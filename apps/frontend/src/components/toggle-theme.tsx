@@ -7,15 +7,10 @@ export function ToggleTheme() {
 	const { setTheme, theme } = useTheme();
 
 	return (
-		<button
-			type="button"
-			className="cursor-pointer fill-primary-red text-primary-red hover:text-white"
-			onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-			{theme === "light" ? (
-				<span className="material-symbols-outlined">dark_mode</span>
-			) : (
-				<span className="material-symbols-outlined">light_mode</span>
-			)}
+		<button type="button" className="cursor-pointer" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+			<span className="material-symbols-outlined text-primary-gradient">
+				{theme === "light" ? "dark_mode" : "light_mode"}
+			</span>
 		</button>
 	);
 }

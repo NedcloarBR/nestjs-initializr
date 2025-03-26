@@ -1,10 +1,10 @@
-import { ToggleTheme } from "@/components/toggle-theme";
+import { Header } from "@/components/header";
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default function Index() {
-  return (
-    <>
-      <h1>Hello World</h1>
-      <ToggleTheme/>
-    </>
-  )
+	return (
+		<>
+			<Header />
+		</>
+	);
 }

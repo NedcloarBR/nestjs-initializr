@@ -3,7 +3,7 @@ import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
 import { AppModule } from "./app/app.module";
 import { Services } from "./app/constants/services";
-import type { ConfigService } from "./app/modules/config/config.service";
+import type { ConfigService } from "./app/modules/config";
 import { setupSwagger } from "./lib";
 
 async function bootstrap() {
