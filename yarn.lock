@@ -2974,7 +2974,6 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jest-environment-node: "npm:^29.7.0"
     lucide-react: "npm:^0.479.0"
-    material-symbols: "npm:^0.29.0"
     next: "npm:~15.1.4"
     next-intl: "npm:^3.26.5"
     next-themes: "npm:^0.4.4"
@@ -10587,13 +10586,6 @@ __metadata:
   dependencies:
     tmpl: "npm:1.0.5"
   checksum: 10c0/b0e6e599780ce6bab49cc413eba822f7d1f0dfebd1c103eaa3785c59e43e22c59018323cf9e1708f0ef5329e94a745d163fcbb6bff8e4c6742f9be9e86f3500c
-  languageName: node
-  linkType: hard
-
-"material-symbols@npm:^0.29.0":
-  version: 0.29.0
-  resolution: "material-symbols@npm:0.29.0"
-  checksum: 10c0/622edb9b5af03e4ac468402c40c403117f04ff5407cb984912c3624fa0d6d00c8d584c418a0a5e2c667a006ef96058dc78306aadb4920ff9edf4c07c27d94e03
   languageName: node
   linkType: hard
 

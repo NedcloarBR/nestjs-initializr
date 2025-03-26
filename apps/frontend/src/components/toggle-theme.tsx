@@ -8,9 +8,7 @@ export function ToggleTheme() {
 
 	return (
 		<button type="button" className="cursor-pointer" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-			<span className="material-symbols-outlined text-primary-gradient">
-				{theme === "light" ? "dark_mode" : "light_mode"}
-			</span>
+			<span className="material-icons text-primary-gradient">{theme === "light" ? "dark_mode" : "light_mode"}</span>
 		</button>
 	);
 }
