@@ -1,5 +1,4 @@
-import { Inter } from "next/font/google";
-import "@/global.css";
+import "@/styles/global.css";
 import "flag-icons/css/flag-icons.css";
 import { routing } from "@/lib/i18n/routing";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -7,8 +6,6 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(props: {
 	params: Promise<{ locale: string }>;
@@ -44,7 +41,7 @@ export default async function LocaleLayout(props: {
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
-			<body className={inter.className}>
+			<body>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
 					<NextIntlClientProvider messages={messages}>
 						{children}
