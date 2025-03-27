@@ -17,7 +17,7 @@ export async function generateMetadata(props: {
 
 	return {
 		title: t("Home.title"),
-		description: t("Home.description"),
+		description: t("Home.description")
 	};
 }
 

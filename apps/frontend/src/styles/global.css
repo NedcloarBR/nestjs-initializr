@@ -1,9 +1,7 @@
 @import "tailwindcss";
 
-@import "./fonts/material-icons.css";
-@import "./fonts/source-sans-pro.css";
-
-@plugin "tailwindcss-animate";
+@import "./fonts.css";
+@import "./shadcn.css";
 
 @custom-variant dark (&:is(.dark *));
 
