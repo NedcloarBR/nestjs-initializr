@@ -44,8 +44,10 @@ export default async function LocaleLayout(props: {
 			<body>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
 					<NextIntlClientProvider messages={messages}>
-						{children}
-						{/* <Analytics /> */}
+						<main className="m-0 p-0 font-medium overflow-x-hidden">
+							{children}
+							{/* <Analytics /> */}
+						</main>
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</body>
