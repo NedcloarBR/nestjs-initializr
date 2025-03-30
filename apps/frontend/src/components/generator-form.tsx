@@ -1,10 +1,20 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "./ui";
+import {
+	Button,
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	Input,
+	RadioGroup,
+	RadioGroupItem
+} from "./ui";
 
 import { saveAs } from "file-saver";
 
