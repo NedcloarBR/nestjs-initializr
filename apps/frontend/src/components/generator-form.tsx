@@ -74,11 +74,13 @@ export function GeneratorForm() {
 						name="projectName"
 						control={form.control}
 						render={({ field }) => (
-							<FormItem className="flex items-center space-x-4">
-								<FormLabel>Name</FormLabel>
-								<FormControl className="flex-1">
-									<Input {...field} />
-								</FormControl>
+							<FormItem>
+								<div className="flex items-center space-x-4">
+									<FormLabel>Name</FormLabel>
+									<FormControl className="flex-1">
+										<Input {...field} />
+									</FormControl>
+								</div>
 								<FormMessage />
 							</FormItem>
 						)}
@@ -93,7 +95,6 @@ export function GeneratorForm() {
 								<FormControl className="flex-1">
 									<Input {...field} />
 								</FormControl>
-								<FormMessage />
 							</FormItem>
 						)}
 					/>
@@ -114,7 +115,6 @@ export function GeneratorForm() {
 										</FormItem>
 									))}
 								</RadioGroup>
-								<FormMessage />
 							</FormItem>
 						)}
 					/>
