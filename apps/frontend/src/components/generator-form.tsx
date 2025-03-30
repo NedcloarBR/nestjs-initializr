@@ -4,7 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "./ui";
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "./ui";
+
+import { saveAs } from "file-saver";
 
 const formSchema = z.object({
 	projectName: z.string().min(1, "Project name is required").max(214, "Project name must be less than 214 characters"),
@@ -20,8 +22,34 @@ export function GeneratorForm() {
 		}
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		try {
+			const response = await fetch("http://localhost:9901/api/generator", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					name: values.projectName,
+					description: values.projectDescription,
+					nodeVersion: values.nodeVersion
+				})
+			});
+
+			if (!response.ok) {
+				throw new Error("Error generating the project zip file");
+			}
+
+			const contentDisposition = response.headers.get("Content-Disposition");
+			const fileName = contentDisposition?.split("filename=")[1] || "project.zip";
+
+			const blob = await response.blob();
+
+			saveAs(blob, fileName);
+		} catch (error) {
+			console.error(error);
+			alert("Error downloading the zip file");
+		}
 	}
 
 	const nodeVersions = ["20", "21", "22", "23"];
@@ -80,6 +108,7 @@ export function GeneratorForm() {
 							</FormItem>
 						)}
 					/>
+					<Button type="submit">Submit</Button>
 				</form>
 			</Form>
 		</section>

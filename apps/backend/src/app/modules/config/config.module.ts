@@ -4,7 +4,7 @@ import { Services } from "../../constants/services";
 import { ConfigService } from "./config.service";
 import { configValidator } from "./config.validator";
 
-const providers: Provider[] = [{ provide: Services.ConfigService, useClass: ConfigService }];
+const providers: Provider[] = [{ provide: Services.Config, useClass: ConfigService }];
 
 @Global()
 @Module({
@@ -12,10 +12,10 @@ const providers: Provider[] = [{ provide: Services.ConfigService, useClass: Conf
 		NestConfigModule.forRoot({
 			isGlobal: false,
 			envFilePath: [`.env.${process.env.NODE_ENV}`],
-			validate: configValidator,
-		}),
+			validate: configValidator
+		})
 	],
 	providers: [...providers],
-	exports: [...providers],
+	exports: [...providers]
 })
 export class ConfigModule {}

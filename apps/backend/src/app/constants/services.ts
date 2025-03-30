@@ -1,3 +1,4 @@
 export enum Services {
-	ConfigService = "CONFIG_SERVICE",
+	Config = "CONFIG_SERVICE",
+	Generator = "GENERATOR_SERVICE"
 }
