@@ -1,11 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "./ui";
 
 const formSchema = z.object({
 	projectName: z.string().min(1, "Project name is required").max(214, "Project name must be less than 214 characters"),
@@ -61,28 +60,26 @@ export function GeneratorForm() {
 						)}
 					/>
 
-					<div className="inline">
-						<FormField
-							name="nodeVersion"
-							control={form.control}
-							render={({ field }) => (
-								<FormItem className="flex items-center space-x-4">
-									<FormLabel>NodeJS Version</FormLabel>
-									<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex">
-										{nodeVersions.map((version) => (
-											<FormItem key={version} className="flex items-center space-x-3">
-												<FormControl className="flex-1">
-													<RadioGroupItem value={version} id={version} />
-												</FormControl>
-												<FormLabel>{version}</FormLabel>
-											</FormItem>
-										))}
-									</RadioGroup>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
+					<FormField
+						name="nodeVersion"
+						control={form.control}
+						render={({ field }) => (
+							<FormItem className="flex items-center space-x-4">
+								<FormLabel>NodeJS Version</FormLabel>
+								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex">
+									{nodeVersions.map((version) => (
+										<FormItem key={version} className="flex items-center space-x-3">
+											<FormControl className="flex-1">
+												<RadioGroupItem value={version} id={version} />
+											</FormControl>
+											<FormLabel>{version}</FormLabel>
+										</FormItem>
+									))}
+								</RadioGroup>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 				</form>
 			</Form>
 		</section>
