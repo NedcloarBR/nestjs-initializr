@@ -1,92 +1,88 @@
 "use client";
 
-import { useNodeVersions } from "@/hooks/useNodeVersions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
 const formSchema = z.object({
 	projectName: z.string().min(1, "Project name is required").max(214, "Project name must be less than 214 characters"),
 	projectDescription: z.string().optional(),
-	nodeVersion: z.string().default("20.0.0").optional(),
-	showNodeCurrent: z.boolean().default(false)
+	nodeVersion: z.string().min(1, "Node version is required").default("20").optional()
 });
 
 export function GeneratorForm() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {}
+		defaultValues: {
+			nodeVersion: "20"
+		}
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
 	}
 
-	const { nodeVersion } = form.getValues();
-	const { versions } = useNodeVersions("v20.0.0", true);
+	const nodeVersions = ["20", "21", "22", "23"];
 
 	return (
 		<section id="generator-form" className="m-8 h-full bg-zinc-800 rounded-lg">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-xs p-8">
-					<h2 className="">Project Metadata</h2>
+					<h2>Project Metadata</h2>
+
 					<FormField
-						control={form.control}
 						name="projectName"
+						control={form.control}
 						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Project Name</FormLabel>
-								<FormControl>
-									<Input placeholder="nestjs-project" {...field} />
+							<FormItem className="flex items-center space-x-4">
+								<FormLabel>Name</FormLabel>
+								<FormControl className="flex-1">
+									<Input {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
+
 					<FormField
-						control={form.control}
 						name="projectDescription"
+						control={form.control}
 						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Project Description</FormLabel>
-								<FormControl>
-									<Input placeholder="nestjs-project description" {...field} />
+							<FormItem className="flex items-center space-x-4">
+								<FormLabel>Description</FormLabel>
+								<FormControl className="flex-1">
+									<Input {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name="nodeVersion"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>NodeJS Version</FormLabel>
-								<Select>
-									<FormControl>
-										<SelectTrigger>
-											<SelectValue placeholder="Node Version" />
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										{versions.map((version) => (
-											<SelectItem key={version.version} value={version.version}>
-												{version.version}
-											</SelectItem>
+
+					<div className="inline">
+						<FormField
+							name="nodeVersion"
+							control={form.control}
+							render={({ field }) => (
+								<FormItem className="flex items-center space-x-4">
+									<FormLabel>NodeJS Version</FormLabel>
+									<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex">
+										{nodeVersions.map((version) => (
+											<FormItem key={version} className="flex items-center space-x-3">
+												<FormControl className="flex-1">
+													<RadioGroupItem value={version} id={version} />
+												</FormControl>
+												<FormLabel>{version}</FormLabel>
+											</FormItem>
 										))}
-									</SelectContent>
-								</Select>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button className="cursor-pointer" type="submit">
-						Submit
-					</Button>
+									</RadioGroup>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 				</form>
 			</Form>
 		</section>
