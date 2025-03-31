@@ -52,3 +52,12 @@ export function AddScript(scriptName: string, scriptCommand: string, id: string)
 
 	fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), "utf-8");
 }
+
+export function AddProperty(propertyName: string, propertyValue: string | Record<string, unknown>, id: string) {
+	const packageJsonPath = path.join(__dirname, "__generated__", id, "package.json");
+	const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+
+	packageJson[propertyName] = propertyValue;
+
+	fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), "utf-8");
+}
