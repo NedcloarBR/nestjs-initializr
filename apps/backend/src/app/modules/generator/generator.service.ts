@@ -4,6 +4,7 @@ import path from "node:path";
 import { Injectable } from "@nestjs/common";
 import archiver from "archiver";
 import { AppGenerator } from "./generators/app.generator";
+import { Misc } from "./generators/functions/misc";
 import { MainGenerator, type MainTypes } from "./generators/main.generator";
 import { PackageJsonGenerator, type PackageJsonMetadata } from "./generators/package-json.generator";
 
@@ -18,6 +19,7 @@ export class GeneratorService {
 		const packageJson = PackageJsonGenerator(metadata.packageJson, id);
 		MainGenerator(metadata.mainType, id);
 		AppGenerator(id);
+		Misc(id);
 
 		return await this.generateZipFile([packageJson], id);
 	}
