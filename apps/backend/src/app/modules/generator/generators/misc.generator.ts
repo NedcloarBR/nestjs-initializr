@@ -9,4 +9,8 @@ export function MiscGenerator(content: string, fileName: string, id: string) {
 	const filePath = path.join(dirPath, fileName);
 
 	fs.writeFileSync(filePath, content, { encoding: "utf-8" });
+
+	const file = fs.createReadStream(filePath);
+
+	return { fileName: fileName, stream: file };
 }

@@ -19,9 +19,9 @@ export class GeneratorService {
 		const packageJson = PackageJsonGenerator(metadata.packageJson, id);
 		MainGenerator(metadata.mainType, id);
 		AppGenerator(id);
-		Misc(id);
+		const miscFiles = Misc(id);
 
-		return await this.generateZipFile([packageJson], id);
+		return await this.generateZipFile([packageJson, ...miscFiles], id);
 	}
 
 	private async generateZipFile(
