@@ -1,8 +1,27 @@
 {
-  "Metadata": {
-    "Home": {
-      "title": "NestJS Initializr",
-      "description": "Start your NestJS projects with ease"
-    }
-  }
+	"Metadata": {
+		"Home": {
+			"title": "NestJS Initializr",
+			"description": "Start your NestJS projects with ease"
+		}
+	},
+
+	"Languages": {
+		"en-US": "English",
+		"pt-BR": "Português (Brasil)"
+	},
+
+	"Generator": {
+		"Error": {
+			"Generate": "Error generating the project zip file",
+			"Download": "Error downloading the project zip file"
+		},
+		"Metadata": {
+			"title": "Project Metadata",
+			"name": "Name",
+			"description": "Description",
+			"nodeVersion": "NodeJS Version"
+		},
+		"GenerateButton": "Generate"
+	}
 }

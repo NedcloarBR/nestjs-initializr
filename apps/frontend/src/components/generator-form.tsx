@@ -17,6 +17,7 @@ import {
 } from "./ui";
 
 import { saveAs } from "file-saver";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
 	projectName: z
@@ -29,6 +30,8 @@ const formSchema = z.object({
 });
 
 export function GeneratorForm() {
+	const t = useTranslations("Generator");
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -72,7 +75,7 @@ export function GeneratorForm() {
 		<section id="generator-form" className="m-8 h-full bg-zinc-800 rounded-lg">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-xs p-8">
-					<h2>Project Metadata</h2>
+					<h2>{t("Metadata.title")}</h2>
 
 					<FormField
 						name="projectName"
@@ -80,7 +83,7 @@ export function GeneratorForm() {
 						render={({ field }) => (
 							<FormItem>
 								<div className="flex items-center space-x-4">
-									<FormLabel>Name</FormLabel>
+									<FormLabel>{t("Metadata.name")}</FormLabel>
 									<FormControl className="flex-1">
 										<Input {...field} />
 									</FormControl>
@@ -95,7 +98,7 @@ export function GeneratorForm() {
 						control={form.control}
 						render={({ field }) => (
 							<FormItem className="flex items-center space-x-4">
-								<FormLabel>Description</FormLabel>
+								<FormLabel>{t("Metadata.description")}</FormLabel>
 								<FormControl className="flex-1">
 									<Input {...field} />
 								</FormControl>
@@ -107,8 +110,8 @@ export function GeneratorForm() {
 						name="nodeVersion"
 						control={form.control}
 						render={({ field }) => (
-							<FormItem className="flex items-center space-x-4">
-								<FormLabel>NodeJS Version</FormLabel>
+							<FormItem className="flex flex-row items-center space-x-4">
+								<FormLabel className="whitespace-nowrap">{t("Metadata.nodeVersion")}</FormLabel>
 								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex">
 									{nodeVersions.map((version) => (
 										<FormItem key={version} className="flex items-center space-x-3">
@@ -122,7 +125,7 @@ export function GeneratorForm() {
 							</FormItem>
 						)}
 					/>
-					<Button type="submit">Submit</Button>
+					<Button type="submit">{t("GenerateButton")}</Button>
 				</form>
 			</Form>
 		</section>
