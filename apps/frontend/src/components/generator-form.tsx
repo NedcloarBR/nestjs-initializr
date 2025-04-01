@@ -19,7 +19,11 @@ import {
 import { saveAs } from "file-saver";
 
 const formSchema = z.object({
-	projectName: z.string().min(1, "Project name is required").max(214, "Project name must be less than 214 characters"),
+	projectName: z
+		.string()
+		.min(1, "Project name is required")
+		.max(214, "Project name must be less than 214 characters")
+		.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, "Invalid project name"),
 	projectDescription: z.string().optional(),
 	nodeVersion: z.string().min(1, "Node version is required").default("20").optional()
 });

@@ -5,8 +5,8 @@ import { nestScripts } from "../templates/scripts/nest.template";
 
 export interface PackageJsonMetadata {
 	name: string;
-	description: string;
-	nodeVersion: string;
+	description?: string;
+	nodeVersion: "20" | "21" | "22" | "23";
 }
 
 export function PackageJsonGenerator(metadata: PackageJsonMetadata, id: string) {

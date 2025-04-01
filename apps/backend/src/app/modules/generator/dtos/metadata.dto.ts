@@ -1,12 +1,17 @@
-import { IsString } from "class-validator";
+import { Optional } from "@nestjs/common";
+import { IsIn, IsNotEmpty, IsString, Matches } from "class-validator";
 
 export class MetadataDTO {
 	@IsString()
-	public readonly name: string;
+	@IsNotEmpty()
+	@Matches(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/)
+	public readonly name!: string;
 
 	@IsString()
-	public readonly description: string;
+	@Optional()
+	public readonly description?: string;
 
 	@IsString()
-	public readonly nodeVersion: string;
+	@IsIn(["20", "21", "22", "23"], { message: "Node version must be one of the following: 20, 21, 22, 23" })
+	public readonly nodeVersion!: "20" | "21" | "22" | "23";
 }
