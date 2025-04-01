@@ -44,7 +44,7 @@ export default async function LocaleLayout(props: {
 			<body>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
 					<NextIntlClientProvider messages={messages}>
-						<main className="m-0 p-0 font-medium overflow-x-hidden">
+						<main className="m-0 p-0 font-medium overflow-x-hidden h-screen bg-nest-background dark:bg-nest-background">
 							{children}
 							{/* <Analytics /> */}
 						</main>

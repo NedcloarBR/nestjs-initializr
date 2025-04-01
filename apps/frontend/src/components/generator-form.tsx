@@ -72,7 +72,7 @@ export function GeneratorForm() {
 	const nodeVersions = ["20", "21", "22", "23"];
 
 	return (
-		<section id="generator-form" className="m-8 h-full bg-zinc-800 rounded-lg">
+		<section id="generator-form" className="m-8 h-full rounded-lg">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-xs p-8">
 					<h2>{t("Metadata.title")}</h2>
@@ -114,7 +114,7 @@ export function GeneratorForm() {
 								<FormLabel className="whitespace-nowrap">{t("Metadata.nodeVersion")}</FormLabel>
 								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex">
 									{nodeVersions.map((version) => (
-										<FormItem key={version} className="flex items-center space-x-3">
+										<FormItem key={version} className="flex items-center">
 											<FormControl className="flex-1">
 												<RadioGroupItem value={version} id={version} />
 											</FormControl>

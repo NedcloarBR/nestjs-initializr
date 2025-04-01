@@ -6,51 +6,51 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	--primary: #ea2845;
-	--primary-accent: #ea2868;
-	--primary-1dp: #d71e38;
-	--primary-2dp: #da2640;
-	--primary-3dp: #db2840;
-	--primary-4dp: #e40020;
-	--primary-5dp: #ff0023;
-	--primary-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary-accent) 100%);
-	--background: #fdfdfd;
-	--background-1dp: #f7f7f7;
-	--background-2dp: #f0f2f3;
-	--background-3dp: #e8e8e8;
-	--background-4dp: #efefef;
-	--background-5dp: #cccccc;
-	--header-background: #151515;
+	--nest-primary: #ea2845;
+	--nest-primary-accent: #ea2868;
+	--nest-primary-1dp: #d71e38;
+	--nest-primary-2dp: #da2640;
+	--nest-primary-3dp: #db2840;
+	--nest-primary-4dp: #e40020;
+	--nest-primary-5dp: #ff0023;
+	--nest-primary-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary-accent) 100%);
+	--nest-background: #fdfdfd;
+	--nest-background-1dp: #f7f7f7;
+	--nest-background-2dp: #f0f2f3;
+	--nest-background-3dp: #e8e8e8;
+	--nest-background-4dp: #efefef;
+	--nest-background-5dp: #cccccc;
+	--nest-header-background: #151515;
 }
 
 .dark {
-	--primary: #f23551;
-	--primary-accent: #e23770;
-	--primary-1dp: #f45f75;
-	--primary-2dp: #f4526a;
-	--primary-3dp: #f1455f;
-	--primary-4dp: #f23c57;
-	--primary-5dp: #f23551;
-	--primary-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary-accent) 100%);
-	--background: #1f1f22;
-	--background-1dp: #232327;
-	--background-2dp: #252528;
-	--background-3dp: #29292d;
-	--background-4dp: #3d3d41;
-	--background-5dp: #39393e;
-	--header-background: #1b1b1d;
+	--nest-primary: #f23551;
+	--nest-primary-accent: #e23770;
+	--nest-primary-1dp: #f45f75;
+	--nest-primary-2dp: #f4526a;
+	--nest-primary-3dp: #f1455f;
+	--nest-primary-4dp: #f23c57;
+	--nest-primary-5dp: #f23551;
+	--nest-primary-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary-accent) 100%);
+	--nest-background: #1f1f22;
+	--nest-background-1dp: #232327;
+	--nest-background-2dp: #252528;
+	--nest-background-3dp: #29292d;
+	--nest-background-4dp: #3d3d41;
+	--nest-background-5dp: #39393e;
+	--nest-header-background: #1b1b1d;
 }
 
 @theme inline {
-	--color-background: var(--background);
-	--color-header-background: var(--header-background);
-	--color-primary: var(--primary);
-	--color-accent: var(--primary-accent);
+	--color-nest-background: var(--nest-background);
+	--color-nest-header-background: var(--nest-header-background);
+	--color-nest-primary: var(--nest-primary);
+	--color-nest-accent: var(--nest-primary-accent);
 }
 
 @layer utilities {
-	.text-primary-gradient {
-		@apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+	.text-nest-primary-gradient {
+		@apply bg-gradient-to-r from-nest-primary to-nest-accent bg-clip-text text-transparent;
 	}
 }
 
