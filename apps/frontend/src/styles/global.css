@@ -59,3 +59,11 @@
 		font-family: "Source Sans Pro", sans-serif;
 	}
 }
+
+.custom-radio {
+	color: var(--nest-primary);
+}
+
+.custom-radio [data-slot="radio-group-indicator"] svg {
+	fill: var(--nest-primary);
+}

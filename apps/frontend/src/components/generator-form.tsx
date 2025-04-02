@@ -12,6 +12,7 @@ import {
 	FormLabel,
 	FormMessage,
 	Input,
+	Label,
 	RadioGroup,
 	RadioGroupItem
 } from "./ui";
@@ -82,13 +83,11 @@ export function GeneratorForm() {
 						name="projectName"
 						control={form.control}
 						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center space-x-4 max-w-lg">
-									<FormLabel className="flex-[0_1_110px]">{t("Metadata.name")}</FormLabel>
-									<FormControl className="flex-1">
-										<Input className="ml-5" {...field} />
-									</FormControl>
-								</div>
+							<FormItem className="flex items-center space-x-4 max-w-lg">
+								<FormLabel className="w-20">{t("Metadata.name")}</FormLabel>
+								<FormControl className="flex-1">
+									<Input {...field} className="w-full" />
+								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
@@ -99,9 +98,9 @@ export function GeneratorForm() {
 						control={form.control}
 						render={({ field }) => (
 							<FormItem className="flex items-center space-x-4 max-w-lg">
-								<FormLabel className="flex-[0_1_110px]">{t("Metadata.description")}</FormLabel>
+								<FormLabel className="w-20">{t("Metadata.description")}</FormLabel>
 								<FormControl className="flex-1">
-									<Input className="ml-5" {...field} />
+									<Input {...field} className="w-full" />
 								</FormControl>
 							</FormItem>
 						)}
@@ -111,21 +110,26 @@ export function GeneratorForm() {
 						name="nodeVersion"
 						control={form.control}
 						render={({ field }) => (
-							<FormItem className="flex flex-row items-center space-x-4 max-w-lg">
-								<FormLabel className="whitespace-nowrap flex-[0_1_110px]">{t("Metadata.nodeVersion")}</FormLabel>
+							<FormItem className="flex items-center space-x-4 max-w-lg">
+								<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
 								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
 									{nodeVersions.map((version) => (
-										<FormItem key={version} className="flex items-center ml-5">
-											<FormControl className="flex-1">
-												<RadioGroupItem value={version} id={version} />
+										<div key={version} className="flex items-center">
+											<FormControl>
+												<Label
+													htmlFor={version}
+													className={`cursor-pointer ml-2 ${field.value === version ? "text-nest-primary" : ""}`}>
+													<RadioGroupItem className="cursor-pointer custom-radio" value={version} id={version} />
+													{version}
+												</Label>
 											</FormControl>
-											<FormLabel>{version}</FormLabel>
-										</FormItem>
+										</div>
 									))}
 								</RadioGroup>
 							</FormItem>
 						)}
 					/>
+
 					<Button type="submit">{t("GenerateButton")}</Button>
 				</form>
 			</Form>
