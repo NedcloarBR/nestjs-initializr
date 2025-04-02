@@ -19,19 +19,20 @@ import {
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
 
-const formSchema = z.object({
-	projectName: z
-		.string()
-		.min(1, "Project name is required")
-		.max(214, "Project name must be less than 214 characters")
-		.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, "Invalid project name"),
-	projectDescription: z.string().optional(),
-	nodeVersion: z.string().min(1, "Node version is required").default("20").optional()
-});
+const formSchemaFunction = (t: (arg: string) => string) =>
+	z.object({
+		projectName: z
+			.string()
+			.min(1, t("FormSchema.projectName.min"))
+			.max(214, t("FormSchema.projectName.max"))
+			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex")),
+		projectDescription: z.string().optional(),
+		nodeVersion: z.string().default("20")
+	});
 
 export function GeneratorForm() {
 	const t = useTranslations("Generator");
-
+	const formSchema = formSchemaFunction(t);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {

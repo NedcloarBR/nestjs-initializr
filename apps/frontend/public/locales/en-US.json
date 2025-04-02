@@ -12,6 +12,13 @@
 	},
 
 	"Generator": {
+		"FormSchema": {
+			"projectName": {
+				"min": "Project name is required",
+				"max": "Project name must be less than 214 characters",
+				"regex": "Invalid project name"
+			}
+		},
 		"Error": {
 			"Generate": "Error generating the project zip file",
 			"Download": "Error downloading the project zip file"
