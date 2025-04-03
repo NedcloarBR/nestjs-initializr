@@ -3,9 +3,12 @@ import { ToggleTheme } from "./toggle-theme";
 
 export function Header() {
 	return (
-		<header className="w-full h-17.5 bg-nest-header-background flex items-center">
-			<ToggleTheme />
-			<ChangeLanguage />
+		<header className="flex items-center w-screen h-17.5 bg-nest-header-background">
+			<div className="flex-1" />
+			<div className="mr-8 flex gap-2">
+				<ToggleTheme />
+				<ChangeLanguage />
+			</div>
 		</header>
 	);
 }

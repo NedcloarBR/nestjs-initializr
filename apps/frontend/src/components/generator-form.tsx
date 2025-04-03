@@ -74,7 +74,7 @@ export function GeneratorForm() {
 	const nodeVersions = ["20", "21", "22", "23"];
 
 	return (
-		<section id="generator-form" className="m-8 h-full rounded-lg">
+		<section id="generator-form" className="m-8 rounded-lg">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-8 p-8">
 					<h2 className="font-bold">{t("Metadata.title")}</h2>

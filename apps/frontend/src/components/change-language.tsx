@@ -48,16 +48,14 @@ export function ChangeLanguage() {
 	}
 
 	return (
-		<div className="absolute right-20">
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild={true}>
-					<button type="button" className="cursor-pointer flex focus:outline-none">
-						{currentLang}
-						<span className="sr-only">{}</span>
-					</button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="center">{DropdownLanguages()}</DropdownMenuContent>
-			</DropdownMenu>
-		</div>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild={true}>
+				<button type="button" className="cursor-pointer flex focus:outline-none">
+					{currentLang}
+					<span className="sr-only">{}</span>
+				</button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="center">{DropdownLanguages()}</DropdownMenuContent>
+		</DropdownMenu>
 	);
 }
