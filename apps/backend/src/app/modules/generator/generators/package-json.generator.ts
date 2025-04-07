@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { packageJsonReplaceKeys, packageJsonTemplate } from "../templates/package-json.template";
 import { nestScripts } from "../templates/scripts/nest.template";
+import { BaseGenerator } from "./base.generator";
 
 export interface PackageJsonMetadata {
 	name: string;
@@ -15,21 +16,13 @@ export function PackageJsonGenerator(metadata: PackageJsonMetadata, id: string) 
 		.replace(packageJsonReplaceKeys.PROJECT_DESCRIPTION, metadata.description)
 		.replace(packageJsonReplaceKeys.NODE_VERSION, metadata.nodeVersion);
 
-	const dirPath = path.join(__dirname, "__generated__", id);
-
-	fs.mkdirSync(dirPath, { recursive: true });
-
-	const filePath = path.join(dirPath, "package.json");
-
-	fs.writeFileSync(filePath, content, { encoding: "utf-8" });
-
-	const file = fs.createReadStream(filePath);
+	const packageJson = BaseGenerator(id, "package.json", content, false);
 
 	for (const script of Object.values(nestScripts)) {
 		AddScript(script.name, script.command, id);
 	}
 
-	return { fileName: "package.json", stream: file };
+	return packageJson;
 }
 
 export function AddPackage(packageName: string, packageVersion: string, id: string, dev?: boolean) {

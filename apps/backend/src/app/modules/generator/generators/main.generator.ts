@@ -1,6 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
 import { mainExpressTemplate, mainFastifyTemplate } from "../templates/main.template";
+import { BaseGenerator } from "./base.generator";
 import { AddCommon, AddExpress, AddFastify } from "./functions/dependencies";
 
 type MainTypes = "express" | "fastify";
@@ -21,11 +20,5 @@ export function MainGenerator(type: MainTypes, id: string) {
 
 	AddCommon(id);
 
-	const dirPath = path.join(__dirname, "__generated__", id, "src");
-
-	fs.mkdirSync(dirPath, { recursive: true });
-
-	const mainPath = path.join(dirPath, "main.ts");
-
-	fs.writeFileSync(mainPath, content, { encoding: "utf-8" });
+	BaseGenerator(id, "main.ts", content, false, "src");
 }
