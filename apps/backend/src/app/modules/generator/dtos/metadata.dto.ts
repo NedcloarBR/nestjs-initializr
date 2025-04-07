@@ -1,6 +1,4 @@
-import { Optional } from "@nestjs/common";
-import { IsIn, IsNotEmpty, IsString, Matches } from "class-validator";
-
+import { IsIn, IsNotEmpty, IsOptional, IsString, Matches } from "class-validator";
 export class MetadataDTO {
 	@IsString()
 	@IsNotEmpty()
@@ -8,7 +6,7 @@ export class MetadataDTO {
 	public readonly name!: string;
 
 	@IsString()
-	@Optional()
+	@IsOptional()
 	public readonly description?: string;
 
 	@IsString()
