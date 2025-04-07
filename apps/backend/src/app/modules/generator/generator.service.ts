@@ -46,6 +46,7 @@ export class GeneratorService {
 		archive.pipe(output);
 
 		for (const file of files) {
+			console.log("file", file);
 			archive.append(file.stream, { name: file.fileName });
 		}
 

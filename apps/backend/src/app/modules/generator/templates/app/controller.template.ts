@@ -1,4 +1,4 @@
-export const appControllerTemplate = `
+const content = `
 import { Controller, Get } from "@nestjs/common";
 import { AppService } from "./app.service";
 
@@ -12,3 +12,9 @@ export class AppController {
   }
 }
 `;
+
+export const appControllerTemplate = {
+	name: "app.controller.ts",
+	path: "src",
+	content
+};

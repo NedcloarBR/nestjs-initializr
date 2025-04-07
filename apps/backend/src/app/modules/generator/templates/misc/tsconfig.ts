@@ -1,4 +1,4 @@
-export const tsconfig = `
+const tsconfigContent = `
 {
   "compilerOptions": {
     "module": "commonjs",
@@ -18,9 +18,21 @@ export const tsconfig = `
 }
 `;
 
-export const tsconfigBuild = `
+const tsconfigBuildContent = `
 {
   "extends": "./tsconfig.json",
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }
 `;
+
+export const tsconfig = {
+	name: "tsconfig.json",
+	path: "",
+	content: tsconfigContent
+};
+
+export const tsconfigBuild = {
+	name: "tsconfig.json",
+	path: "",
+	content: tsconfigBuildContent
+};

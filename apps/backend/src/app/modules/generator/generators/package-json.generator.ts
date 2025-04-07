@@ -11,12 +11,20 @@ export interface PackageJsonMetadata {
 }
 
 export function PackageJsonGenerator(metadata: PackageJsonMetadata, id: string) {
-	const content = packageJsonTemplate
+	const content = packageJsonTemplate.content
 		.replace(packageJsonReplaceKeys.PROJECT_NAME, metadata.name)
 		.replace(packageJsonReplaceKeys.PROJECT_DESCRIPTION, metadata.description)
 		.replace(packageJsonReplaceKeys.NODE_VERSION, metadata.nodeVersion);
 
-	const packageJson = BaseGenerator(id, "package.json", content, false);
+	const packageJson = BaseGenerator(
+		id,
+		{
+			name: packageJsonTemplate.name,
+			path: packageJsonTemplate.path,
+			content
+		},
+		true
+	);
 
 	for (const script of Object.values(nestScripts)) {
 		AddScript(script.name, script.command, id);

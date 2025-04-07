@@ -4,9 +4,9 @@ import { tsconfig, tsconfigBuild } from "../../templates/misc/tsconfig";
 import { BaseGenerator } from "../base.generator";
 
 export function Misc(id: string) {
-	const tsconfigFile = BaseGenerator(tsconfig, "tsconfig.json", id);
-	const tsconfigBuildFile = BaseGenerator(tsconfigBuild, "tsconfig.build.json", id);
-	const nestjsCliFile = BaseGenerator(nestjsCli, "nestjs-cli.json", id);
-	const readmeFile = BaseGenerator(readme, "README.md", id);
+	const tsconfigFile = BaseGenerator(id, tsconfig, true);
+	const tsconfigBuildFile = BaseGenerator(id, tsconfigBuild, true);
+	const nestjsCliFile = BaseGenerator(id, nestjsCli, true);
+	const readmeFile = BaseGenerator(id, readme, true);
 	return [tsconfigFile, tsconfigBuildFile, nestjsCliFile, readmeFile];
 }

@@ -1,4 +1,4 @@
-export const mainExpressTemplate = `
+const expressContent = `
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
@@ -15,7 +15,7 @@ async function bootstrap() {
 bootstrap();
 `;
 
-export const mainFastifyTemplate = `
+const fastifyContent = `
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
@@ -33,3 +33,15 @@ async function bootstrap() {
 
 bootstrap();
 `;
+
+export const mainExpressTemplate = {
+	name: "main.ts",
+	path: "src",
+	content: expressContent
+};
+
+export const mainFastifyTemplate = {
+	name: "main.ts",
+	path: "src",
+	content: fastifyContent
+};

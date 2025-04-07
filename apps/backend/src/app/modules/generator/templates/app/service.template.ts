@@ -1,4 +1,4 @@
-export const appServiceTemplate = `
+const content = `
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -8,3 +8,9 @@ export class AppService {
   }
 }
 `;
+
+export const appServiceTemplate = {
+	name: "app.service.ts",
+	path: "src",
+	content: content
+};

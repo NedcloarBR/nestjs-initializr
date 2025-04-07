@@ -1,4 +1,4 @@
-export const nestjsCli = `
+const content = `
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
@@ -8,3 +8,9 @@ export const nestjsCli = `
   }
 }
 `;
+
+export const nestjsCli = {
+	name: "nest-cli.json",
+	path: "",
+	content
+};

@@ -1,4 +1,4 @@
-export const packageJsonTemplate = `
+export const content = `
 {
   "name": "{{PROJECT_NAME}}",
 	"description": "{{PROJECT_DESCRIPTION}}",
@@ -19,3 +19,9 @@ export enum packageJsonReplaceKeys {
 	PROJECT_DESCRIPTION = "{{PROJECT_DESCRIPTION}}",
 	NODE_VERSION = "{{NODE_VERSION}}"
 }
+
+export const packageJsonTemplate = {
+	name: "package.json",
+	path: "",
+	content
+};

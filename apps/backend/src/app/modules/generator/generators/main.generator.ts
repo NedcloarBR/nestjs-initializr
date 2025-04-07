@@ -5,20 +5,24 @@ import { AddCommon, AddExpress, AddFastify } from "./functions/dependencies";
 type MainTypes = "express" | "fastify";
 
 export function MainGenerator(type: MainTypes, id: string) {
-	let content: string;
+	let template: {
+		name: string;
+		path: string;
+		content: string;
+	};
 
 	switch (type) {
 		case "express":
-			content = mainExpressTemplate;
+			template = mainExpressTemplate;
 			AddExpress(id);
 			break;
 		case "fastify":
-			content = mainFastifyTemplate;
+			template = mainFastifyTemplate;
 			AddFastify(id);
 			break;
 	}
 
 	AddCommon(id);
 
-	BaseGenerator(id, "main.ts", content, false, "src");
+	BaseGenerator(id, template);
 }
