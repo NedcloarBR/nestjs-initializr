@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { packageJsonReplaceKeys, packageJsonTemplate } from "../templates/package-json.template";
 import { nestScripts } from "../templates/scripts/nest.template";
-import { BaseGenerator } from "./base.generator";
+import { BaseGenerator } from "./base/base.generator";
 
 export interface PackageJsonMetadata {
 	name: string;
