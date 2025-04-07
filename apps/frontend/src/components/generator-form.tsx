@@ -49,6 +49,7 @@ export function GeneratorForm() {
 					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
+					mainType: "fastify",
 					name: values.projectName,
 					description: values.projectDescription,
 					nodeVersion: values.nodeVersion

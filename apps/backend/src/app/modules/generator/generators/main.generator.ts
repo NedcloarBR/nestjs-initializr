@@ -1,16 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
-import { mainBasicTemplate, mainFastifyTemplate } from "../templates/main.template";
+import { mainExpressTemplate, mainFastifyTemplate } from "../templates/main.template";
 import { AddCommon, AddExpress, AddFastify } from "./functions/dependencies";
 
-export type MainTypes = "basic" | "fastify";
+type MainTypes = "express" | "fastify";
 
 export function MainGenerator(type: MainTypes, id: string) {
 	let content: string;
 
 	switch (type) {
-		case "basic":
-			content = mainBasicTemplate;
+		case "express":
+			content = mainExpressTemplate;
 			AddExpress(id);
 			break;
 		case "fastify":

@@ -3,14 +3,15 @@ import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { Injectable } from "@nestjs/common";
 import archiver from "archiver";
+import { MetadataDTO } from "./dtos/metadata.dto";
 import { AppGenerator } from "./generators/app.generator";
 import { Misc } from "./generators/functions/misc";
-import { MainGenerator, type MainTypes } from "./generators/main.generator";
+import { MainGenerator } from "./generators/main.generator";
 import { PackageJsonGenerator, type PackageJsonMetadata } from "./generators/package-json.generator";
-
 export interface ProjectMetadata {
 	packageJson: PackageJsonMetadata;
-	mainType: MainTypes;
+	mainType: MetadataDTO["mainType"];
+	modules: MetadataDTO["modules"];
 }
 @Injectable()
 export class GeneratorService {

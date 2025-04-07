@@ -15,7 +15,8 @@ export class GeneratorController {
   @Header('Content-Type', 'application/json')
   @Header('Content-Disposition', 'attachment; filename="project.zip"')
    public async generate(@Res() res: FastifyReply, @Body() metadata: MetadataDTO) {
-    const file = await this.generatorService.generate({packageJson: metadata, mainType: "fastify"});
+    const { mainType, ...packageJson } = metadata;
+    const file = await this.generatorService.generate({ mainType, packageJson, modules: { config: true} });
     return res.send(file);
   }
 }
