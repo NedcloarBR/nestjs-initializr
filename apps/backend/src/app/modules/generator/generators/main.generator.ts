@@ -1,5 +1,5 @@
-import { mainExpressTemplate, mainFastifyTemplate } from "../templates/main.template";
-import { BaseGenerator } from "./base/base.generator";
+import { BaseGenerator } from ".";
+import { mainExpressTemplate, mainFastifyTemplate } from "../templates";
 import { AddCommon, AddExpress, AddFastify } from "./functions/dependencies";
 
 type MainTypes = "express" | "fastify";

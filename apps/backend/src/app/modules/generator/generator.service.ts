@@ -13,6 +13,7 @@ export interface ProjectMetadata {
 	mainType: MetadataDTO["mainType"];
 	modules: MetadataDTO["modules"];
 }
+
 @Injectable()
 export class GeneratorService {
 	public async generate(metadata: ProjectMetadata): Promise<fs.ReadStream> {

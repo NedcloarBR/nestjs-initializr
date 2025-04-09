@@ -1,1 +1,14 @@
-export const content = `config = "CONFIG_SERVICE"`;
+const serviceConstant = `config = "CONFIG_SERVICE"`;
+
+const name = "ConfigModule";
+
+const exporter = `export { ConfigModule } from "./config/config.module"`;
+
+const inject = "@Inject(Services.Config) private readonly configService: ConfigService,";
+
+export const module = {
+	serviceConstant,
+	name,
+	exporter,
+	inject
+};

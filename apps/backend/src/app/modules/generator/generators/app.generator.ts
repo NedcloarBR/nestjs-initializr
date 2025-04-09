@@ -1,7 +1,5 @@
-import { appControllerTemplate } from "../templates/app/controller.template";
-import { appModuleTemplate } from "../templates/app/module.template";
-import { appServiceTemplate } from "../templates/app/service.template";
-import { BaseGenerator } from "./base/base.generator";
+import { BaseGenerator } from ".";
+import { appControllerTemplate, appModuleTemplate, appServiceTemplate } from "../templates";
 
 export function AppGenerator(id: string) {
 	BaseGenerator(id, appModuleTemplate);
