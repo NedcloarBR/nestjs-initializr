@@ -4,9 +4,7 @@ import path from "node:path";
 import { Injectable } from "@nestjs/common";
 import archiver from "archiver";
 import { MetadataDTO } from "./dtos/metadata.dto";
-import { AppGenerator } from "./generators/app.generator";
-import { MainGenerator } from "./generators/main.generator";
-import { MiscGenerator } from "./generators/misc.generator";
+import { AppGenerator, MainGenerator, RootGenerator } from "./generators";
 import { PackageJsonGenerator, type PackageJsonMetadata } from "./generators/package-json.generator";
 export interface ProjectMetadata {
 	packageJson: PackageJsonMetadata;
@@ -21,9 +19,9 @@ export class GeneratorService {
 		const packageJson = PackageJsonGenerator(metadata.packageJson, id);
 		MainGenerator(metadata.mainType, id);
 		AppGenerator(id);
-		const miscFiles = MiscGenerator(id);
+		const rootFiles = RootGenerator(id);
 
-		return await this.generateZipFile([packageJson, ...miscFiles], id);
+		return await this.generateZipFile([packageJson, ...rootFiles], id);
 	}
 
 	private async generateZipFile(
