@@ -1,4 +1,4 @@
-export const content = `
+const content = `
 declare namespace NodeJS {
   interface ProcessEnv {
     NODE_ENV?: "development" | "production" | "test";
@@ -7,3 +7,9 @@ declare namespace NodeJS {
   }
 }
 `;
+
+export const envTypesTemplate = {
+	name: "index.d.ts",
+	path: "src/types",
+	content
+};

@@ -1,6 +1,15 @@
-export * from "./dtos/";
-export * from "./types/";
-export { module } from "./constant.template";
-export { content as moduleContent } from "./module.template";
-export { content as serviceContent } from "./service.template";
-export { content as validatorContent } from "./validator.template";
+import { dotenvTemplate } from "./dotenv.template";
+import { envDtoTemplate } from "./env-dto.template";
+import { envTypesTemplate } from "./index-d.template";
+import { configModuleTemplate } from "./module.template";
+import { configServiceTemplate } from "./service.template";
+import { configValidatorTemplate } from "./validator.template";
+
+export const configTemplates = [
+	envDtoTemplate,
+	envTypesTemplate,
+	dotenvTemplate,
+	configModuleTemplate,
+	configServiceTemplate,
+	configValidatorTemplate
+];

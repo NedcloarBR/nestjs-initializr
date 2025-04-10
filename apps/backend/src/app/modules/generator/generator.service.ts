@@ -6,7 +6,8 @@ import { commonPackages } from "../../constants/common-packages";
 import { expressPackages } from "../../constants/express-packages";
 import { fastifyPackages } from "../../constants/fastify-packages";
 import { MetadataDTO } from "./dtos/metadata.dto";
-import { BaseGenerator } from "./generators";
+import { BaseGenerator, Template } from "./generators";
+import { ModuleService } from "./generators/module.service";
 import { PackageJsonService } from "./generators/package-json.service";
 import {
 	appControllerTemplate,
@@ -17,6 +18,7 @@ import {
 	nestjsCli,
 	readmeTemplate
 } from "./templates";
+import { modulesTemplates } from "./templates/modules.template";
 import { tsconfig, tsconfigBuild } from "./templates/tsconfig.template";
 export interface ProjectMetadata {
 	packageJson: MetadataDTO["packageJson"];
@@ -26,7 +28,10 @@ export interface ProjectMetadata {
 
 @Injectable()
 export class GeneratorService extends BaseGenerator {
-	public constructor(private readonly packageJsonGenerator: PackageJsonService) {
+	public constructor(
+		private readonly packageJsonGenerator: PackageJsonService,
+		private readonly moduleGenerator: ModuleService
+	) {
 		super();
 	}
 
@@ -62,6 +67,18 @@ export class GeneratorService extends BaseGenerator {
 			this.createFile(id, nestjsCli),
 			this.createFile(id, readmeTemplate)
 		];
+
+		if (metadata.modules.length > 0) {
+			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
+		}
+		for (const module of metadata.modules) {
+			const moduleFiles = modulesTemplates.find((m) => m.name === module);
+			await this.moduleGenerator.generate(id, moduleFiles.templates, {
+				export: moduleFiles.constants.exporter,
+				import: moduleFiles.constants.name,
+				importIn: "src/app.module.ts"
+			});
+		}
 
 		return await this.generateZipFile([packageJson, ...rootFiles], id);
 	}

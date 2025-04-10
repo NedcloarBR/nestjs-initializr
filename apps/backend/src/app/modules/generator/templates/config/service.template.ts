@@ -1,4 +1,4 @@
-export const content = `
+const content = `
 import { Injectable } from "@nestjs/common";
 import { ConfigService as NestConfigService } from "@nestjs/config";
 import { EnvDTO } from "./dtos/env.dto";
@@ -16,3 +16,9 @@ export class ConfigService {
 	}
 }
 `;
+
+export const configServiceTemplate = {
+	name: "config.service.ts",
+	path: "src/modules/config",
+	content
+};

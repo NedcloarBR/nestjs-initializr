@@ -1,6 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
+export interface Template {
+	name: string;
+	path: string;
+	content: string;
+}
+
 export class BaseGenerator {
 	public createFile(
 		id: string,

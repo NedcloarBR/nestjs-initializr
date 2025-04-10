@@ -1,4 +1,4 @@
-export const content = `
+const content = `
 import { Module, type Provider } from "@nestjs/common";
 import { ConfigModule as NestConfigModule } from "@nestjs/config";
 import { ConfigService } from "./config.service";
@@ -21,3 +21,9 @@ const provider: Provider<ConfigService> = {
 })
 export class ConfigModule {}
 `;
+
+export const configModuleTemplate = {
+	name: "config.module.ts",
+	path: "src/modules/config",
+	content
+};

@@ -1,4 +1,4 @@
-export const content = `
+const content = `
 import { IsNumber, IsString, IsNotEmpty, IsOptional, IsEnum, Min, Max } from "class-validator";
 
 enum Environment {
@@ -33,3 +33,9 @@ export default registerAs<typeof EnvDTO>("env", () => ({
   };
 })
 `;
+
+export const envDtoTemplate = {
+	name: "env.dto.ts",
+	path: "src/modules/config",
+	content
+};

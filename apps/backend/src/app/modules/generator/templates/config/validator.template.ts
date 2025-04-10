@@ -1,4 +1,4 @@
-export const content = `
+const content = `
 import { plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { ClassConstructor } from 'class-transformer/types/interfaces';
@@ -22,3 +22,9 @@ function validateConfig<T extends object>(
 
 export default validateConfig;
 `;
+
+export const configValidatorTemplate = {
+	name: "config.validator.ts",
+	path: "src/modules/config",
+	content
+};
