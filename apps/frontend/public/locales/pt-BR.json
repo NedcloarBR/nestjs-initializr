@@ -16,7 +16,11 @@
 			"projectName": {
 				"min": "O nome do projeto é obrigatório",
 				"max": "O nome do projeto deve ter menos de 214 caracteres",
-				"regex": "Nome do projeto inválido"
+				"regex": "Nome do projeto inválido",
+				"default": "@organizacao/nome-do-projeto"
+			},
+			"projectDescription": {
+				"default": "Projeto NestJS gerado com o NestJS Initializr por NedcloarBR"
 			}
 		},
 		"Error": {

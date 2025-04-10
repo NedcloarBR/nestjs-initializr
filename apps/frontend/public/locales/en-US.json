@@ -16,7 +16,11 @@
 			"projectName": {
 				"min": "Project name is required",
 				"max": "Project name must be less than 214 characters",
-				"regex": "Invalid project name"
+				"regex": "Invalid project name",
+				"default": "@organization/project-name"
+			},
+			"projectDescription": {
+				"default": "NestJS project generated with NestJS Initializr by NedcloarBR"
 			}
 		},
 		"Error": {

@@ -27,8 +27,9 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 			.string()
 			.min(1, t("FormSchema.projectName.min"))
 			.max(214, t("FormSchema.projectName.max"))
-			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex")),
-		projectDescription: z.string().optional(),
+			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex"))
+			.default(t("FormSchema.projectName.default")),
+		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
 		nodeVersion: z.string().default("20")
 	});
 
@@ -38,6 +39,8 @@ export function GeneratorForm() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			projectName: t("FormSchema.projectName.default"),
+			projectDescription: t("FormSchema.projectDescription.default"),
 			nodeVersion: "20",
 			mainType: "fastify"
 		}
