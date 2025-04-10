@@ -50,9 +50,11 @@ export function GeneratorForm() {
 				},
 				body: JSON.stringify({
 					mainType: "fastify",
-					name: values.projectName,
-					description: values.projectDescription,
-					nodeVersion: values.nodeVersion
+					packageJson: {
+						name: values.projectName,
+						description: values.projectDescription,
+						nodeVersion: values.nodeVersion
+					}
 				})
 			});
 
