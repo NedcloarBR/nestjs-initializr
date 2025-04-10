@@ -1,22 +1,34 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export function BaseGenerator(
-	id: string,
-	fileStructure: {
-		name: string;
-		path: string;
-		content: string;
-	},
-	returnResult?: boolean
-) {
-	const dirPath = path.join(__dirname, "__generated__", id, fileStructure.path);
+export class BaseGenerator {
+  public createFile(id: string, file: {
+    name: string;
+    path: string;
+    content: string;
+  }) {
+    const dirPath = this.getPath(id, file.path);
+    this.mkdir(dirPath);
+    const filePath = path.join(dirPath, file.name);
 
-	fs.mkdirSync(dirPath, { recursive: true });
+    this.writeFile(filePath, file.content);
 
-	const filePath = path.join(dirPath, fileStructure.name);
+    return { fileName: file.name, stream: fs.createReadStream(filePath) }
+  }
 
-	fs.writeFileSync(filePath, fileStructure.content, { encoding: "utf-8" });
+  public mkdir(dirPath: string) {
+    return fs.mkdirSync(dirPath, { recursive: true });
+  }
 
-	return returnResult ? { fileName: fileStructure.name, stream: fs.createReadStream(filePath) } : undefined;
+  public writeFile(filePath: string, content: string) {
+    return fs.writeFileSync(filePath, content, { encoding: "utf-8" });
+  }
+
+  public readFile(filePath: string) {
+    return fs.readFileSync(filePath, { encoding: "utf-8" });
+  }
+
+  public getPath(id: string, filePath?: string) {
+    return path.join(__dirname, "__generated__", id, filePath);
+  }
 }
