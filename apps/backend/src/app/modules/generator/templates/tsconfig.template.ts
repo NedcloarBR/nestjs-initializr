@@ -32,7 +32,7 @@ export const tsconfig = {
 };
 
 export const tsconfigBuild = {
-	name: "tsconfig.json",
+	name: "tsconfig.build.json",
 	path: "",
 	content: tsconfigBuildContent
 };
