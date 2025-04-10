@@ -23,7 +23,7 @@ import { tsconfig, tsconfigBuild } from "./templates/tsconfig.template";
 export interface ProjectMetadata {
 	packageJson: MetadataDTO["packageJson"];
 	mainType: MetadataDTO["mainType"];
-	modules: MetadataDTO["modules"];
+	modules?: MetadataDTO["modules"];
 }
 
 @Injectable()

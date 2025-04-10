@@ -1,6 +1,5 @@
 import { Type } from "class-transformer";
-import { IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested, isNotEmptyObject } from "class-validator";
-import { ModulesMetadataDTO } from "./modules-metadata.dto";
+import { IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from "class-validator";
 import { PackageJsonMetadataDTO } from "./package-json-metadata.dto";
 
 export class MetadataDTO {
@@ -13,8 +12,7 @@ export class MetadataDTO {
 	@IsNotEmptyObject()
 	public readonly packageJson!: PackageJsonMetadataDTO;
 
-	// @ValidateNested()
-	// @Type(() => ModulesMetadataDTO)
-	// @IsOptional()
+	@IsOptional()
+	@IsString({ each: true })
 	public readonly modules?: string[];
 }
