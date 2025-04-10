@@ -19,6 +19,7 @@ import {
 
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
+import { ModuleCard } from "./module-card";
 
 const formSchemaFunction = (t: (arg: string) => string) =>
 	z.object({
@@ -30,7 +31,8 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex"))
 			.default(t("FormSchema.projectName.default")),
 		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
-		nodeVersion: z.string().default("20")
+		nodeVersion: z.string().default("20"),
+		modules: z.array(z.string()).optional().default([])
 	});
 
 export function GeneratorForm() {
@@ -42,7 +44,8 @@ export function GeneratorForm() {
 			projectName: t("FormSchema.projectName.default"),
 			projectDescription: t("FormSchema.projectDescription.default"),
 			nodeVersion: "20",
-			mainType: "fastify"
+			mainType: "fastify",
+			modules: []
 		}
 	});
 
@@ -59,7 +62,8 @@ export function GeneratorForm() {
 						name: values.projectName,
 						description: values.projectDescription,
 						nodeVersion: values.nodeVersion
-					}
+					},
+					modules: values.modules
 				})
 			});
 
@@ -81,90 +85,101 @@ export function GeneratorForm() {
 
 	const nodeVersions = ["20", "21", "22", "23"];
 
+	const modules = [{ name: "config", description: "@nestjs/config module but with a custom service", icon: "config" }];
+
 	return (
 		<section id="generator-form" className="m-8 rounded-lg">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-8 p-8">
-					<h2 className="font-bold">{t("Metadata.title")}</h2>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-8 p-8">
+					<div className="flex-1 space-y-8">
+						<h2 className="font-bold">{t("Metadata.title")}</h2>
 
-					<FormField
-						name="projectName"
-						control={form.control}
-						render={({ field }) => (
-							<FormItem className="flex items-center space-x-4 max-w-lg">
-								<FormLabel className="w-20">{t("Metadata.name")}</FormLabel>
-								<FormControl className="flex-1">
-									<Input {...field} className="w-full" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						name="projectDescription"
-						control={form.control}
-						render={({ field }) => (
-							<FormItem className="flex items-center space-x-4 max-w-lg">
-								<FormLabel className="w-20">{t("Metadata.description")}</FormLabel>
-								<FormControl className="flex-1">
-									<Input {...field} className="w-full" />
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						name="nodeVersion"
-						control={form.control}
-						render={({ field }) => (
-							<FormItem className="flex items-center space-x-4 max-w-lg">
-								<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
-								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
-									{nodeVersions.map((version) => (
-										<div key={version} className="flex items-center">
-											<FormControl>
-												<Label
-													htmlFor={version}
-													className={`cursor-pointer ml-2 ${field.value === version ? "text-nest-primary" : ""}`}>
-													<RadioGroupItem className="cursor-pointer custom-radio" value={version} id={version} />
-													{version}
-												</Label>
-											</FormControl>
-										</div>
-									))}
-								</RadioGroup>
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						name="mainType"
-						control={form.control}
-						render={({ field }) => (
-							<FormItem className="flex items-center space-x-4 max-w-lg">
-								<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
-								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
-									<FormControl>
-										<Label
-											htmlFor="fastify"
-											className={`cursor-pointer ml-2 ${field.value === "fastify" ? "text-nest-primary" : ""}`}>
-											<RadioGroupItem className="cursor-pointer custom-radio" value="fastify" id="fastify" />
-											Fastify
-										</Label>
+						<FormField
+							name="projectName"
+							control={form.control}
+							render={({ field }) => (
+								<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormLabel className="w-20">{t("Metadata.name")}</FormLabel>
+									<FormControl className="flex-1">
+										<Input {...field} className="w-full" />
 									</FormControl>
-									<FormControl>
-										<Label
-											htmlFor="express"
-											className={`cursor-pointer ml-2 ${field.value === "express" ? "text-nest-primary" : ""}`}>
-											<RadioGroupItem className="cursor-pointer custom-radio" value="express" id="express" />
-											Express
-										</Label>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							name="projectDescription"
+							control={form.control}
+							render={({ field }) => (
+								<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormLabel className="w-20">{t("Metadata.description")}</FormLabel>
+									<FormControl className="flex-1">
+										<Input {...field} className="w-full" />
 									</FormControl>
-								</RadioGroup>
-							</FormItem>
-						)}
-					/>
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							name="nodeVersion"
+							control={form.control}
+							render={({ field }) => (
+								<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
+									<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
+										{nodeVersions.map((version) => (
+											<div key={version} className="flex items-center">
+												<FormControl>
+													<Label
+														htmlFor={version}
+														className={`cursor-pointer ml-2 ${field.value === version ? "text-nest-primary" : ""}`}>
+														<RadioGroupItem className="cursor-pointer custom-radio" value={version} id={version} />
+														{version}
+													</Label>
+												</FormControl>
+											</div>
+										))}
+									</RadioGroup>
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							name="mainType"
+							control={form.control}
+							render={({ field }) => (
+								<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
+									<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
+										<FormControl>
+											<Label
+												htmlFor="fastify"
+												className={`cursor-pointer ml-2 ${field.value === "fastify" ? "text-nest-primary" : ""}`}>
+												<RadioGroupItem className="cursor-pointer custom-radio" value="fastify" id="fastify" />
+												Fastify
+											</Label>
+										</FormControl>
+										<FormControl>
+											<Label
+												htmlFor="express"
+												className={`cursor-pointer ml-2 ${field.value === "express" ? "text-nest-primary" : ""}`}>
+												<RadioGroupItem className="cursor-pointer custom-radio" value="express" id="express" />
+												Express
+											</Label>
+										</FormControl>
+									</RadioGroup>
+								</FormItem>
+							)}
+						/>
+					</div>
+
+					<aside className="w-80 space-y-4">
+						<h2 className="font-bold">{t("Modules.title")}</h2>
+						{modules.map((module) => (
+							<ModuleCard key={module.name} name={module.name} description={module.description} />
+						))}
+					</aside>
 
 					<Button type="submit">{t("GenerateButton")}</Button>
 				</form>
