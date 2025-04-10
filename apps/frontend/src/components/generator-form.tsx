@@ -22,6 +22,7 @@ import { useTranslations } from "next-intl";
 
 const formSchemaFunction = (t: (arg: string) => string) =>
 	z.object({
+		mainType: z.enum(["fastify", "express"]).default("fastify"),
 		projectName: z
 			.string()
 			.min(1, t("FormSchema.projectName.min"))
@@ -37,7 +38,8 @@ export function GeneratorForm() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			nodeVersion: "20"
+			nodeVersion: "20",
+			mainType: "fastify"
 		}
 	});
 
@@ -49,7 +51,7 @@ export function GeneratorForm() {
 					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
-					mainType: "fastify",
+					mainType: values.mainType,
 					packageJson: {
 						name: values.projectName,
 						description: values.projectDescription,
@@ -128,6 +130,34 @@ export function GeneratorForm() {
 											</FormControl>
 										</div>
 									))}
+								</RadioGroup>
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						name="mainType"
+						control={form.control}
+						render={({ field }) => (
+							<FormItem className="flex items-center space-x-4 max-w-lg">
+								<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
+								<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
+									<FormControl>
+										<Label
+											htmlFor="fastify"
+											className={`cursor-pointer ml-2 ${field.value === "fastify" ? "text-nest-primary" : ""}`}>
+											<RadioGroupItem className="cursor-pointer custom-radio" value="fastify" id="fastify" />
+											Fastify
+										</Label>
+									</FormControl>
+									<FormControl>
+										<Label
+											htmlFor="express"
+											className={`cursor-pointer ml-2 ${field.value === "express" ? "text-nest-primary" : ""}`}>
+											<RadioGroupItem className="cursor-pointer custom-radio" value="express" id="express" />
+											Express
+										</Label>
+									</FormControl>
 								</RadioGroup>
 							</FormItem>
 						)}

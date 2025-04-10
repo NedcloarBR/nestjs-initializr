@@ -27,7 +27,8 @@
 			"title": "Project Metadata",
 			"name": "Name",
 			"description": "Description",
-			"nodeVersion": "NodeJS Version"
+			"nodeVersion": "NodeJS Version",
+			"mainType": "Project Type"
 		},
 		"GenerateButton": "Generate"
 	}
