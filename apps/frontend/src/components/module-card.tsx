@@ -1,14 +1,13 @@
 import { useController, useFormContext } from "react-hook-form";
-import { FormControl } from "./ui";
-import { Card, CardDescription, CardFooter, CardTitle } from "./ui/card";
-import { Switch } from "./ui/switch";
+import { Card, CardDescription, CardFooter, CardTitle, FormControl, Separator, Switch } from "./ui";
 
 interface Props {
+	title: string;
 	name: string;
 	description: string;
 }
 
-export function ModuleCard({ name, description }: Props) {
+export function ModuleCard({ title, name, description }: Props) {
 	const { control } = useFormContext();
 	const { field } = useController({
 		name: "modules",
@@ -20,17 +19,17 @@ export function ModuleCard({ name, description }: Props) {
 	function toggleModule() {
 		const updatedModules = isSelected ? field.value.filter((mod: string) => mod !== name) : [...field.value, name];
 		field.onChange(updatedModules);
-		console.log(updatedModules);
 	}
 
 	return (
-		<Card className="w-80">
-			<CardTitle>
-				{name}
-				<img src={`/icons/modules/${name}.png`} alt={`${name} icon`} />
+		<Card className="w-80 max-w-80 p-4">
+			<CardTitle className="flex items-center justify-center gap-2">
+				<img className="size-8" src={`/icons/modules/${name}.svg`} alt={`${name} icon`} />
+				{title}
 			</CardTitle>
+			<Separator />
 			<CardDescription>{description}</CardDescription>
-			<CardFooter>
+			<CardFooter className="flex items-center justify-center">
 				<FormControl>
 					<Switch checked={isSelected} onCheckedChange={toggleModule} />
 				</FormControl>

@@ -34,6 +34,12 @@
 			"nodeVersion": "Versão do NodeJS",
 			"mainType": "Tipo de Projeto"
 		},
+		"Modules": {
+			"title": "Módulos opcionais",
+			"config": {
+				"description": "Módulo @nestjs/config, mas com um registro personalizado com validação e serviço personalizado com preenchimento automático e conversão de tipos."
+			}
+		},
 		"GenerateButton": "Gerar"
 	}
 }
