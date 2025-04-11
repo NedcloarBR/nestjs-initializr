@@ -19,6 +19,7 @@ import {
 	Separator
 } from "./ui";
 
+import { modules, nodeVersions } from "@/constants";
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
 import { ModuleCard } from "./module-card";
@@ -84,16 +85,6 @@ export function GeneratorForm() {
 			alert("Error downloading the zip file");
 		}
 	}
-
-	const nodeVersions = ["20", "21", "22", "23"];
-
-	const modules = [
-		{
-			title: "@nestjs/config",
-			name: "config",
-			description: t("Modules.config.description")
-		}
-	];
 
 	return (
 		<section id="generator-form" className="m-32 rounded-lg">
@@ -191,7 +182,7 @@ export function GeneratorForm() {
 							<h2 className="font-bold">{t("Modules.title")}</h2>
 							<ScrollArea className="h-96">
 								<div className="grid grid-cols-4 gap-4">
-									{modules.map((module) => (
+									{modules(t).map((module) => (
 										<ModuleCard
 											key={module.name}
 											title={module.title}
