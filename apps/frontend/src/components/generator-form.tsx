@@ -34,8 +34,8 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex"))
 			.default(t("FormSchema.projectName.default")),
 		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
-		nodeVersion: z.enum(nodeVersions).default("20"),
-    packageManager: z.enum(packageManagers).default("npm"),
+		nodeVersion: z.enum(["20", "21", "22", "23"]).default("20"),
+    packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
 		modules: z.array(z.string()).optional().default([])
 	});
 
@@ -90,7 +90,7 @@ export function GeneratorForm() {
 	}
 
 	return (
-		<section id="generator-form" className="m-32 rounded-lg">
+		<section id="generator-form" className="m-32">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)}>
 					<div className="flex">
@@ -101,7 +101,7 @@ export function GeneratorForm() {
 								name="projectName"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormItem className="flex items-center space-x-4 max-w-xl">
 										<FormLabel className="w-20">{t("Metadata.name")}</FormLabel>
 										<FormControl className="flex-1">
 											<Input {...field} className="w-full" />
@@ -115,7 +115,7 @@ export function GeneratorForm() {
 								name="projectDescription"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormItem className="flex items-center space-x-4 max-w-xl">
 										<FormLabel className="w-20">{t("Metadata.description")}</FormLabel>
 										<FormControl className="flex-1">
 											<Input {...field} className="w-full" />
@@ -128,7 +128,7 @@ export function GeneratorForm() {
 								name="nodeVersion"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormItem className="flex items-center space-x-4 max-w-xl">
 										<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
 											{nodeVersions.map((version) => (
@@ -152,7 +152,7 @@ export function GeneratorForm() {
 								name="mainType"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormItem className="flex items-center space-x-4 max-w-xl">
 										<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
 											<FormControl>
@@ -179,7 +179,7 @@ export function GeneratorForm() {
 								name="packageManager"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-lg">
+									<FormItem className="flex items-center space-x-4 max-w-xl">
 										<FormLabel className="w-20">{t("Metadata.packageManager")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-12">
 											{packageManagers.map((manager) => (
