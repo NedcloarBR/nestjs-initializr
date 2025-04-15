@@ -6,10 +6,10 @@ import { configServiceTemplate } from "./service.template";
 import { configValidatorTemplate } from "./validator.template";
 
 export const configTemplates = [
-	envDtoTemplate,
-	envTypesTemplate,
-	dotenvTemplate,
-	configModuleTemplate,
-	configServiceTemplate,
-	configValidatorTemplate
+  envDtoTemplate,
+  envTypesTemplate,
+  dotenvTemplate,
+  configModuleTemplate,
+  configServiceTemplate,
+  configValidatorTemplate
 ];

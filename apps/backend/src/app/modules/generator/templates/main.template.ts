@@ -19,7 +19,7 @@ const fastifyContent = `
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
-import { AppModule } from "./app/app.module";
+import { AppModule } from "./app.module";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
@@ -35,13 +35,13 @@ bootstrap();
 `;
 
 export const mainExpressTemplate = {
-	name: "main.ts",
-	path: "src",
-	content: expressContent
+  name: "main.ts",
+  path: "src",
+  content: expressContent
 };
 
 export const mainFastifyTemplate = {
-	name: "main.ts",
-	path: "src",
-	content: fastifyContent
+  name: "main.ts",
+  path: "src",
+  content: fastifyContent
 };

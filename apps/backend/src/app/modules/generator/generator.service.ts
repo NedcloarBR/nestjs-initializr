@@ -20,12 +20,14 @@ import {
 } from "./templates";
 import { modulesTemplates } from "./templates/modules.template";
 import { tsconfig, tsconfigBuild } from "./templates/tsconfig.template";
+import { MainUpdaterService } from "./generators/main-updater.service";
 
 @Injectable()
 export class GeneratorService extends BaseGenerator {
   public constructor(
     private readonly packageJsonGenerator: PackageJsonService,
-    private readonly moduleGenerator: ModuleService
+    private readonly moduleGenerator: ModuleService,
+    private readonly mainUpdater: MainUpdaterService
   ) {
     super();
   }
@@ -75,6 +77,33 @@ export class GeneratorService extends BaseGenerator {
         importIn: "src/app.module.ts"
       });
       rootDirFiles.push(...moduleRootFiles);
+      if (moduleFiles.constants.serviceConstant) {
+        let constantFile = fs.existsSync(this.getPath(id, "src/constants/services.ts"))
+          ? this.getPath(id, "src/constants/services.ts")
+          : undefined;
+        if (!constantFile) {
+          this.createFile(id, {
+            name: "services.ts",
+            path: "src/constants",
+            content: "export enum Services {\n}\n"
+          })
+          constantFile = this.getPath(id, "src/constants/services.ts");
+        }
+        const constantContent = this.readFile(constantFile);
+        const constantName = moduleFiles.constants.serviceConstant;
+        const constantRegex = new RegExp(`export enum Services {\\n}`, "g");
+        const newConstantContent = constantContent.replace(
+          constantRegex,
+          `export enum Services {\n\t${constantName},\n}`
+        );
+        this.writeFile(constantFile, newConstantContent);
+      }
+      if (moduleFiles.mainTemplates) {
+        const templates = moduleFiles.mainTemplates(metadata.mainType);
+        for (const template of templates) {
+          this.mainUpdater.update(id, template);
+        }
+      }
     }
 
     return await this.generateZipFile(rootDirFiles, id);
