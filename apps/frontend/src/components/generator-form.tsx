@@ -19,7 +19,7 @@ import {
 	Separator
 } from "./ui";
 
-import { modules, nodeVersions } from "@/constants";
+import { modules, nodeVersions, packageManagers } from "@/constants";
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
 import { ModuleCard } from "./module-card";
@@ -34,7 +34,8 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex"))
 			.default(t("FormSchema.projectName.default")),
 		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
-		nodeVersion: z.string().default("20"),
+		nodeVersion: z.enum(nodeVersions).default("20"),
+    packageManager: z.enum(packageManagers).default("npm"),
 		modules: z.array(z.string()).optional().default([])
 	});
 
@@ -48,6 +49,7 @@ export function GeneratorForm() {
 			projectDescription: t("FormSchema.projectDescription.default"),
 			nodeVersion: "20",
 			mainType: "fastify",
+      packageManager: "npm",
 			modules: []
 		}
 	});
@@ -66,6 +68,7 @@ export function GeneratorForm() {
 						description: values.projectDescription,
 						nodeVersion: values.nodeVersion
 					},
+          packageManager: values.packageManager,
 					modules: values.modules
 				})
 			});
@@ -168,6 +171,27 @@ export function GeneratorForm() {
 													Express
 												</Label>
 											</FormControl>
+										</RadioGroup>
+									</FormItem>
+								)}
+							/>
+              <FormField
+								name="packageManager"
+								control={form.control}
+								render={({ field }) => (
+									<FormItem className="flex items-center space-x-4 max-w-lg">
+										<FormLabel className="w-20">{t("Metadata.packageManager")}</FormLabel>
+										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-12">
+											{packageManagers.map((manager) => (
+                        <FormControl>
+												<Label
+													htmlFor={manager}
+													className={`cursor-pointer ml-2 ${field.value === manager ? "text-nest-primary" : ""}`}>
+													<RadioGroupItem className="cursor-pointer custom-radio" value={manager} id={manager} />
+													<img src={`/icons/packageManagers/${manager}.svg`} alt={`${manager} icon`}/>
+												</Label>
+											</FormControl>
+                      ))}
 										</RadioGroup>
 									</FormItem>
 								)}

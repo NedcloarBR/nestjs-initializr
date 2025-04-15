@@ -32,7 +32,8 @@
 			"name": "Nome",
 			"description": "Descrição",
 			"nodeVersion": "Versão do NodeJS",
-			"mainType": "Tipo de Projeto"
+			"mainType": "Tipo de Projeto",
+      "packageManager": "Gerenciador de Pacotes"
 		},
 		"Modules": {
 			"title": "Módulos opcionais",

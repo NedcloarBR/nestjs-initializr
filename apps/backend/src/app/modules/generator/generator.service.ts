@@ -35,7 +35,19 @@ export class GeneratorService extends BaseGenerator {
   public async generate(metadata: MetadataDTO): Promise<fs.ReadStream> {
     const id = Date.now().toString();
     const packageJson = await this.packageJsonGenerator.generate(metadata.packageJson, id);
-    const rootDirFiles = [packageJson]
+    const rootDirFiles = [packageJson];
+
+    const packageManagers = {
+      npm: "package-lock.json",
+      yarn: "yarn.lock",
+      pnpm: "pnpm-lock.yaml"
+    }
+    const lockFile = this.createFile(id, {
+      name: packageManagers[metadata.packageManager],
+      path: "",
+      content: ""
+    });
+    rootDirFiles.push(lockFile);
 
     switch (metadata.mainType) {
       case "express":
