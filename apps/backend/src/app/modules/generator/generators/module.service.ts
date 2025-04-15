@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { Injectable } from "@nestjs/common";
 import { BaseGenerator, Template } from "./base.generator";
 
@@ -36,6 +37,28 @@ export class ModuleService extends BaseGenerator {
     const moduleToUpdateContent = this.readFile(moduleToUpdatePathResolved);
 
     this.writeFile(moduleToUpdatePathResolved, moduleToUpdateContent);
+  }
+
+  public updateServiceConstants(id: string, serviceConstant: string) {
+    let constantFile = fs.existsSync(this.getPath(id, "src/constants/services.ts"))
+      ? this.getPath(id, "src/constants/services.ts")
+      : undefined;
+    if (!constantFile) {
+      this.createFile(id, {
+        name: "services.ts",
+        path: "src/constants",
+        content: "export enum Services {\n}\n"
+      })
+      constantFile = this.getPath(id, "src/constants/services.ts");
+    }
+    const constantContent = this.readFile(constantFile);
+
+    const constantRegex = new RegExp(`export enum Services {\\n}`, "g");
+    const newConstantContent = constantContent.replace(
+      constantRegex,
+      `export enum Services {\n\t${serviceConstant},\n}`
+    );
+    this.writeFile(constantFile, newConstantContent);
   }
 
   public inject() { }

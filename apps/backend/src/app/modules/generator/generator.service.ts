@@ -81,6 +81,7 @@ export class GeneratorService extends BaseGenerator {
     if (metadata.modules.length > 0) {
       this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
     }
+
     for (const module of metadata.modules) {
       const moduleFiles = modulesTemplates.find((m) => m.name === module);
       const moduleRootFiles = await this.moduleGenerator.generate(id, moduleFiles.templates, {
@@ -90,25 +91,7 @@ export class GeneratorService extends BaseGenerator {
       });
       rootDirFiles.push(...moduleRootFiles);
       if (moduleFiles.constants.serviceConstant) {
-        let constantFile = fs.existsSync(this.getPath(id, "src/constants/services.ts"))
-          ? this.getPath(id, "src/constants/services.ts")
-          : undefined;
-        if (!constantFile) {
-          this.createFile(id, {
-            name: "services.ts",
-            path: "src/constants",
-            content: "export enum Services {\n}\n"
-          })
-          constantFile = this.getPath(id, "src/constants/services.ts");
-        }
-        const constantContent = this.readFile(constantFile);
-        const constantName = moduleFiles.constants.serviceConstant;
-        const constantRegex = new RegExp(`export enum Services {\\n}`, "g");
-        const newConstantContent = constantContent.replace(
-          constantRegex,
-          `export enum Services {\n\t${constantName},\n}`
-        );
-        this.writeFile(constantFile, newConstantContent);
+        this.moduleGenerator.updateServiceConstants(id, moduleFiles.constants.serviceConstant);
       }
       if (moduleFiles.mainTemplates) {
         const templates = moduleFiles.mainTemplates(metadata.mainType);
