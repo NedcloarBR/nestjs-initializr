@@ -35,7 +35,7 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 			.default(t("FormSchema.projectName.default")),
 		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
 		nodeVersion: z.enum(["20", "21", "22", "23"]).default("20"),
-    packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
+		packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
 		modules: z.array(z.string()).optional().default([])
 	});
 
@@ -49,7 +49,7 @@ export function GeneratorForm() {
 			projectDescription: t("FormSchema.projectDescription.default"),
 			nodeVersion: "20",
 			mainType: "fastify",
-      packageManager: "npm",
+			packageManager: "npm",
 			modules: []
 		}
 	});
@@ -68,7 +68,7 @@ export function GeneratorForm() {
 						description: values.projectDescription,
 						nodeVersion: values.nodeVersion
 					},
-          packageManager: values.packageManager,
+					packageManager: values.packageManager,
 					modules: values.modules
 				})
 			});
@@ -175,7 +175,7 @@ export function GeneratorForm() {
 									</FormItem>
 								)}
 							/>
-              <FormField
+							<FormField
 								name="packageManager"
 								control={form.control}
 								render={({ field }) => (
@@ -183,15 +183,15 @@ export function GeneratorForm() {
 										<FormLabel className="w-20">{t("Metadata.packageManager")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-12">
 											{packageManagers.map((manager) => (
-                        <FormControl>
-												<Label
-													htmlFor={manager}
-													className={`cursor-pointer ml-2 ${field.value === manager ? "text-nest-primary" : ""}`}>
-													<RadioGroupItem className="cursor-pointer custom-radio" value={manager} id={manager} />
-													<img src={`/icons/packageManagers/${manager}.svg`} alt={`${manager} icon`}/>
-												</Label>
-											</FormControl>
-                      ))}
+												<FormControl key={manager}>
+													<Label
+														htmlFor={manager}
+														className={`cursor-pointer ml-2 ${field.value === manager ? "text-nest-primary" : ""}`}>
+														<RadioGroupItem className="cursor-pointer custom-radio" value={manager} id={manager} />
+														<img src={`/icons/packageManagers/${manager}.svg`} alt={`${manager} icon`} />
+													</Label>
+												</FormControl>
+											))}
 										</RadioGroup>
 									</FormItem>
 								)}
