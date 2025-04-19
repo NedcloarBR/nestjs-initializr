@@ -6,7 +6,7 @@ import { commonPackages, expressPackages, fastifyPackages } from "../../constant
 // biome-ignore lint/style/useImportType: <explanation>
 import { MetadataDTO } from "./dtos/metadata.dto";
 // biome-ignore lint/style/useImportType: <explanation>
-import { BaseGenerator, MainUpdaterService, ModuleService, PackageJsonService } from "./generators";
+import { BaseGenerator, MainUpdaterService, ModuleService, PackageJsonService, SwaggerService } from "./generators";
 import {
 	appControllerTemplate,
 	appModuleTemplate,
@@ -23,7 +23,8 @@ export class GeneratorService extends BaseGenerator {
 	public constructor(
 		private readonly packageJsonGenerator: PackageJsonService,
 		private readonly moduleGenerator: ModuleService,
-		private readonly mainUpdater: MainUpdaterService
+		private readonly mainUpdaterGenerator: MainUpdaterService,
+		private readonly swaggerGenerator: SwaggerService
 	) {
 		super();
 	}
@@ -92,14 +93,22 @@ export class GeneratorService extends BaseGenerator {
 		return zipFile;
 	}
 
-	private async generateModules(id: string, modules: MetadataDTO["modules"], mainType: MetadataDTO["mainType"]) {
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+	private async generateModules(id: string, rawModules: MetadataDTO["modules"], mainType: MetadataDTO["mainType"]) {
 		const moduleGeneratedFiles = [];
+
+		const modules = [...rawModules.filter((m) => m !== "swagger"), ...rawModules.filter((m) => m === "swagger")];
 
 		if (modules.length > 0) {
 			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
 		}
 
+		const withConfigModule = modules.includes("config");
 		for (const module of modules) {
+			if (module === "swagger") {
+				await this.swaggerGenerator.generate(id, mainType, withConfigModule);
+				continue;
+			}
 			const moduleFiles = modulesTemplates.find((m) => m.name === module);
 			const moduleRootFiles = await this.moduleGenerator.generate(
 				id,
@@ -125,7 +134,7 @@ export class GeneratorService extends BaseGenerator {
 			if (moduleFiles.mainTemplates) {
 				const templates = moduleFiles.mainTemplates(mainType);
 				for (const template of templates) {
-					this.mainUpdater.update(id, template);
+					this.mainUpdaterGenerator.update(id, template);
 				}
 			}
 		}

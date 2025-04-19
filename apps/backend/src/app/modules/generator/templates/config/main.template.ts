@@ -17,12 +17,12 @@ export function configMainTemplates(mainType: "fastify" | "express") {
 						"const app = await NestFactory.create(AppModule);\nconst configService = app.get<ConfigService>(Services.config);"
 				},
 		{
-			replacer: 'const globalPrefix = "api"',
-			content: 'const globalPrefix = configService.get("GLOBAL_PREFIX")'
+			replacer: 'const globalPrefix = "api";',
+			content: 'const globalPrefix = configService.get("GLOBAL_PREFIX");'
 		},
 		{
-			replacer: "const port = 3000",
-			content: 'const port = configService.get("PORT")'
+			replacer: "const port = 3000;",
+			content: 'const port = configService.get("PORT");'
 		}
 	];
 }
