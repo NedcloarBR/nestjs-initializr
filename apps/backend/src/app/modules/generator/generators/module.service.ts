@@ -53,7 +53,7 @@ export class ModuleService extends BaseGenerator {
     }
     const constantContent = this.readFile(constantFile);
 
-    const constantRegex = new RegExp(`export enum Services {\\n}`, "g");
+    const constantRegex = /export enum Services {\n}/g;
     const newConstantContent = constantContent.replace(
       constantRegex,
       `export enum Services {\n\t${serviceConstant},\n}`
