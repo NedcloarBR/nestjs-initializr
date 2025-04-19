@@ -40,11 +40,11 @@ export default async function LocaleLayout(props: {
 	const messages = await getMessages({ locale });
 
 	return (
-		<html lang={locale} suppressHydrationWarning>
+		<html lang={locale} suppressHydrationWarning={true}>
 			<body>
-				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange={true}>
 					<NextIntlClientProvider messages={messages}>
-						<main className="m-0 p-0 font-medium overflow-x-hidden h-screen bg-nest-background dark:bg-nest-background">
+						<main className="m-0 h-screen overflow-x-hidden bg-nest-background p-0 font-medium dark:bg-nest-background">
 							{children}
 							{/* <Analytics /> */}
 						</main>

@@ -50,7 +50,7 @@ export function ChangeLanguage() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild={true}>
-				<button type="button" className="cursor-pointer flex focus:outline-none">
+				<button type="button" className="flex cursor-pointer focus:outline-none">
 					{currentLang}
 					<span className="sr-only">{}</span>
 				</button>

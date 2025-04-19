@@ -4,12 +4,12 @@ import { ConfigDTO } from "./config.dto";
 
 export function configValidator(config: Record<string, string | number | boolean | undefined>): ConfigDTO {
 	const validatedConfig = plainToInstance(ConfigDTO, config, {
-		enableImplicitConversion: true,
+		enableImplicitConversion: true
 	});
 
 	const errors = validateSync(validatedConfig, {
 		skipMissingProperties: false,
-		forbidUnknownValues: true,
+		forbidUnknownValues: true
 	});
 
 	if (errors.length > 0) {

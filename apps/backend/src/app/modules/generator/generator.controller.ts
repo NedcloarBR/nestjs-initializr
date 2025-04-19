@@ -1,4 +1,3 @@
-
 import { Body, Controller, Header, Inject, Post, Res } from "@nestjs/common";
 import type { FastifyReply } from "fastify";
 import { Services } from "../../constants/services";
@@ -9,13 +8,13 @@ import { GeneratorService } from "./generator.service";
 
 @Controller("generator")
 export class GeneratorController {
-  public constructor(@Inject(Services.Generator) private readonly generatorService: GeneratorService) {}
+	public constructor(@Inject(Services.Generator) private readonly generatorService: GeneratorService) {}
 
-  @Post()
-  @Header('Content-Type', 'application/json')
-  @Header('Content-Disposition', 'attachment; filename="project.zip"')
-   public async generate(@Res() res: FastifyReply, @Body() metadata: MetadataDTO) {
-    const file = await this.generatorService.generate(metadata);
-    return res.send(file);
-  }
+	@Post()
+	@Header("Content-Type", "application/json")
+	@Header("Content-Disposition", 'attachment; filename="project.zip"')
+	public async generate(@Res() res: FastifyReply, @Body() metadata: MetadataDTO) {
+		const file = await this.generatorService.generate(metadata);
+		return res.send(file);
+	}
 }

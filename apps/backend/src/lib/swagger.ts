@@ -14,7 +14,7 @@ export function setupSwagger(app: NestFastifyApplication, globalPrefix: string, 
 
 	SwaggerModule.setup(`${globalPrefix}/docs`, app, documentFactory, {
 		jsonDocumentUrl: `${globalPrefix}/docs/json`,
-		yamlDocumentUrl: `${globalPrefix}/docs/yaml`,
+		yamlDocumentUrl: `${globalPrefix}/docs/yaml`
 	});
 
 	logger.verbose(`Swagger is available at: http://localhost:${port}/${globalPrefix}/docs`);

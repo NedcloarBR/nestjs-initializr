@@ -5,10 +5,14 @@ import archiver from "archiver";
 import { commonPackages } from "../../constants/common-packages";
 import { expressPackages } from "../../constants/express-packages";
 import { fastifyPackages } from "../../constants/fastify-packages";
+// biome-ignore lint/style/useImportType: <explanation>
 import { MetadataDTO } from "./dtos/metadata.dto";
 import { BaseGenerator } from "./generators/base.generator";
+// biome-ignore lint/style/useImportType: <explanation>
 import { MainUpdaterService } from "./generators/main-updater.service";
+// biome-ignore lint/style/useImportType: <explanation>
 import { ModuleService } from "./generators/module.service";
+// biome-ignore lint/style/useImportType: <explanation>
 import { PackageJsonService } from "./generators/package-json.service";
 import {
 	appControllerTemplate,

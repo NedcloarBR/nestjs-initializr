@@ -35,13 +35,13 @@ bootstrap();
 `;
 
 export const mainExpressTemplate = {
-  name: "main.ts",
-  path: "src",
-  content: expressContent
+	name: "main.ts",
+	path: "src",
+	content: expressContent
 };
 
 export const mainFastifyTemplate = {
-  name: "main.ts",
-  path: "src",
-  content: fastifyContent
+	name: "main.ts",
+	path: "src",
+	content: fastifyContent
 };

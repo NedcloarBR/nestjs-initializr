@@ -1,15 +1,16 @@
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default getRequestConfig(async ({ requestLocale }) => {
 	let locale = await requestLocale;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	if (!locale || !routing.locales.includes(locale as any)) {
+	if (!(locale && routing.locales.includes(locale as any))) {
 		locale = routing.defaultLocale;
 	}
 
 	return {
 		locale,
-		messages: (await import(`../../../public/locales/${locale}.json`)).default,
+		messages: (await import(`../../../public/locales/${locale}.json`)).default
 	};
 });

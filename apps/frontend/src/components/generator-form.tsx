@@ -94,14 +94,14 @@ export function GeneratorForm() {
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)}>
 					<div className="flex">
-						<div className="flex-1 space-y-8 bg-nest-header-background p-8 rounded-lg">
+						<div className="flex-1 space-y-8 rounded-lg bg-nest-header-background p-8">
 							<h2 className="font-bold">{t("Metadata.title")}</h2>
 
 							<FormField
 								name="projectName"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-xl">
+									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.name")}</FormLabel>
 										<FormControl className="flex-1">
 											<Input {...field} className="w-full" />
@@ -115,7 +115,7 @@ export function GeneratorForm() {
 								name="projectDescription"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-xl">
+									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.description")}</FormLabel>
 										<FormControl className="flex-1">
 											<Input {...field} className="w-full" />
@@ -128,7 +128,7 @@ export function GeneratorForm() {
 								name="nodeVersion"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-xl">
+									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
 											{nodeVersions.map((version) => (
@@ -136,8 +136,8 @@ export function GeneratorForm() {
 													<FormControl>
 														<Label
 															htmlFor={version}
-															className={`cursor-pointer ml-2 ${field.value === version ? "text-nest-primary" : ""}`}>
-															<RadioGroupItem className="cursor-pointer custom-radio" value={version} id={version} />
+															className={`ml-2 cursor-pointer ${field.value === version ? "text-nest-primary" : ""}`}>
+															<RadioGroupItem className="custom-radio cursor-pointer" value={version} id={version} />
 															{version}
 														</Label>
 													</FormControl>
@@ -152,22 +152,22 @@ export function GeneratorForm() {
 								name="mainType"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-xl">
+									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
 											<FormControl>
 												<Label
 													htmlFor="fastify"
-													className={`cursor-pointer ml-2 ${field.value === "fastify" ? "text-nest-primary" : ""}`}>
-													<RadioGroupItem className="cursor-pointer custom-radio" value="fastify" id="fastify" />
+													className={`ml-2 cursor-pointer ${field.value === "fastify" ? "text-nest-primary" : ""}`}>
+													<RadioGroupItem className="custom-radio cursor-pointer" value="fastify" id="fastify" />
 													Fastify
 												</Label>
 											</FormControl>
 											<FormControl>
 												<Label
 													htmlFor="express"
-													className={`cursor-pointer ml-2 ${field.value === "express" ? "text-nest-primary" : ""}`}>
-													<RadioGroupItem className="cursor-pointer custom-radio" value="express" id="express" />
+													className={`ml-2 cursor-pointer ${field.value === "express" ? "text-nest-primary" : ""}`}>
+													<RadioGroupItem className="custom-radio cursor-pointer" value="express" id="express" />
 													Express
 												</Label>
 											</FormControl>
@@ -179,15 +179,15 @@ export function GeneratorForm() {
 								name="packageManager"
 								control={form.control}
 								render={({ field }) => (
-									<FormItem className="flex items-center space-x-4 max-w-xl">
+									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.packageManager")}</FormLabel>
 										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-12">
 											{packageManagers.map((manager) => (
 												<FormControl key={manager}>
 													<Label
 														htmlFor={manager}
-														className={`cursor-pointer ml-2 ${field.value === manager ? "text-nest-primary" : ""}`}>
-														<RadioGroupItem className="cursor-pointer custom-radio" value={manager} id={manager} />
+														className={`ml-2 cursor-pointer ${field.value === manager ? "text-nest-primary" : ""}`}>
+														<RadioGroupItem className="custom-radio cursor-pointer" value={manager} id={manager} />
 														<img src={`/icons/packageManagers/${manager}.svg`} alt={`${manager} icon`} />
 													</Label>
 												</FormControl>
@@ -202,7 +202,7 @@ export function GeneratorForm() {
 							<Separator orientation="vertical" />
 						</div>
 
-						<aside className="space-y-8 overflow-hidden bg-nest-header-background p-8 rounded-lg">
+						<aside className="space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
 							<h2 className="font-bold">{t("Modules.title")}</h2>
 							<ScrollArea className="h-96">
 								<div className="grid grid-cols-4 gap-4">
