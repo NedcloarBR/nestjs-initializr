@@ -30,6 +30,10 @@ export const NPM_DEPENDENCIES = {
 	rxjs: {
 		name: "rxjs",
 		version: "^7.8.1"
+	},
+	"@nestjs/config": {
+		name: "@nestjs/config",
+		version: "^4.0.1"
 	}
 };
 

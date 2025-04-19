@@ -4,7 +4,10 @@
 	"license": "MIT",
 	"private": true,
 	"packageManager": "yarn@4.7.0",
-	"workspaces": ["apps/*", "libs/*"],
+	"workspaces": [
+		"apps/*",
+		"libs/*"
+	],
 	"scripts": {
 		"shadcn:add": "TS_NODE_PROJECT=tsconfig.base.json npx shadcn@latest add",
 		"format": "yarn biome format --write ./",

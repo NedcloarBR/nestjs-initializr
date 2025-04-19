@@ -2,18 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { Injectable } from "@nestjs/common";
 import archiver from "archiver";
-import { commonPackages } from "../../constants/common-packages";
-import { expressPackages } from "../../constants/express-packages";
-import { fastifyPackages } from "../../constants/fastify-packages";
+import { commonPackages, expressPackages, fastifyPackages } from "../../constants/packages";
 // biome-ignore lint/style/useImportType: <explanation>
 import { MetadataDTO } from "./dtos/metadata.dto";
-import { BaseGenerator } from "./generators/base.generator";
 // biome-ignore lint/style/useImportType: <explanation>
-import { MainUpdaterService } from "./generators/main-updater.service";
-// biome-ignore lint/style/useImportType: <explanation>
-import { ModuleService } from "./generators/module.service";
-// biome-ignore lint/style/useImportType: <explanation>
-import { PackageJsonService } from "./generators/package-json.service";
+import { BaseGenerator, MainUpdaterService, ModuleService, PackageJsonService } from "./generators";
 import {
 	appControllerTemplate,
 	appModuleTemplate,
@@ -23,8 +16,8 @@ import {
 	nestjsCli,
 	readmeTemplate
 } from "./templates";
-import { modulesTemplates } from "./templates/modules.template";
-import { tsconfig, tsconfigBuild } from "./templates/tsconfig.template";
+import { modulesTemplates } from "./templates/rootFiles/modules.template";
+import { tsconfig, tsconfigBuild } from "./templates/rootFiles/tsconfig.template";
 
 @Injectable()
 export class GeneratorService extends BaseGenerator {
@@ -84,28 +77,8 @@ export class GeneratorService extends BaseGenerator {
 			]
 		);
 
-		if (metadata.modules.length > 0) {
-			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
-		}
-
-		for (const module of metadata.modules) {
-			const moduleFiles = modulesTemplates.find((m) => m.name === module);
-			const moduleRootFiles = await this.moduleGenerator.generate(id, moduleFiles.templates, {
-				export: moduleFiles.constants.exporter,
-				import: moduleFiles.constants.name,
-				importIn: "src/app.module.ts"
-			});
-			rootDirFiles.push(...moduleRootFiles);
-			if (moduleFiles.constants.serviceConstant) {
-				this.moduleGenerator.updateServiceConstants(id, moduleFiles.constants.serviceConstant);
-			}
-			if (moduleFiles.mainTemplates) {
-				const templates = moduleFiles.mainTemplates(metadata.mainType);
-				for (const template of templates) {
-					this.mainUpdater.update(id, template);
-				}
-			}
-		}
+		const modulesFiles = await this.generateModules(id, metadata.modules, metadata.mainType);
+		rootDirFiles.push(...modulesFiles);
 
 		const zipFile = await this.generateZipFile(rootDirFiles, id);
 
@@ -120,6 +93,42 @@ export class GeneratorService extends BaseGenerator {
 		}, 10_000);
 
 		return zipFile;
+	}
+
+	private async generateModules(id: string, modules: MetadataDTO["modules"], mainType: MetadataDTO["mainType"]) {
+		const moduleGeneratedFiles = [];
+
+		if (modules.length > 0) {
+			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
+		}
+
+		for (const module of modules) {
+			const moduleFiles = modulesTemplates.find((m) => m.name === module);
+			const moduleRootFiles = await this.moduleGenerator.generate(id, moduleFiles.templates, {
+				export: moduleFiles.constants.exporter,
+				import: moduleFiles.constants.name,
+				importIn: "src/app.module.ts"
+			});
+			moduleGeneratedFiles.push(...moduleRootFiles);
+			if (moduleFiles.constants.serviceConstant) {
+				this.moduleGenerator.updateServiceConstants(id, moduleFiles.constants.serviceConstant);
+			}
+
+			if (moduleFiles.packages) {
+				for (const packageMeta of moduleFiles.packages) {
+					await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
+				}
+			}
+
+			if (moduleFiles.mainTemplates) {
+				const templates = moduleFiles.mainTemplates(mainType);
+				for (const template of templates) {
+					this.mainUpdater.update(id, template);
+				}
+			}
+		}
+
+		return moduleGeneratedFiles;
 	}
 
 	private async generateZipFile(
