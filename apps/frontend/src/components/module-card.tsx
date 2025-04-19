@@ -22,16 +22,19 @@ export function ModuleCard({ title, name, description }: Props) {
 	}
 
 	return (
-		<Card className="w-80 max-w-80 p-4">
-			<CardTitle className="flex items-center justify-center gap-2">
-				<img className="size-8" src={`/icons/modules/${name}.svg`} alt={`${name} icon`} />
-				{title}
-			</CardTitle>
-			<Separator />
-			<CardDescription>{description}</CardDescription>
+		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
+			<div>
+				<CardTitle className="flex items-center justify-center gap-2">
+					<img className="size-8" src={`/icons/modules/${name}.svg`} alt={`${name} icon`} />
+					{title}
+				</CardTitle>
+				<Separator className="my-2" />
+				<CardDescription>{description}</CardDescription>
+			</div>
+
 			<CardFooter className="flex items-center justify-center">
 				<FormControl>
-					<Switch checked={isSelected} onCheckedChange={toggleModule} />
+					<Switch className="cursor-pointer" checked={isSelected} onCheckedChange={toggleModule} />
 				</FormControl>
 			</CardFooter>
 		</Card>

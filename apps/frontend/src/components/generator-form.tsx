@@ -219,7 +219,7 @@ export function GeneratorForm() {
 						</aside>
 					</div>
 
-					<Button type="submit" className="mt-8">
+					<Button type="submit" className="mt-8 cursor-pointer">
 						{t("GenerateButton")}
 					</Button>
 				</form>
