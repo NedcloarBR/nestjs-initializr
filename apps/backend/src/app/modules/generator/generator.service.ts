@@ -99,7 +99,7 @@ export class GeneratorService extends BaseGenerator {
 
 		const modules = [...rawModules.filter((m) => m !== "swagger"), ...rawModules.filter((m) => m === "swagger")];
 
-		if (modules.length > 0) {
+		if (modules.length > 0 && !(modules.length === 1 && modules[0] === "swagger")) {
 			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
 		}
 
