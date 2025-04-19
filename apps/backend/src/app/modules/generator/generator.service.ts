@@ -11,8 +11,7 @@ import {
 	appControllerTemplate,
 	appModuleTemplate,
 	appServiceTemplate,
-	mainExpressTemplate,
-	mainFastifyTemplate,
+	mainTemplate,
 	nestjsCli,
 	readmeTemplate
 } from "./templates";
@@ -46,20 +45,18 @@ export class GeneratorService extends BaseGenerator {
 		});
 		rootDirFiles.push(lockFile);
 
-		switch (metadata.mainType) {
-			case "express":
-				this.createFile(id, mainExpressTemplate);
-				for (const packageMeta of expressPackages) {
-					await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
-				}
-				break;
-			case "fastify":
-				this.createFile(id, mainFastifyTemplate);
-				for (const packageMeta of fastifyPackages) {
-					await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
-				}
-				break;
+		this.createFile(id, mainTemplate(metadata.mainType));
+		if (metadata.mainType === "fastify") {
+			for (const packageMeta of fastifyPackages) {
+				await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
+			}
 		}
+		if (metadata.mainType === "express") {
+			for (const packageMeta of expressPackages) {
+				await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
+			}
+		}
+
 		for (const packageMeta of commonPackages) {
 			await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
 		}

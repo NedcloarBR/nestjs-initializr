@@ -1,28 +1,19 @@
-const expressContent = `
+export function mainTemplate(mainType: "fastify" | "express") {
+	const platformImport =
+		mainType === "fastify"
+			? "FastifyAdapter, type NestFastifyApplication"
+			: "ExpressAdapter, type NestExpressApplication";
+
+	const appPlatform = mainType === "fastify" ? "NestFastifyApplication" : "NestExpressApplication";
+
+	const content = `
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import { ${platformImport} } from "@nestjs/platform-fastify";
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
-	const port = 3000;
-  const globalPrefix = "api"
-	app.setGlobalPrefix(globalPrefix);
-	await app.listen(port);
-	Logger.log(\`Application is running on: http://localhost:\${port}/\${globalPrefix}\`, "Bootstrap");
-}
-
-bootstrap();
-`;
-
-const fastifyContent = `
-import { Logger } from "@nestjs/common";
-import { NestFactory } from "@nestjs/core";
-import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
-import { AppModule } from "./app.module";
-
-async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  const app = await NestFactory.create<${appPlatform}>(AppModule${mainType === "fastify" ? ", new FastifyAdapter()" : ", new ExpressAdapter()"});
   const globalPrefix = "api"
   app.setGlobalPrefix(globalPrefix);
   const port = 3000
@@ -34,14 +25,9 @@ async function bootstrap() {
 bootstrap();
 `;
 
-export const mainExpressTemplate = {
-	name: "main.ts",
-	path: "src",
-	content: expressContent
-};
-
-export const mainFastifyTemplate = {
-	name: "main.ts",
-	path: "src",
-	content: fastifyContent
-};
+	return {
+		name: "main.ts",
+		path: "src",
+		content
+	};
+}
