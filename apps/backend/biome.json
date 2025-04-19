@@ -1,6 +1,0 @@
-{
-  "extends": [
-    "../../biome.json",
-    "@nedcloarbr/biome-config/nestjs"
-  ]
-}

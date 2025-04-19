@@ -1,7 +1,55 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "extends": [
-    "@nedcloarbr/biome-config/base",
-    "@nedcloarbr/biome-config/ignore"
-  ]
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"extends": ["@nedcloarbr/biome-config/base", "@nedcloarbr/biome-config/ignore"],
+	"overrides": [
+		{
+			"include": ["apps/backend/"],
+			"javascript": {
+				"parser": {
+					"unsafeParameterDecoratorsEnabled": true
+				}
+			}
+		},
+		{
+			"include": ["apps/frontend"],
+			"javascript": {
+				"jsxRuntime": "transparent"
+			},
+			"css": {
+				"formatter": {
+					"enabled": true,
+					"indentWidth": 2,
+					"indentStyle": "tab",
+					"lineEnding": "lf",
+					"lineWidth": 120,
+					"quoteStyle": "double"
+				}
+			},
+			"linter": {
+				"rules": {
+					"a11y": {
+						"all": true
+					},
+					"nursery": {
+						"useSortedClasses": "error"
+					},
+					"correctness": {
+						"noUnknownFunction": "error",
+						"noUnknownUnit": "error"
+					},
+					"security": {
+						"noDangerouslySetInnerHtml": "error",
+						"noDangerouslySetInnerHtmlWithChildren": "error"
+					},
+					"style": {
+						"noImplicitBoolean": "error",
+						"useFragmentSyntax": "error"
+					},
+					"suspicious": {
+						"noSuspiciousSemicolonInJsx": "error"
+					}
+				}
+			}
+		}
+	]
 }

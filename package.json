@@ -4,12 +4,12 @@
 	"license": "MIT",
 	"private": true,
 	"packageManager": "yarn@4.7.0",
-	"workspaces": [
-		"apps/*",
-		"libs/*"
-	],
+	"workspaces": ["apps/*", "libs/*"],
 	"scripts": {
-		"shadcn:add": "TS_NODE_PROJECT=tsconfig.base.json npx shadcn@latest add"
+		"shadcn:add": "TS_NODE_PROJECT=tsconfig.base.json npx shadcn@latest add",
+		"format": "yarn biome format --write ./",
+		"lint": "yarn biome lint ./",
+		"check": "yarn biome check --write ./"
 	},
 	"dependencies": {
 		"@fastify/cors": "^11.0.1",
@@ -56,7 +56,6 @@
 		"@babel/core": "^7.14.5",
 		"@babel/preset-react": "^7.14.5",
 		"@biomejs/biome": "^1.9.4",
-		"@gitopslovers/nx-biome": "^1.5.0",
 		"@nedcloarbr/biome-config": "^1.9.1",
 		"@nestjs/schematics": "^11.0.2",
 		"@nestjs/testing": "^11.0.11",

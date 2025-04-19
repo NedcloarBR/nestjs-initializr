@@ -2029,13 +2029,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gitopslovers/nx-biome@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "@gitopslovers/nx-biome@npm:1.5.0"
-  checksum: 10c0/97a2c343af91323e22f83396b55a1966431387ad4ead1c7a6e007ffb302fe6508d87ebc350e0a35511a71d128518919898ea0a00bc9c7557161ecb11053d20c0
-  languageName: node
-  linkType: hard
-
 "@hookform/resolvers@npm:^4.1.3":
   version: 4.1.3
   resolution: "@hookform/resolvers@npm:4.1.3"
@@ -3150,7 +3143,6 @@ __metadata:
     "@biomejs/biome": "npm:^1.9.4"
     "@fastify/cors": "npm:^11.0.1"
     "@fastify/static": "npm:^8.1.1"
-    "@gitopslovers/nx-biome": "npm:^1.5.0"
     "@hookform/resolvers": "npm:^4.1.3"
     "@nedcloarbr/biome-config": "npm:^1.9.1"
     "@nestjs/common": "npm:^11.0.11"

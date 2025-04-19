@@ -53,10 +53,6 @@
 	"targetDefaults": {
 		"e2e-ci--**/*": {
 			"dependsOn": ["^build"]
-		},
-		"lint-biome": {
-			"inputs": ["default", "{workspaceRoot}/biome.json"],
-			"cache": true
 		}
 	},
 	"generators": {
