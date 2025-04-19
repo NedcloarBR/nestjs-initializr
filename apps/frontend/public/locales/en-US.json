@@ -39,6 +39,9 @@
 			"title": "Optional modules",
 			"config": {
 				"description": "@nestjs/config module but with a custom registration with validation and custom service with auto complete and type casting."
+			},
+			"swagger": {
+				"description": "@nestjs/swagger module configured with ui, json and yaml endpoints."
 			}
 		},
 		"GenerateButton": "Generate"
