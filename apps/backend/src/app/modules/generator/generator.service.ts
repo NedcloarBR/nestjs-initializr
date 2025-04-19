@@ -101,11 +101,16 @@ export class GeneratorService extends BaseGenerator {
 
 		for (const module of modules) {
 			const moduleFiles = modulesTemplates.find((m) => m.name === module);
-			const moduleRootFiles = await this.moduleGenerator.generate(id, moduleFiles.templates, {
-				export: moduleFiles.constants.exporter,
-				import: moduleFiles.constants.name,
-				importIn: "src/app.module.ts"
-			});
+			const moduleRootFiles = await this.moduleGenerator.generate(
+				id,
+				moduleFiles.templates,
+				{
+					export: moduleFiles.constants.exporter,
+					import: moduleFiles.constants.name,
+					importIn: "src/app.module.ts"
+				},
+				mainType
+			);
 			moduleGeneratedFiles.push(...moduleRootFiles);
 			if (moduleFiles.constants.serviceConstant) {
 				this.moduleGenerator.updateServiceConstants(id, moduleFiles.constants.serviceConstant);

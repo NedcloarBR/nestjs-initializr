@@ -7,10 +7,12 @@ export class ModuleService extends BaseGenerator {
 	public async generate(
 		id: string,
 		templates: Template[],
-		metadata: { import: string; export: string; importIn?: string }
+		metadata: { import: string; export: string; importIn?: string },
+		mainType: "fastify" | "express"
 	) {
 		const rootFiles = [];
-		for (const template of templates) {
+		for (const rawTemplate of templates) {
+			const template = typeof rawTemplate === "function" ? rawTemplate(mainType) : rawTemplate;
 			const file = this.createFile(id, template);
 			if (template.path === "") {
 				rootFiles.push(file);
