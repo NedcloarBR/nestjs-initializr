@@ -44,6 +44,24 @@
 				"description": "Módulo @nestjs/swagger configurado com endpoints ui, json e yaml."
 			}
 		},
+		"Extra": {
+			"trigger": "Opções extras",
+			"title": "Opções extras",
+			"extras": {
+				"cors": {
+					"title": "Cors",
+					"description": "Habilitar CORS"
+				},
+				"helmet": {
+					"title": "Helmet",
+					"description": "Habilitar Helmet"
+				},
+				"validation": {
+					"title": "Validation",
+					"description": "Habilitar ValidationPipe"
+				}
+			}
+		},
 		"GenerateButton": "Gerar"
 	}
 }

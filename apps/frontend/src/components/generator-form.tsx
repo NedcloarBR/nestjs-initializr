@@ -2,9 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { unknown, z } from "zod";
+import { z } from "zod";
 import {
 	Button,
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
 	Form,
 	FormControl,
 	FormField,
@@ -19,10 +25,11 @@ import {
 	Separator
 } from "./ui";
 
-import { modules, nodeVersions, packageManagers } from "@/constants";
+import { extraFields, modules, nodeVersions, packageManagers } from "@/constants";
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { ExtraField } from "./extra-field";
 import { ModuleCard } from "./module-card";
 
 const formSchemaFunction = (t: (arg: string) => string) =>
@@ -37,7 +44,8 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
 		nodeVersion: z.enum(["20", "21", "22", "23"]).default("20"),
 		packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
-		modules: z.array(z.string()).optional().default([])
+		modules: z.array(z.string()).optional().default([]),
+		extras: z.array(z.string()).optional().default([])
 	});
 
 export function GeneratorForm() {
@@ -51,7 +59,8 @@ export function GeneratorForm() {
 			nodeVersion: "20",
 			mainType: "fastify",
 			packageManager: "npm",
-			modules: []
+			modules: [],
+			extras: []
 		}
 	});
 
@@ -70,7 +79,8 @@ export function GeneratorForm() {
 						nodeVersion: values.nodeVersion
 					},
 					packageManager: values.packageManager,
-					modules: values.modules
+					modules: values.modules,
+					extras: values.extras
 				})
 			});
 
@@ -85,6 +95,7 @@ export function GeneratorForm() {
 
 			saveAs(blob, fileName);
 		} catch (error) {
+			console.error(error);
 			let message = "An unexpected error occurred.";
 			if ((error as Error).message === "Failed to fetch") {
 				message = "Error connecting to the server.";
@@ -200,6 +211,26 @@ export function GeneratorForm() {
 									</FormItem>
 								)}
 							/>
+							<Dialog>
+								<DialogTrigger asChild>
+									<Button className="cursor-pointer">{t("Extra.trigger")}</Button>
+								</DialogTrigger>
+								<DialogContent className="flex">
+									<DialogHeader>
+										<DialogTitle>{t("Extra.title")}</DialogTitle>
+										<DialogDescription className="pt-4">
+											{extraFields(t).map((extra) => (
+												<ExtraField
+													key={extra.name}
+													name={extra.name}
+													title={extra.title}
+													description={extra.description}
+												/>
+											))}
+										</DialogDescription>
+									</DialogHeader>
+								</DialogContent>
+							</Dialog>
 						</div>
 
 						<div className="pr-16 pl-16">

@@ -25,6 +25,7 @@ async function bootstrap() {
 	app.enableCors({
 		origin: "*"
 	});
+
 	setupSwagger(app, globalPrefix, port);
 
 	await app.listen(port, "0.0.0.0");

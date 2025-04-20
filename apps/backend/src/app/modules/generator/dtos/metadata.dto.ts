@@ -19,4 +19,8 @@ export class MetadataDTO {
 	@IsString()
 	@IsIn(["npm", "yarn", "pnpm"])
 	public readonly packageManager!: "npm" | "yarn" | "pnpm";
+
+	@IsOptional()
+	@IsString({ each: true })
+	public readonly extras?: string[];
 }

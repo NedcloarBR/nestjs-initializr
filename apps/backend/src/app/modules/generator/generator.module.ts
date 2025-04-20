@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { Services } from "../../constants/services";
 import { GeneratorController } from "./generator.controller";
 import { GeneratorService } from "./generator.service";
-import { MainUpdaterService, ModuleService, PackageJsonService, SwaggerService } from "./generators";
+import { ExtraService, MainUpdaterService, ModuleService, PackageJsonService, SwaggerService } from "./generators";
 
 @Module({
 	controllers: [GeneratorController],
@@ -14,7 +14,8 @@ import { MainUpdaterService, ModuleService, PackageJsonService, SwaggerService }
 		PackageJsonService,
 		ModuleService,
 		MainUpdaterService,
-		SwaggerService
+		SwaggerService,
+		ExtraService
 	]
 })
 export class GeneratorModule {}

@@ -42,6 +42,14 @@ export const NPM_DEPENDENCIES = {
 	"class-transformer": {
 		name: "class-transformer",
 		version: "^0.5.1"
+	},
+	"@fastify/helmet": {
+		name: "@fastify/helmet",
+		version: "^13.0.1"
+	},
+	helmet: {
+		name: "helmet",
+		version: "^8.1.0"
 	}
 };
 

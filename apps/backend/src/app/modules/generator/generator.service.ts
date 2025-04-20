@@ -6,7 +6,14 @@ import { commonPackages, expressPackages, fastifyPackages } from "../../constant
 // biome-ignore lint/style/useImportType: <explanation>
 import { MetadataDTO } from "./dtos/metadata.dto";
 // biome-ignore lint/style/useImportType: <explanation>
-import { BaseGenerator, MainUpdaterService, ModuleService, PackageJsonService, SwaggerService } from "./generators";
+import {
+	BaseGenerator,
+	ExtraService,
+	MainUpdaterService,
+	ModuleService,
+	PackageJsonService,
+	SwaggerService
+} from "./generators";
 import {
 	appControllerTemplate,
 	appModuleTemplate,
@@ -24,7 +31,8 @@ export class GeneratorService extends BaseGenerator {
 		private readonly packageJsonGenerator: PackageJsonService,
 		private readonly moduleGenerator: ModuleService,
 		private readonly mainUpdaterGenerator: MainUpdaterService,
-		private readonly swaggerGenerator: SwaggerService
+		private readonly swaggerGenerator: SwaggerService,
+		private readonly extraGenerator: ExtraService
 	) {
 		super();
 	}
@@ -74,9 +82,13 @@ export class GeneratorService extends BaseGenerator {
 				this.createFile(id, readmeTemplate)
 			]
 		);
-
 		const modulesFiles = await this.generateModules(id, metadata.modules, metadata.mainType);
 		rootDirFiles.push(...modulesFiles);
+
+		if (metadata.extras.length > 0) {
+			const withConfigModule = metadata.modules.includes("config");
+			await this.extraGenerator.generate(id, metadata.extras, metadata.mainType, withConfigModule);
+		}
 
 		const zipFile = await this.generateZipFile(rootDirFiles, id);
 

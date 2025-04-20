@@ -45,7 +45,7 @@
 						"noDangerouslySetInnerHtmlWithChildren": "error"
 					},
 					"style": {
-						"noImplicitBoolean": "error",
+						"noImplicitBoolean": "off",
 						"useFragmentSyntax": "error"
 					},
 					"suspicious": {
