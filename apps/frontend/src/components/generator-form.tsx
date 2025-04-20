@@ -205,7 +205,7 @@ export function GeneratorForm() {
 						<aside className="space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
 							<h2 className="font-bold">{t("Modules.title")}</h2>
 							<ScrollArea className="h-96">
-								<div className="grid grid-cols-4 gap-4">
+								<div className="flex flex-wrap justify-start gap-4">
 									{modules(t).map((module) => (
 										<ModuleCard
 											key={module.name}
