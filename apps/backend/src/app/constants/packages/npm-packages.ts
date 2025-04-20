@@ -34,6 +34,14 @@ export const NPM_DEPENDENCIES = {
 	"@nestjs/config": {
 		name: "@nestjs/config",
 		version: "^4.0.1"
+	},
+	"class-validator": {
+		name: "class-validator",
+		version: "^0.14.1"
+	},
+	"class-transformer": {
+		name: "class-transformer",
+		version: "^0.5.1"
 	}
 };
 

@@ -13,6 +13,14 @@ export const modulesTemplates = [
 			{
 				...NPM_DEPENDENCIES["@nestjs/config"],
 				dev: false
+			},
+			{
+				...NPM_DEPENDENCIES["class-validator"],
+				dev: false
+			},
+			{
+				...NPM_DEPENDENCIES["class-transformer"],
+				dev: false
 			}
 		]
 	}
