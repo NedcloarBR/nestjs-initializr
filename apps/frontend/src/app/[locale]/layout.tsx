@@ -1,5 +1,6 @@
 import "@/styles/global.css";
 import "flag-icons/css/flag-icons.css";
+import { Toaster } from "@/components/ui";
 import { routing } from "@/lib/i18n/routing";
 import { ThemeProvider } from "@/providers/theme-provider";
 // import { Analytics } from "@vercel/analytics/next";
@@ -47,6 +48,7 @@ export default async function LocaleLayout(props: {
 						<main className="m-0 h-screen overflow-x-hidden bg-nest-background p-0 font-medium dark:bg-nest-background">
 							{children}
 							{/* <Analytics /> */}
+							<Toaster />
 						</main>
 					</NextIntlClientProvider>
 				</ThemeProvider>

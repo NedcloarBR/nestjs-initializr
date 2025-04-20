@@ -8,4 +8,5 @@ export * from "./radio-group";
 export * from "./select";
 export * from "./separator";
 export * from "./scroll-area";
+export * from "./sonner";
 export * from "./switch";

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { unknown, z } from "zod";
 import {
 	Button,
 	Form,
@@ -22,6 +22,7 @@ import {
 import { modules, nodeVersions, packageManagers } from "@/constants";
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { ModuleCard } from "./module-card";
 
 const formSchemaFunction = (t: (arg: string) => string) =>
@@ -84,8 +85,11 @@ export function GeneratorForm() {
 
 			saveAs(blob, fileName);
 		} catch (error) {
-			console.error(error);
-			alert("Error downloading the zip file");
+			let message = "An unexpected error occurred.";
+			if ((error as Error).message === "Failed to fetch") {
+				message = "Error connecting to the server.";
+			}
+			toast.error(message);
 		}
 	}
 

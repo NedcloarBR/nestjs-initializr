@@ -4,10 +4,7 @@
 	"license": "MIT",
 	"private": true,
 	"packageManager": "yarn@4.7.0",
-	"workspaces": [
-		"apps/*",
-		"libs/*"
-	],
+	"workspaces": ["apps/*", "libs/*"],
 	"scripts": {
 		"shadcn:add": "TS_NODE_PROJECT=tsconfig.base.json npx shadcn@latest add",
 		"format": "yarn biome format --write ./",
@@ -49,12 +46,13 @@
 		"lucide-react": "^0.484.0",
 		"next": "~15.1.4",
 		"next-intl": "^3.26.5",
-		"next-themes": "^0.4.4",
+		"next-themes": "^0.4.6",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
 		"react-hook-form": "^7.54.2",
 		"reflect-metadata": "^0.2.2",
 		"rxjs": "^7.8.0",
+		"sonner": "^2.0.3",
 		"tailwind-merge": "^3.0.2",
 		"tw-animate-css": "^1.2.4",
 		"zod": "^3.24.2"
