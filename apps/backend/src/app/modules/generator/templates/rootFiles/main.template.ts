@@ -9,7 +9,7 @@ export function mainTemplate(mainType: "fastify" | "express") {
 	const content = `
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { ${platformImport} } from "@nestjs/platform-fastify";
+import { ${platformImport} } from "@nestjs/platform-${mainType}";
 import { AppModule } from "./app.module";
 
 async function bootstrap() {

@@ -12,9 +12,9 @@ export function configMainTemplates(mainType: "fastify" | "express") {
 						"const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());\nconst configService = app.get<ConfigService>(Services.config);"
 				}
 			: {
-					replacer: "const app = await NestFactory.create(AppModule);",
+					replacer: "const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());",
 					content:
-						"const app = await NestFactory.create(AppModule);\nconst configService = app.get<ConfigService>(Services.config);"
+						"const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());\nconst configService = app.get<ConfigService>(Services.config);"
 				},
 		{
 			replacer: 'const globalPrefix = "api";',
