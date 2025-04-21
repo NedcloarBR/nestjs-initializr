@@ -42,6 +42,6 @@ export class BaseGenerator {
 	}
 
 	public getPath(id: string, filePath?: string) {
-		return path.join(__dirname, "__generated__", id, filePath);
+		return path.join(__dirname, "__generated__", id, filePath ?? "");
 	}
 }

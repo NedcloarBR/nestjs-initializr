@@ -10,7 +10,6 @@ const tsconfigContent = `
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "incremental": true,
     "forceConsistentCasingInFileNames": true,

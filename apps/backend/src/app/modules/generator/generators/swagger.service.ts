@@ -5,6 +5,7 @@ import { swaggerLibIndex, swaggerLibTemplate, swaggerMainTemplate } from "../tem
 import { BaseGenerator } from "./base.generator";
 // biome-ignore lint/style/useImportType: <explanation>
 import { MainUpdaterService } from "./main-updater.service";
+// biome-ignore lint/style/useImportType: <explanation>
 import { PackageJsonService } from "./package-json.service";
 
 @Injectable()

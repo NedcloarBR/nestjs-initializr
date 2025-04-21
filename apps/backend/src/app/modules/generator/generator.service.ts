@@ -1,6 +1,7 @@
+import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import archiver from "archiver";
 import { commonPackages, expressPackages, fastifyPackages } from "../../constants/packages";
 // biome-ignore lint/style/useImportType: <explanation>
@@ -90,14 +91,16 @@ export class GeneratorService extends BaseGenerator {
 			await this.extraGenerator.generate(id, metadata.extras, metadata.mainType, withConfigModule);
 		}
 
+		await this.lintAndFormat(id);
+
 		const zipFile = await this.generateZipFile(rootDirFiles, id);
 
 		setTimeout(() => {
 			fs.rm(path.join(__dirname, "__generated__", id), { recursive: true }, (err) => {
 				if (err) {
-					console.error(`Error deleting directory: ${err}`);
+					Logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
 				} else {
-					console.log(`Directory deleted successfully: ${id}`);
+					Logger.log("Directory deleted successfully", `Delete:${id}`);
 				}
 			});
 		}, 10_000);
@@ -152,6 +155,40 @@ export class GeneratorService extends BaseGenerator {
 		}
 
 		return moduleGeneratedFiles;
+	}
+
+	private async lintAndFormat(id: string): Promise<void> {
+		const dirPath = this.getPath(id);
+		const configPath = path.join(__dirname, "assets");
+
+		async function runBiomeCommand(args: string[]): Promise<void> {
+			return new Promise((resolve, reject) => {
+				const process = spawn("biome", [...args, "--config-path", configPath, dirPath]);
+
+				process.stdout?.on("data", (data) => {
+					Logger.log(`[biome ${args[0]} stdout]: ${data.toString().trim()}`, `Biome:${args[0]}:${id}`);
+				});
+
+				process.stderr?.on("data", (data) => {
+					Logger.error(`[biome ${args[0]} stderr]: ${data.toString().trim()}`, `Biome:${args[0]}:${id}`);
+				});
+
+				process.on("error", (err) => {
+					reject(new Error(`Biome execute error ${args[0]}: ${err.message}`));
+				});
+
+				process.on("close", (code) => {
+					if (code === 0) {
+						resolve();
+					} else {
+						reject(new Error(`Biome ${args[0]} exit code: ${code}`));
+					}
+				});
+			});
+		}
+
+		await runBiomeCommand(["lint", "--write"]);
+		await runBiomeCommand(["format", "--write"]);
 	}
 
 	private async generateZipFile(
