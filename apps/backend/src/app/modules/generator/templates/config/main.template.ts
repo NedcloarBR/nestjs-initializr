@@ -3,18 +3,18 @@ export function configMainTemplates(mainType: "fastify" | "express") {
 		{
 			replacer: 'import { AppModule } from "./app.module";',
 			content:
-				'import { AppModule } from "./app.module";\nimport { Services } from "./constants/services.ts"\nimport { ConfigService } from "./modules/config/config.service"'
+				'import { AppModule } from "./app.module";\nimport { Services } from "./constants/services"\nimport { ConfigService } from "./modules/config/config.service"'
 		},
 		mainType === "fastify"
 			? {
 					replacer: "const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());",
 					content:
-						"const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());\nconst configService = app.get<ConfigService>(Services.config);"
+						"const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());\nconst configService = app.get<ConfigService>(Services.Config);"
 				}
 			: {
 					replacer: "const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());",
 					content:
-						"const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());\nconst configService = app.get<ConfigService>(Services.config);"
+						"const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());\nconst configService = app.get<ConfigService>(Services.Config);"
 				},
 		{
 			replacer: 'const globalPrefix = "api";',

@@ -8,7 +8,7 @@ export type ConfigSchema = EnvDTO
 @Injectable()
 export class ConfigService {
 	public constructor(
-		private readonly nestConfigService: NestConfigService
+		private readonly nestConfigService: NestConfigService<ConfigSchema>
 	) {}
 
 	public get<K extends keyof ConfigSchema>(value: K): ConfigSchema[K] {

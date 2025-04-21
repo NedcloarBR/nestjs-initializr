@@ -1,11 +1,11 @@
 export const NPM_DEPENDENCIES = {
 	fastify: {
 		name: "fastify",
-		version: "^5.2.2"
+		version: "5.3.0"
 	},
 	"@nestjs/platform-fastify": {
 		name: "@nestjs/platform-fastify",
-		version: "^11.0.11"
+		version: "^11.0.20"
 	},
 	express: {
 		name: "express",
@@ -13,15 +13,15 @@ export const NPM_DEPENDENCIES = {
 	},
 	"@nestjs/platform-express": {
 		name: "@nestjs/platform-express",
-		version: "^11.0.11"
+		version: "^11.0.20"
 	},
 	"@nestjs/common": {
 		name: "@nestjs/common",
-		version: "^11.0.1"
+		version: "^11.0.20"
 	},
 	"@nestjs/core": {
 		name: "@nestjs/core",
-		version: "^11.0.1"
+		version: "^11.0.20"
 	},
 	"reflect-metadata": {
 		name: "reflect-metadata",
@@ -50,6 +50,14 @@ export const NPM_DEPENDENCIES = {
 	helmet: {
 		name: "helmet",
 		version: "^8.1.0"
+	},
+	"@nestjs/swagger": {
+		name: "@nestjs/swagger",
+		version: "^11.0.7"
+	},
+	"@fastify/static": {
+		name: "@fastify/static",
+		version: "^8.1.1"
 	}
 };
 

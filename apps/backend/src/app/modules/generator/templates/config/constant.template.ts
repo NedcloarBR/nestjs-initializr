@@ -1,4 +1,4 @@
-const serviceConstant = `config = "CONFIG_SERVICE"`;
+const serviceConstant = `Config = "CONFIG_SERVICE"`;
 
 const name = "ConfigModule";
 

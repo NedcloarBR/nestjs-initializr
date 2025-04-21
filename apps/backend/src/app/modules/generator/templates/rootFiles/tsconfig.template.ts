@@ -11,9 +11,14 @@ const tsconfigContent = `
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+		"paths": {
+			"@/*": ["./*"]
+		}
   }
 }
 `;

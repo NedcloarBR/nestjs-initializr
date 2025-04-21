@@ -35,7 +35,28 @@ export class ModuleService extends BaseGenerator {
 
 	public updateImport(id: string, importString: string, moduleToUpdatePath: string) {
 		const moduleToUpdatePathResolved = this.getPath(id, moduleToUpdatePath);
-		const moduleToUpdateContent = this.readFile(moduleToUpdatePathResolved);
+		let moduleToUpdateContent = this.readFile(moduleToUpdatePathResolved);
+
+		const importsRegex = /(imports:\s*\[)([\s\S]*?)(\])/;
+		const importFromModulesFolderRegex = /import\s+\{\s*([^\}]+)\s*\}\s+from\s+['"]@\/modules['"]/g;
+		if (!moduleToUpdateContent.includes(`${importString},`)) {
+			moduleToUpdateContent = moduleToUpdateContent.replace(importsRegex, `$1$2\n    ${importString},$3`);
+			if (!moduleToUpdateContent.includes("import { } from '@/modules'")) {
+				moduleToUpdateContent = `import { } from '@/modules';${moduleToUpdateContent}`;
+			}
+			moduleToUpdateContent = moduleToUpdateContent.replace(importFromModulesFolderRegex, (match, existingImports) => {
+				const updatedImports = existingImports
+					.split(",")
+					.map((s) => s.trim())
+					.filter(Boolean);
+
+				if (!updatedImports.includes(importString)) {
+					updatedImports.push(importString);
+				}
+
+				return `import { ${updatedImports.join(", ")} } from "@/modules"`;
+			});
+		}
 
 		this.writeFile(moduleToUpdatePathResolved, moduleToUpdateContent);
 	}
