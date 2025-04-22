@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
+// biome-ignore lint/style/useImportType:
 import { MetadataDTO } from "../dtos/metadata.dto";
 import { BiomeTemplate } from "../templates/linterFormatter/biome.template";
 import { EslintPrettierTemplate } from "../templates/linterFormatter/eslint-prettier.template";
 import { BaseGenerator } from "./base.generator";
+// biome-ignore lint/style/useImportType:
 import { PackageJsonService } from "./package-json.service";
 
 @Injectable()

@@ -16,16 +16,9 @@ import {
 	PackageJsonService,
 	SwaggerService
 } from "./generators";
-import {
-	appControllerTemplate,
-	appModuleTemplate,
-	appServiceTemplate,
-	mainTemplate,
-	nestjsCli,
-	readmeTemplate
-} from "./templates";
-import { modulesTemplates } from "./templates/rootFiles/modules.template";
-import { tsconfig, tsconfigBuild } from "./templates/rootFiles/tsconfig.template";
+import { AppTemplates } from "./templates/app.templates";
+import { modulesTemplates } from "./templates/modules.templates";
+import { RootFilesTemplates } from "./templates/root-files-templates";
 
 @Injectable()
 export class GeneratorService extends BaseGenerator {
@@ -57,12 +50,12 @@ export class GeneratorService extends BaseGenerator {
 		});
 		rootDirFiles.push(lockFile);
 
-		this.createFile(id, mainTemplate(metadata.mainType));
 		if (metadata.mainType === "fastify") {
 			for (const packageMeta of fastifyPackages) {
 				await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
 			}
 		}
+
 		if (metadata.mainType === "express") {
 			for (const packageMeta of expressPackages) {
 				await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
@@ -73,19 +66,16 @@ export class GeneratorService extends BaseGenerator {
 			await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
 		}
 
-		this.createFile(id, appModuleTemplate);
-		this.createFile(id, appControllerTemplate);
-		this.createFile(id, appServiceTemplate);
+		for (const template of AppTemplates) {
+			this.createFile(id, template);
+		}
 
-		rootDirFiles.push(
-			...[
-				this.createFile(id, tsconfig),
-				this.createFile(id, tsconfigBuild),
-				this.createFile(id, nestjsCli),
-				this.createFile(id, readmeTemplate)
-			]
-		);
-		const modulesFiles = await this.generateModules(id, metadata.modules, metadata.mainType);
+		for (const template of RootFilesTemplates(metadata.mainType)) {
+			const file = this.createFile(id, template);
+			rootDirFiles.push(file);
+		}
+
+		const modulesFiles = await this.generateModules(id, metadata.modules, metadata.mainType, metadata.packageJson.name);
 		rootDirFiles.push(...modulesFiles);
 
 		if (metadata.extras.length > 0) {
@@ -116,7 +106,12 @@ export class GeneratorService extends BaseGenerator {
 	}
 
 	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-	private async generateModules(id: string, rawModules: MetadataDTO["modules"], mainType: MetadataDTO["mainType"]) {
+	private async generateModules(
+		id: string,
+		rawModules: MetadataDTO["modules"],
+		mainType: MetadataDTO["mainType"],
+		projectName: string
+	) {
 		const moduleGeneratedFiles = [];
 
 		const modules = [...rawModules.filter((m) => m !== "swagger"), ...rawModules.filter((m) => m === "swagger")];
@@ -128,7 +123,7 @@ export class GeneratorService extends BaseGenerator {
 		const withConfigModule = modules.includes("config");
 		for (const module of modules) {
 			if (module === "swagger") {
-				await this.swaggerGenerator.generate(id, mainType, withConfigModule);
+				await this.swaggerGenerator.generate(id, mainType, withConfigModule, projectName);
 				continue;
 			}
 			const moduleFiles = modulesTemplates.find((m) => m.name === module);

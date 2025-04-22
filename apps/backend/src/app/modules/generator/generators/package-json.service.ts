@@ -1,18 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import type { MetadataDTO } from "../dtos/metadata.dto";
-import { nestScripts, packageJsonReplaceKeys, packageJsonTemplate } from "../templates";
+import { PackageJsonReplaceKeys, PackageJsonTemplate } from "../templates/package-json.template";
+import { nestScripts } from "../templates/scripts.template";
 import { BaseGenerator } from "./base.generator";
 
 @Injectable()
 export class PackageJsonService extends BaseGenerator {
 	public async generate(metadata: MetadataDTO["packageJson"], id: string) {
-		const content = packageJsonTemplate.content
-			.replace(packageJsonReplaceKeys.PROJECT_NAME, metadata.name)
-			.replace(packageJsonReplaceKeys.PROJECT_DESCRIPTION, metadata.description)
-			.replace(packageJsonReplaceKeys.NODE_VERSION, metadata.nodeVersion);
+		const content = PackageJsonTemplate.content
+			.replace(PackageJsonReplaceKeys.PROJECT_NAME, metadata.name)
+			.replace(PackageJsonReplaceKeys.PROJECT_DESCRIPTION, metadata.description)
+			.replace(PackageJsonReplaceKeys.NODE_VERSION, metadata.nodeVersion);
 
 		const file = this.createFile(id, {
-			...packageJsonTemplate,
+			...PackageJsonTemplate,
 			content
 		});
 
