@@ -4,5 +4,11 @@
 	"sourceRoot": "apps/frontend",
 	"projectType": "application",
 	"tags": [],
-	"targets": {}
+	"targets": {
+		"test": {
+			"options": {
+				"passWithNoTests": true
+			}
+		}
+	}
 }

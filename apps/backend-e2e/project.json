@@ -12,6 +12,9 @@
 				"passWithNoTests": true
 			},
 			"dependsOn": ["backend:build"]
+		},
+		"test": {
+			"options": { "passWithNoTests": true }
 		}
 	}
 }

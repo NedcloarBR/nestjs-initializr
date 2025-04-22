@@ -26,7 +26,7 @@ export default defineConfig({
 	},
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: "npx nx run frontend:start",
+		command: "npx nx build frontend && node apps/frontend/.next/standalone/apps/frontend/server.js",
 		url: "http://localhost:3000",
 		reuseExistingServer: !process.env.CI,
 		cwd: workspaceRoot
