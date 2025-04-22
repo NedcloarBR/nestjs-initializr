@@ -113,5 +113,41 @@ export const DEV_NPM_DEPENDENCIES = {
 	"@swc/core": {
 		name: "@swc/core",
 		version: "^1.10.8"
+	},
+	"@biomejs/biome": {
+		name: "@biomejs/biome",
+		version: "^1.9.4"
+	},
+	"@nedcloarbr/biome-config": {
+		name: "@nedcloarbr/biome-config",
+		version: "^1.9.1"
+	},
+	"@eslint/eslintrc": {
+		name: "@eslint/eslintrc",
+		version: "^3.2.0"
+	},
+	"@eslint/js": {
+		name: "@eslint/js",
+		version: "^9.18.0"
+	},
+	eslint: {
+		name: "eslint",
+		version: "^9.18.0"
+	},
+	"eslint-config-prettier": {
+		name: "eslint-config-prettier",
+		version: "^10.0.1"
+	},
+	"eslint-plugin-prettier": {
+		name: "eslint-plugin-prettier",
+		version: "^5.2.3"
+	},
+	prettier: {
+		name: "prettier",
+		version: "^3.4.2"
+	},
+	"typescript-eslint": {
+		name: "typescript-eslint",
+		version: "^8.20.0"
 	}
 };

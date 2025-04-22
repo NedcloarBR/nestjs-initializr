@@ -10,6 +10,7 @@ import { MetadataDTO } from "./dtos/metadata.dto";
 import {
 	BaseGenerator,
 	ExtraService,
+	LinterFormatterService,
 	MainUpdaterService,
 	ModuleService,
 	PackageJsonService,
@@ -33,7 +34,8 @@ export class GeneratorService extends BaseGenerator {
 		private readonly moduleGenerator: ModuleService,
 		private readonly mainUpdaterGenerator: MainUpdaterService,
 		private readonly swaggerGenerator: SwaggerService,
-		private readonly extraGenerator: ExtraService
+		private readonly extraGenerator: ExtraService,
+		private readonly linterFormatterGenerator: LinterFormatterService
 	) {
 		super();
 	}
@@ -89,6 +91,11 @@ export class GeneratorService extends BaseGenerator {
 		if (metadata.extras.length > 0) {
 			const withConfigModule = metadata.modules.includes("config");
 			await this.extraGenerator.generate(id, metadata.extras, metadata.mainType, withConfigModule);
+		}
+
+		if (metadata.linterFormatter) {
+			const linterFormatterFiles = await this.linterFormatterGenerator.generate(id, metadata.linterFormatter);
+			rootDirFiles.push(...linterFormatterFiles);
 		}
 
 		await this.lintAndFormat(id);

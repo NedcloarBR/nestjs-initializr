@@ -11,3 +11,4 @@ export * from "./separator";
 export * from "./scroll-area";
 export * from "./sonner";
 export * from "./switch";
+export * from "./tooltip";

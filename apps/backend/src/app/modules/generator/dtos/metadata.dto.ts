@@ -23,4 +23,9 @@ export class MetadataDTO {
 	@IsOptional()
 	@IsString({ each: true })
 	public readonly extras?: string[];
+
+	@IsOptional()
+	@IsString()
+	@IsIn(["biome", "eslint-prettier"])
+	public readonly linterFormatter?: "biome" | "eslint-prettier";
 }

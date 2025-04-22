@@ -3,6 +3,7 @@ import { Services } from "../../constants/services";
 import { GeneratorController } from "./generator.controller";
 import { GeneratorService } from "./generator.service";
 import { ExtraService, MainUpdaterService, ModuleService, PackageJsonService, SwaggerService } from "./generators";
+import { LinterFormatterService } from "./generators/linter-formater.service";
 
 @Module({
 	controllers: [GeneratorController],
@@ -15,7 +16,8 @@ import { ExtraService, MainUpdaterService, ModuleService, PackageJsonService, Sw
 		ModuleService,
 		MainUpdaterService,
 		SwaggerService,
-		ExtraService
+		ExtraService,
+		LinterFormatterService
 	]
 })
 export class GeneratorModule {}

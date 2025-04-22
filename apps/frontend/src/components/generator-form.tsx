@@ -30,6 +30,7 @@ import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ExtraField } from "./extra-field";
+import { LinterFormatterCard } from "./linter-formatter-card";
 import { ModuleCard } from "./module-card";
 
 const formSchemaFunction = (t: (arg: string) => string) =>
@@ -45,7 +46,8 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 		nodeVersion: z.enum(["20", "21", "22", "23"]).default("20"),
 		packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
 		modules: z.array(z.string()).optional().default([]),
-		extras: z.array(z.string()).optional().default([])
+		extras: z.array(z.string()).optional().default([]),
+		linterFormatter: z.enum(["biome", "eslint-prettier"])
 	});
 
 export function GeneratorForm() {
@@ -80,7 +82,8 @@ export function GeneratorForm() {
 					},
 					packageManager: values.packageManager,
 					modules: values.modules,
-					extras: values.extras
+					extras: values.extras,
+					linterFormatter: values.linterFormatter
 				})
 			});
 
@@ -249,6 +252,22 @@ export function GeneratorForm() {
 											description={module.description}
 										/>
 									))}
+									<LinterFormatterCard
+										key="biome"
+										title={t("LinterFormatter.biome.title")}
+										name="biome"
+										description={t("LinterFormatter.biome.description")}
+										disableText={t("LinterFormatter.biome.disableText")}
+										iconType="svg"
+									/>
+									<LinterFormatterCard
+										key="eslint-prettier"
+										title={t("LinterFormatter.eslint-prettier.title")}
+										name="eslint-prettier"
+										description={t("LinterFormatter.eslint-prettier.description")}
+										disableText={t("LinterFormatter.eslint-prettier.disableText")}
+										iconType="png"
+									/>
 								</div>
 							</ScrollArea>
 						</aside>

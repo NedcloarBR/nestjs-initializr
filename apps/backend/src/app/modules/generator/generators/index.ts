@@ -1,5 +1,6 @@
 export { BaseGenerator, Template } from "./base.generator";
 export { ExtraService } from "./extra.service";
+export { LinterFormatterService } from "./linter-formater.service";
 export { MainUpdaterService } from "./main-updater.service";
 export { ModuleService } from "./module.service";
 export { PackageJsonService } from "./package-json.service";

@@ -62,6 +62,18 @@
 				}
 			}
 		},
+		"LinterFormatter": {
+			"biome": {
+				"title": "BiomeJS",
+				"description": "BiomeJS configuration using the @nedcloarbr/biome-config package",
+				"disableText": "It is not possible to enable BiomeJS and Eslint + Prettier at the same time."
+			},
+			"eslint-prettier": {
+				"title": "Eslint + Prettier",
+				"description": "Eslint + Prettier configuration included in the default NestJS starter.",
+				"disableText": "It is not possible to enable Eslint + Prettier and BiomeJS at the same time."
+			}
+		},
 		"GenerateButton": "Generate"
 	}
 }
