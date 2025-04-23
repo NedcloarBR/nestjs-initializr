@@ -50,13 +50,16 @@ export function LinterFormatterCard({ title, name, description, disableText, ico
 			<CardFooter className="flex items-center justify-center">
 				<FormControl>
 					<Tooltip>
-						<TooltipTrigger type="button">
-							<Switch
-								className="cursor-pointer"
-								disabled={disabled}
-								checked={isSelected}
-								onCheckedChange={toggleLinterFormatter}
-							/>
+						<TooltipTrigger asChild>
+							<span>
+								<Switch
+									type="button"
+									className="cursor-pointer"
+									disabled={disabled}
+									checked={isSelected}
+									onCheckedChange={toggleLinterFormatter}
+								/>
+							</span>
 						</TooltipTrigger>
 						{disabled && <TooltipContent>{disableText}</TooltipContent>}
 					</Tooltip>
