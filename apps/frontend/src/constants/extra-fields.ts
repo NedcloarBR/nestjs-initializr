@@ -5,5 +5,10 @@ export const extraFields = (t: (arg: string) => string) => [
 		name: "validation",
 		title: t("Extra.extras.validation.title"),
 		description: t("Extra.extras.validation.description")
+	},
+	{
+		name: "compression",
+		title: t("Extra.extras.compression.title"),
+		description: t("Extra.extras.compression.description")
 	}
 ];

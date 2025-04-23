@@ -58,6 +58,14 @@ export const NPM_DEPENDENCIES = {
 	"@fastify/static": {
 		name: "@fastify/static",
 		version: "^8.1.1"
+	},
+	compression: {
+		name: "compression",
+		version: "^1.8.0"
+	},
+	"@fastify/compress": {
+		name: "@fastify/compress",
+		version: "^8.0.1"
 	}
 };
 

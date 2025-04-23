@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { NPM_DEPENDENCIES } from "../../../constants/packages";
 // biome-ignore lint/style/useImportType:
 import { MetadataDTO } from "../dtos/metadata.dto";
-import { cors } from "../templates/extra/cors";
+import { extrasMetadata } from "../templates/extra";
 import { helmet } from "../templates/extra/helmet";
 import { validation } from "../templates/extra/validation";
 import { BaseGenerator } from "./base.generator";
@@ -20,49 +20,24 @@ export class ExtraService extends BaseGenerator {
 		super();
 	}
 
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 	public async generate(
 		id: string,
 		extras: MetadataDTO["extras"],
 		mainType: "fastify" | "express",
 		withConfigModule: boolean
 	) {
+		const metadata = extrasMetadata(mainType, withConfigModule);
+
 		for (const extra of extras) {
-			if (extra === "cors") {
-				await this.mainUpdaterGenerator.update(id, cors(withConfigModule));
-			}
-
-			if (extra === "helmet") {
-				for (const helmetTemplate of helmet(mainType, withConfigModule)) {
-					await this.mainUpdaterGenerator.update(id, helmetTemplate);
+			if (metadata[extra].templates)
+				for (const template of metadata[extra].templates) {
+					await this.mainUpdaterGenerator.update(id, template);
 				}
-				mainType === "fastify"
-					? await this.packageJsonGenerator.addPackage(
-							id,
-							NPM_DEPENDENCIES["@fastify/helmet"].name,
-							NPM_DEPENDENCIES["@fastify/helmet"].version
-						)
-					: await this.packageJsonGenerator.addPackage(
-							id,
-							NPM_DEPENDENCIES["helmet"].name,
-							NPM_DEPENDENCIES["helmet"].version
-						);
-			}
 
-			if (extra === "validation") {
-				for (const validationTemplate of validation(withConfigModule)) {
-					await this.mainUpdaterGenerator.update(id, validationTemplate);
+			if (metadata[extra].packages) {
+				for (const pkg of metadata[extra].packages) {
+					await this.packageJsonGenerator.addPackage(id, pkg.name, pkg.version);
 				}
-				await this.packageJsonGenerator.addPackage(
-					id,
-					NPM_DEPENDENCIES["class-validator"].name,
-					NPM_DEPENDENCIES["class-validator"].version
-				);
-				await this.packageJsonGenerator.addPackage(
-					id,
-					NPM_DEPENDENCIES["class-transformer"].name,
-					NPM_DEPENDENCIES["class-transformer"].version
-				);
 			}
 		}
 	}

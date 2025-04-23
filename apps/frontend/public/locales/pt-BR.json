@@ -59,6 +59,10 @@
 				"validation": {
 					"title": "Validation",
 					"description": "Habilitar ValidationPipe"
+				},
+				"compression": {
+					"title": "Compression",
+					"description": "Habilitar Compression"
 				}
 			}
 		},
