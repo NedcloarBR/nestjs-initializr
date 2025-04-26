@@ -47,7 +47,7 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 		packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
 		modules: z.array(z.string()).optional().default([]),
 		extras: z.array(z.string()).optional().default([]),
-		linterFormatter: z.enum(["biome", "eslint-prettier"])
+		linterFormatter: z.enum(["biome", "eslint-prettier"]).optional().nullable().default(null)
 	});
 
 export function GeneratorForm() {
@@ -62,7 +62,8 @@ export function GeneratorForm() {
 			mainType: "fastify",
 			packageManager: "npm",
 			modules: [],
-			extras: []
+			extras: [],
+			linterFormatter: null
 		}
 	});
 
