@@ -23,7 +23,7 @@ async function bootstrap() {
 	);
 
 	app.enableCors({
-		origin: "*"
+		origin: configService.get("BACKEND_CORS_ORIGIN")
 	});
 
 	setupSwagger(app, globalPrefix, port);

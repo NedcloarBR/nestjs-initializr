@@ -1,6 +1,9 @@
 import { IsNumber, IsString } from "class-validator";
 
 export class ConfigDTO {
+	@IsString()
+	public readonly BACKEND_CORS_ORIGIN: string;
+
 	@IsNumber(
 		{
 			allowInfinity: false,

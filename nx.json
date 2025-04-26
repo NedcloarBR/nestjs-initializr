@@ -51,11 +51,6 @@
 		}
 	],
 	"targetDefaults": {
-		"build": {
-			"dependsOn": ["^build"],
-			"inputs": ["{projectRoot}/**/*"],
-			"outputs": ["{projectRoot}/dist", "{projectRoot}/build", "{projectRoot}/public/build"]
-		},
 		"e2e-ci--**/*": {
 			"dependsOn": ["^build"]
 		}
