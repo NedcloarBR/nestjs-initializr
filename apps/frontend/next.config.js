@@ -16,7 +16,10 @@ const nextConfig = {
 	eslint: {
 		ignoreDuringBuilds: true
 	},
-	trailingSlash: false
+	trailingSlash: false,
+	env: {
+		BACKEND_URL: process.env.FRONTEND_BACKEND_URL
+	}
 };
 
 const plugins = [

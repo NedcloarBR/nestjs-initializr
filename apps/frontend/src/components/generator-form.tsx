@@ -69,7 +69,7 @@ export function GeneratorForm() {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		try {
-			const response = await fetch("http://localhost:9901/api/generator", {
+			const response = await fetch(`${process.env.BACKEND_URL}/api/generator`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
