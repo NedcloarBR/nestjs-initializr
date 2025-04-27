@@ -9,6 +9,7 @@ import { MetadataDTO } from "./dtos/metadata.dto";
 // biome-ignore lint/style/useImportType: <explanation>
 import {
 	BaseGenerator,
+	DockerService,
 	ExtraService,
 	LinterFormatterService,
 	MainUpdaterService,
@@ -28,7 +29,8 @@ export class GeneratorService extends BaseGenerator {
 		private readonly mainUpdaterGenerator: MainUpdaterService,
 		private readonly swaggerGenerator: SwaggerService,
 		private readonly extraGenerator: ExtraService,
-		private readonly linterFormatterGenerator: LinterFormatterService
+		private readonly linterFormatterGenerator: LinterFormatterService,
+		private readonly dockerGenerator: DockerService
 	) {
 		super();
 	}
@@ -86,6 +88,16 @@ export class GeneratorService extends BaseGenerator {
 		if (metadata.linterFormatter) {
 			const linterFormatterFiles = await this.linterFormatterGenerator.generate(id, metadata.linterFormatter);
 			rootDirFiles.push(...linterFormatterFiles);
+		}
+
+		if (metadata.docker) {
+			const dockerFiles = await this.dockerGenerator.generate(
+				id,
+				metadata.packageManager,
+				metadata.packageJson.nodeVersion,
+				metadata.packageJson.name
+			);
+			rootDirFiles.push(...dockerFiles);
 		}
 
 		await this.lintAndFormat(id);

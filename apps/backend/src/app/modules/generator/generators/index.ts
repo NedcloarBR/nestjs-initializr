@@ -1,4 +1,5 @@
 export { BaseGenerator, Template } from "./base.generator";
+export { DockerService } from "./docker.service";
 export { ExtraService } from "./extra.service";
 export { LinterFormatterService } from "./linter-formatter.service";
 export { MainUpdaterService } from "./main-updater.service";

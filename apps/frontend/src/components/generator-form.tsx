@@ -29,6 +29,7 @@ import { extraFields, modules, nodeVersions, packageManagers } from "@/constants
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { DockerCard } from "./docker-card";
 import { ExtraField } from "./extra-field";
 import { LinterFormatterCard } from "./linter-formatter-card";
 import { ModuleCard } from "./module-card";
@@ -47,7 +48,8 @@ const formSchemaFunction = (t: (arg: string) => string) =>
 		packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
 		modules: z.array(z.string()).optional().default([]),
 		extras: z.array(z.string()).optional().default([]),
-		linterFormatter: z.enum(["biome", "eslint-prettier"]).optional().nullable().default(null)
+		linterFormatter: z.enum(["biome", "eslint-prettier"]).optional().nullable().default(null),
+		docker: z.boolean().optional().default(false)
 	});
 
 export function GeneratorForm() {
@@ -63,7 +65,8 @@ export function GeneratorForm() {
 			packageManager: "npm",
 			modules: [],
 			extras: [],
-			linterFormatter: null
+			linterFormatter: null,
+			docker: false
 		}
 	});
 
@@ -84,7 +87,8 @@ export function GeneratorForm() {
 					packageManager: values.packageManager,
 					modules: values.modules,
 					extras: values.extras,
-					linterFormatter: values.linterFormatter
+					linterFormatter: values.linterFormatter,
+					docker: values.docker
 				})
 			});
 
@@ -269,6 +273,7 @@ export function GeneratorForm() {
 										disableText={t("LinterFormatter.eslint-prettier.disableText")}
 										iconType="png"
 									/>
+									<DockerCard />
 								</div>
 							</ScrollArea>
 						</aside>

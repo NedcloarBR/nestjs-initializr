@@ -78,6 +78,9 @@
 				"disableText": "It is not possible to enable Eslint + Prettier and BiomeJS at the same time."
 			}
 		},
+		"Docker": {
+			"description": "Dockerize your NestJS application"
+		},
 		"GenerateButton": "Generate"
 	}
 }

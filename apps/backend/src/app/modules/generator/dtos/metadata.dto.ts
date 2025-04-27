@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsBoolean, IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from "class-validator";
 import { PackageJsonMetadataDTO } from "./package-json-metadata.dto";
 
 export class MetadataDTO {
@@ -28,4 +28,8 @@ export class MetadataDTO {
 	@IsString()
 	@IsIn(["biome", "eslint-prettier"])
 	public readonly linterFormatter?: "biome" | "eslint-prettier";
+
+	@IsOptional()
+	@IsBoolean()
+	public readonly docker?: boolean;
 }

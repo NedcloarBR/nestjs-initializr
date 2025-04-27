@@ -10,6 +10,7 @@ import {
 	PackageJsonService,
 	SwaggerService
 } from "./generators";
+import { DockerService } from "./generators/docker.service";
 
 @Module({
 	controllers: [GeneratorController],
@@ -23,7 +24,8 @@ import {
 		MainUpdaterService,
 		SwaggerService,
 		ExtraService,
-		LinterFormatterService
+		LinterFormatterService,
+		DockerService
 	]
 })
 export class GeneratorModule {}
