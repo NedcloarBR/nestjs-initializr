@@ -138,7 +138,7 @@ export class GeneratorService extends BaseGenerator {
 				await this.swaggerGenerator.generate(id, mainType, withConfigModule, projectName);
 				continue;
 			}
-			const moduleFiles = modulesTemplates.find((m) => m.name === module);
+			const moduleFiles = modulesTemplates(withConfigModule, mainType).find((m) => m.name === module);
 			const moduleRootFiles = await this.moduleGenerator.generate(
 				id,
 				moduleFiles.templates,
@@ -167,8 +167,7 @@ export class GeneratorService extends BaseGenerator {
 			}
 
 			if (moduleFiles.mainTemplates) {
-				const templates = moduleFiles.mainTemplates(mainType);
-				for (const template of templates) {
+				for (const template of moduleFiles.mainTemplates) {
 					this.fileUpdaterGenerator.update(id, "src/main.ts", template);
 				}
 			}
