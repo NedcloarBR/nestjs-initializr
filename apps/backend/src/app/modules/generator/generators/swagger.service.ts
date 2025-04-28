@@ -4,7 +4,7 @@ import { NPM_DEPENDENCIES } from "../../../constants/packages";
 import { SwaggerTemplateReplaceKeys, SwaggerTemplates } from "../templates/swagger.templates";
 import { BaseGenerator } from "./base.generator";
 // biome-ignore lint/style/useImportType: <explanation>
-import { MainUpdaterService } from "./main-updater.service";
+import { FileUpdaterService } from "./file-updater.service";
 // biome-ignore lint/style/useImportType: <explanation>
 import { PackageJsonService } from "./package-json.service";
 
@@ -12,7 +12,7 @@ import { PackageJsonService } from "./package-json.service";
 export class SwaggerService extends BaseGenerator {
 	public constructor(
 		private readonly packageJsonGenerator: PackageJsonService,
-		private readonly mainUpdaterGenerator: MainUpdaterService
+		private readonly fileUpdaterGenerator: FileUpdaterService
 	) {
 		super();
 	}
@@ -51,7 +51,7 @@ export class SwaggerService extends BaseGenerator {
 			content: swagger.templates[0].content.replace(SwaggerTemplateReplaceKeys.PROJECT_NAME, projectName)
 		});
 		for (const template of swagger.main) {
-			await this.mainUpdaterGenerator.update(id, template);
+			await this.fileUpdaterGenerator.update(id, "src/main", template);
 		}
 	}
 }

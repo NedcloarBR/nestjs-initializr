@@ -7,7 +7,7 @@ import { helmet } from "../templates/extra/helmet";
 import { validation } from "../templates/extra/validation";
 import { BaseGenerator } from "./base.generator";
 // biome-ignore lint/style/useImportType:
-import { MainUpdaterService } from "./main-updater.service";
+import { FileUpdaterService } from "./file-updater.service";
 // biome-ignore lint/style/useImportType:
 import { PackageJsonService } from "./package-json.service";
 
@@ -15,7 +15,7 @@ import { PackageJsonService } from "./package-json.service";
 export class ExtraService extends BaseGenerator {
 	public constructor(
 		private readonly packageJsonGenerator: PackageJsonService,
-		private readonly mainUpdaterGenerator: MainUpdaterService
+		private readonly fileUpdaterGenerator: FileUpdaterService
 	) {
 		super();
 	}
@@ -31,7 +31,7 @@ export class ExtraService extends BaseGenerator {
 		for (const extra of extras) {
 			if (metadata[extra].templates)
 				for (const template of metadata[extra].templates) {
-					await this.mainUpdaterGenerator.update(id, template);
+					await this.fileUpdaterGenerator.update(id, "src/main.ts", template);
 				}
 
 			if (metadata[extra].packages) {

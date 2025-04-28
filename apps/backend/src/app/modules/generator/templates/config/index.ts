@@ -20,6 +20,7 @@ export const ConfigTemplates = {
 	],
 	constants: configConstants,
 	mainTemplates: configMainTemplates,
+	filesToUpdate: null,
 	packages: [
 		{
 			...NPM_DEPENDENCIES["@nestjs/config"],

@@ -11,8 +11,8 @@ import {
 	BaseGenerator,
 	DockerService,
 	ExtraService,
+	FileUpdaterService,
 	LinterFormatterService,
-	MainUpdaterService,
 	ModuleService,
 	PackageJsonService,
 	SwaggerService
@@ -26,7 +26,7 @@ export class GeneratorService extends BaseGenerator {
 	public constructor(
 		private readonly packageJsonGenerator: PackageJsonService,
 		private readonly moduleGenerator: ModuleService,
-		private readonly mainUpdaterGenerator: MainUpdaterService,
+		private readonly fileUpdaterGenerator: FileUpdaterService,
 		private readonly swaggerGenerator: SwaggerService,
 		private readonly extraGenerator: ExtraService,
 		private readonly linterFormatterGenerator: LinterFormatterService,
@@ -143,15 +143,15 @@ export class GeneratorService extends BaseGenerator {
 				id,
 				moduleFiles.templates,
 				{
-					export: moduleFiles.constants.exporter,
-					import: moduleFiles.constants.name,
-					importIn: "src/app.module.ts"
+					export: moduleFiles.constants.export,
+					import: moduleFiles.constants.import,
+					importIn: moduleFiles.constants.importIn
 				},
 				mainType
 			);
 			moduleGeneratedFiles.push(...moduleRootFiles);
-			if (moduleFiles.constants.serviceConstant) {
-				this.moduleGenerator.updateServiceConstants(id, moduleFiles.constants.serviceConstant);
+			if (moduleFiles.constants.token) {
+				this.moduleGenerator.updateServiceConstants(id, moduleFiles.constants.token);
 			}
 
 			if (moduleFiles.packages) {
@@ -160,10 +160,16 @@ export class GeneratorService extends BaseGenerator {
 				}
 			}
 
+			if (moduleFiles.filesToUpdate) {
+				for (const file of moduleFiles.filesToUpdate) {
+					this.fileUpdaterGenerator.update(id, file.path, file.template);
+				}
+			}
+
 			if (moduleFiles.mainTemplates) {
 				const templates = moduleFiles.mainTemplates(mainType);
 				for (const template of templates) {
-					this.mainUpdaterGenerator.update(id, template);
+					this.fileUpdaterGenerator.update(id, "src/main.ts", template);
 				}
 			}
 		}
