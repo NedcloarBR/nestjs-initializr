@@ -126,7 +126,11 @@ export class GeneratorService extends BaseGenerator {
 	) {
 		const moduleGeneratedFiles = [];
 
-		const modules = [...rawModules.filter((m) => m !== "swagger"), ...rawModules.filter((m) => m === "swagger")];
+		const modules = [
+			...rawModules.filter((m) => m === "config"),
+			...rawModules.filter((m) => m !== "config" && m !== "swagger"),
+			...rawModules.filter((m) => m === "swagger")
+		];
 
 		if (modules.length > 0 && !(modules.length === 1 && modules[0] === "swagger")) {
 			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
@@ -162,13 +166,18 @@ export class GeneratorService extends BaseGenerator {
 
 			if (moduleFiles.filesToUpdate) {
 				for (const file of moduleFiles.filesToUpdate) {
-					this.fileUpdaterGenerator.update(id, file.path, file.template);
+					for (const template of file.templates) {
+						const fileCreated = await this.fileUpdaterGenerator.update(id, file.path, file.name, template);
+						if (fileCreated) {
+							moduleGeneratedFiles.push(fileCreated);
+						}
+					}
 				}
 			}
 
 			if (moduleFiles.mainTemplates) {
 				for (const template of moduleFiles.mainTemplates) {
-					this.fileUpdaterGenerator.update(id, "src/main.ts", template);
+					this.fileUpdaterGenerator.update(id, "src", "main.ts", template);
 				}
 			}
 		}
