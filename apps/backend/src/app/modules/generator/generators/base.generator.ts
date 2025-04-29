@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import dedent from "dedent";
 
 type StaticTemplate = {
 	name: string;
@@ -23,8 +24,13 @@ export class BaseGenerator {
 		const dirPath = this.getPath(id, file.path);
 		this.mkdir(dirPath);
 		const filePath = path.join(dirPath, file.name);
+		let content = file.content;
+		const notDedent = [".ts", ".js", ".json", ".env"];
+		if (!notDedent.some((ext) => file.name.endsWith(ext))) {
+			content = dedent(file.content);
+		}
 
-		this.writeFile(filePath, file.content);
+		this.writeFile(filePath, content);
 
 		return { fileName: file.name, stream: fs.createReadStream(filePath) };
 	}

@@ -3382,6 +3382,7 @@ __metadata:
     class-validator: "npm:^0.14.1"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
+    dedent: "npm:^1.5.3"
     fastify: "npm:^5.2.2"
     file-saver: "npm:^2.0.5"
     flag-icons: "npm:^7.3.2"
@@ -8747,7 +8748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dedent@npm:^1.0.0":
+"dedent@npm:^1.0.0, dedent@npm:^1.5.3":
   version: 1.5.3
   resolution: "dedent@npm:1.5.3"
   peerDependencies:
