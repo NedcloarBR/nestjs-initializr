@@ -1,9 +1,10 @@
 export const dotenvTemplate = {
-	name: ".env",
 	path: "",
-	content: `
-    NODE_ENV = development
-    PORT = 4404
-    GLOBAL_PREFIX = api
-  `
+	name: ".env",
+	templates: [
+		{
+			replacer: "",
+			content: "NODE_ENV = development\nPORT = 4404\nGLOBAL_PREFIX = api"
+		}
+	]
 };

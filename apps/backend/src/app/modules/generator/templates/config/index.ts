@@ -12,14 +12,8 @@ import { configValidatorTemplate } from "./validator.template";
 export function ConfigTemplates(mainType: "fastify" | "express"): ModuleTemplate {
 	return {
 		name: "config",
-		templates: [
-			envDtoTemplate,
-			envTypesTemplate,
-			dotenvTemplate,
-			configModuleTemplate,
-			configServiceTemplate,
-			configValidatorTemplate
-		],
+		templates: [envDtoTemplate, envTypesTemplate, configModuleTemplate, configServiceTemplate, configValidatorTemplate],
+		filesToUpdate: [dotenvTemplate],
 		constants: configConstants,
 		mainTemplates: configMainTemplates(mainType),
 		packages: [
