@@ -31,7 +31,7 @@ export class ExtraService extends BaseGenerator {
 		for (const extra of extras) {
 			if (metadata[extra].templates)
 				for (const template of metadata[extra].templates) {
-					await this.fileUpdaterGenerator.update(id, "src/main.ts", template);
+					await this.fileUpdaterGenerator.update(id, "src", "main.ts", template);
 				}
 
 			if (metadata[extra].packages) {

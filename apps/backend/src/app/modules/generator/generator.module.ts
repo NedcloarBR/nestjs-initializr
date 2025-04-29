@@ -4,8 +4,8 @@ import { GeneratorController } from "./generator.controller";
 import { GeneratorService } from "./generator.service";
 import {
 	ExtraService,
+	FileUpdaterService,
 	LinterFormatterService,
-	MainUpdaterService,
 	ModuleService,
 	PackageJsonService,
 	SwaggerService
@@ -21,7 +21,7 @@ import { DockerService } from "./generators/docker.service";
 		},
 		PackageJsonService,
 		ModuleService,
-		MainUpdaterService,
+		FileUpdaterService,
 		SwaggerService,
 		ExtraService,
 		LinterFormatterService,

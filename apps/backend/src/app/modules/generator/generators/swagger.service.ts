@@ -51,7 +51,7 @@ export class SwaggerService extends BaseGenerator {
 			content: swagger.templates[0].content.replace(SwaggerTemplateReplaceKeys.PROJECT_NAME, projectName)
 		});
 		for (const template of swagger.main) {
-			await this.fileUpdaterGenerator.update(id, "src/main", template);
+			await this.fileUpdaterGenerator.update(id, "src", "main.ts", template);
 		}
 	}
 }
