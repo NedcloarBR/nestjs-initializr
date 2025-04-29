@@ -35,8 +35,7 @@ export class GeneratorService extends BaseGenerator {
 		super();
 	}
 
-	public async generate(metadata: MetadataDTO): Promise<fs.ReadStream> {
-		const id = Date.now().toString();
+	public async generate(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
 		const packageJson = await this.packageJsonGenerator.generate(metadata.packageJson, id);
 		const rootDirFiles = [packageJson];
 

@@ -1,5 +1,5 @@
-import { Body, Controller, Header, Inject, Post, Res } from "@nestjs/common";
-import type { FastifyReply } from "fastify";
+import { Body, Controller, Header, Inject, Post, Req, Res } from "@nestjs/common";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import { Services } from "../../constants/services";
 // biome-ignore lint/style/useImportType: Cannot useImportType in body dtos
 import { MetadataDTO } from "./dtos/metadata.dto";
@@ -13,8 +13,8 @@ export class GeneratorController {
 	@Post()
 	@Header("Content-Type", "application/json")
 	@Header("Content-Disposition", 'attachment; filename="project.zip"')
-	public async generate(@Res() res: FastifyReply, @Body() metadata: MetadataDTO) {
-		const file = await this.generatorService.generate(metadata);
+	public async generate(@Res() res: FastifyReply, @Req() req: FastifyRequest, @Body() metadata: MetadataDTO) {
+		const file = await this.generatorService.generate(metadata, req.requestId);
 		return res.send(file);
 	}
 }
