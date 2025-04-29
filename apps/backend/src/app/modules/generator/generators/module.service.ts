@@ -5,7 +5,7 @@ import { BaseGenerator, type Template } from "./base.generator";
 export type ModuleTemplate = {
 	name: string;
 	templates: Template[];
-	constants: {
+	constants?: {
 		token: string;
 		import: string;
 		export: string;
@@ -13,7 +13,7 @@ export type ModuleTemplate = {
 		importIn: string;
 	};
 	mainTemplates?: { replacer: string; content: string }[];
-	filesToUpdate?: { path: string; template: { replacer: string; content: string } }[];
+	filesToUpdate?: { path: string; name: string; templates: { replacer: string; content: string }[] }[];
 	packages?: { name: string; version: string; dev: boolean }[];
 };
 
@@ -44,7 +44,7 @@ export class ModuleService extends BaseGenerator {
 	public updateExport(id: string, exportString: string) {
 		const allModulesIndexPath = this.getPath(id, "src/modules/index.ts");
 		let allModulesIndexContent = this.readFile(allModulesIndexPath);
-		allModulesIndexContent += exportString;
+		allModulesIndexContent += `\n${exportString}`;
 		this.writeFile(allModulesIndexPath, allModulesIndexContent);
 	}
 
@@ -52,25 +52,35 @@ export class ModuleService extends BaseGenerator {
 		const moduleToUpdatePathResolved = this.getPath(id, moduleToUpdatePath);
 		let moduleToUpdateContent = this.readFile(moduleToUpdatePathResolved);
 
-		const importsRegex = /(imports:\s*\[)([\s\S]*?)(\])/;
-		const importFromModulesFolderRegex = /import\s+\{\s*([^\}]+)\s*\}\s+from\s+['"]@\/modules['"]/g;
-		if (!moduleToUpdateContent.includes(`${importString},`)) {
-			moduleToUpdateContent = moduleToUpdateContent.replace(importsRegex, `$1$2\n    ${importString},$3`);
-			if (!moduleToUpdateContent.includes("import { } from '@/modules'")) {
-				moduleToUpdateContent = `import { } from '@/modules';${moduleToUpdateContent}`;
-			}
-			moduleToUpdateContent = moduleToUpdateContent.replace(importFromModulesFolderRegex, (match, existingImports) => {
-				const updatedImports = existingImports
-					.split(",")
-					.map((s) => s.trim())
-					.filter(Boolean);
+		const importsSectionRegex = /(imports:\s*\[)([\s\S]*?)(\])/;
+		const importFromModulesRegex = /import\s+\{\s*([^\}]+)\s*\}\s+from\s+['"]@\/modules['"]/;
 
-				if (!updatedImports.includes(importString)) {
-					updatedImports.push(importString);
-				}
-
-				return `import { ${updatedImports.join(", ")} } from "@/modules"`;
+		const importsMatch = moduleToUpdateContent.match(importsSectionRegex);
+		if (importsMatch && !importsMatch[2].includes(importString)) {
+			moduleToUpdateContent = moduleToUpdateContent.replace(importsSectionRegex, (match, before, middle, after) => {
+				return `${before}${middle.trim() ? `${middle.trim()},\n    ${importString}` : `\n    ${importString}`}${after}`;
 			});
+		}
+
+		const importMatch = moduleToUpdateContent.match(importFromModulesRegex);
+		if (importMatch) {
+			const existingImports = importMatch[1]
+				.split(",")
+				.map((s) => s.trim())
+				.filter(Boolean);
+
+			if (!existingImports.includes(importString)) {
+				existingImports.push(importString);
+			}
+
+			const uniqueImports = [...new Set(existingImports)].sort();
+
+			moduleToUpdateContent = moduleToUpdateContent.replace(
+				importFromModulesRegex,
+				`import { ${uniqueImports.join(", ")} } from "@/modules"`
+			);
+		} else {
+			moduleToUpdateContent = `import { ${importString} } from "@/modules";\n${moduleToUpdateContent}`;
 		}
 
 		this.writeFile(moduleToUpdatePathResolved, moduleToUpdateContent);
