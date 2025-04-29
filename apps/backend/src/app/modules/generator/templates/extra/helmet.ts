@@ -2,7 +2,7 @@ export function helmet(mainType: "fastify" | "express", withConfigModule: boolea
 	return [
 		{
 			replacer: 'import { NestFactory } from "@nestjs/core";',
-			content: `import { NestFactory } from "@nestjs/core";\nimport helmet from ${mainType === "fastify" ? "@fastify/helmet" : "helmet"};`
+			content: `import { NestFactory } from "@nestjs/core";\nimport helmet from ${mainType === "fastify" ? '"@fastify/helmet"' : '"helmet"'};`
 		},
 		{
 			replacer: `const port = ${withConfigModule ? 'configService.get("PORT")' : 3000};`,
