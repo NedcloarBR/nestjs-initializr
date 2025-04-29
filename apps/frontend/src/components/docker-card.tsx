@@ -13,8 +13,7 @@ export function DockerCard() {
 	const isSelected = field.value;
 
 	function toggleDocker() {
-		const updatedModules = isSelected ? field.value : !field.value;
-		field.onChange(updatedModules);
+		field.onChange(!isSelected);
 	}
 
 	return (
