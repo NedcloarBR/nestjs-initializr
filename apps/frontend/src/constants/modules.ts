@@ -7,27 +7,27 @@ export const modules = (t: (args: string) => string) =>
 			iconType: "svg"
 		},
 		{ title: "Swagger", name: "swagger", description: t("Modules.swagger.description"), iconType: "svg" },
-		{ title: "Necord", name: "necord", description: t("Modules.necord.description"), iconType: "png" },
+		{ title: "Necord", name: "necord", description: t("Modules.necord.description"), iconType: "svg" },
 		{
 			title: "@necord/localization",
 			name: "necord-localization",
 			description: t("Modules.necord-localization.description"),
 			dependsOn: "necord",
-			iconType: "png"
+			iconType: "svg"
 		},
 		{
 			title: "@necord/pagination",
 			name: "necord-pagination",
 			description: t("Modules.necord-pagination.description"),
 			dependsOn: "necord",
-			iconType: "png"
+			iconType: "svg"
 		},
 		{
 			title: "@necord/lavalink",
 			name: "necord-lavalink",
 			description: t("Modules.necord-lavalink.description"),
 			dependsOn: "necord",
-			iconType: "png"
+			iconType: "svg"
 		}
 	] as {
 		title: string;
