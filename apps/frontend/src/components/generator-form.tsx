@@ -255,6 +255,8 @@ export function GeneratorForm() {
 											title={module.title}
 											name={module.name}
 											description={module.description}
+											iconType={module.iconType}
+											dependsOn={module.dependsOn}
 										/>
 									))}
 									<LinterFormatterCard

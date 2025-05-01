@@ -1,0 +1,28 @@
+import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
+import type { ModuleTemplate } from "../../../generators/module.service";
+import { commandTemplate } from "./command.template";
+import { configTemplate } from "./config.template";
+import { dotenvTemplate } from "./dotenv.template";
+import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
+import { JSONLocaleLoaderTemplate } from "./jsonlocale-loader.template";
+import { moduleTemplate } from "./module.template";
+import { pingTranslationTemplate } from "./ping-translation.template";
+
+export function NecordLocalizationTemplates(withConfigModule: boolean): ModuleTemplate {
+	return {
+		name: "necord-localization",
+		templates: [...(withConfigModule ? [JSONLocaleLoaderTemplate, pingTranslationTemplate, envDtoTemplate] : [])],
+		filesToUpdate: [
+			commandTemplate,
+			moduleTemplate(withConfigModule),
+			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate] : []),
+			dotenvTemplate
+		],
+		packages: [
+			{
+				...NPM_DEPENDENCIES["@necord/localization"],
+				dev: false
+			}
+		]
+	};
+}

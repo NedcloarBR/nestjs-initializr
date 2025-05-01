@@ -37,11 +37,25 @@
 		},
 		"Modules": {
 			"title": "Módulos opcionais",
+			"dependsOn": "Este módulo depende do(s) seguinte(s) módulo(s): {ModuleNames}",
+			"dockerMissing": "Este módulo requer Docker",
 			"config": {
 				"description": "Módulo @nestjs/config, mas com um registro personalizado com validação e serviço personalizado com preenchimento automático e conversão de tipos."
 			},
 			"swagger": {
 				"description": "Módulo @nestjs/swagger configurado com endpoints ui, json e yaml."
+			},
+			"necord": {
+				"description": "Este pacote usa o melhor do mundo NodeJS debaixo do pano. Discord.js é a biblioteca mais poderosa para criar bots e Nest.js é um framework progressivo para a criação de aplicações bem arquitetadas. Este módulo fornece uma maneira rápida e fácil para criar bots do Discord e uma integração profunda com sua aplicação NestJS."
+			},
+			"necord-pagination": {
+				"description": "Certamente! Paginação é uma técnica útil empregada nas interfaces do usuário para apresentar grandes quantidades de informações de forma estruturada e controlável. Ao lidar com volumes substanciais de dados, como resultados de busca, artigos ou listagens de produtos, apresentá-lo tudo de uma vez pode sobrecarregar usuários e levar a uma experiência de usuário ruim. A paginação permite dividir as informações em partes menores, organizadas, melhorando o envolvimento dos usuários e a facilidade de navegação. Esse modulo permite que você crie uma paginação com algumas linhas de código."
+			},
+			"necord-localization": {
+				"description": "@necord/localization é um módulo de localização leve para Necord. Ele permite que você localize facilmente os comandos do seu bot. O módulo fornece uma API simples para gerenciamento de localizações e traduções, bem como um poderoso sistema de adaptador de localização."
+			},
+			"necord-lavalink": {
+				"description": "Transforme seu bot em um DJ profissional com o poder do ecossistema Lavalink. Este pacote usa lavalink-client nos bastidores, oferecendo uma solução de alto desempenho e eficiente para o gerenciamento de fluxos de áudio no Discord. Aproveitando o Lavalink, o seu bot ganha a capacidade de gerenciar a reprodução de áudio, filas, e controles em tempo real, com latência mínima, transformando-o em um sistema de música totalmente capaz e profissional."
 			}
 		},
 		"Extra": {

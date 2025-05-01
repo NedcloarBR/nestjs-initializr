@@ -66,6 +66,30 @@ export const NPM_DEPENDENCIES = {
 	"@fastify/compress": {
 		name: "@fastify/compress",
 		version: "^8.0.1"
+	},
+	necord: {
+		name: "necord",
+		version: "^6.8.9"
+	},
+	"discord.js": {
+		name: "discord.js",
+		version: "^14.19.1"
+	},
+	"@necord/localization": {
+		name: "@necord/localization",
+		version: "^4.0.2"
+	},
+	"@necord/pagination": {
+		name: "@necord/pagination",
+		version: "^2.0.4"
+	},
+	"@necord/lavalink": {
+		name: "@necord/lavalink",
+		version: "^1.1.4"
+	},
+	"lavalink-client": {
+		name: "lavalink-client",
+		version: "^2.5.0"
 	}
 };
 
