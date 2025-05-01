@@ -27,7 +27,8 @@ export function NecordModuleTemplate(withConfigModule: boolean) {
                     IntentsBitField.Flags.GuildMembers,
                     IntentsBitField.Flags.GuildMessages,
                     IntentsBitField.Flags.MessageContent
-                  ]
+                  ],
+                  development: process.env.DISCORD_DEVELOPMENT_GUILD_ID
               })`
 					}
         ],

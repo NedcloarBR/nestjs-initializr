@@ -20,7 +20,8 @@ export const NecordConfigTemplate = {
             IntentsBitField.Flags.GuildMembers,
             IntentsBitField.Flags.GuildMessages,
             IntentsBitField.Flags.MessageContent
-          ]
+          ],
+          development: this.config.get("DISCORD_DEVELOPMENT_GUILD_ID")
         }
       }
     }

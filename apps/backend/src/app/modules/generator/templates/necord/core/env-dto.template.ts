@@ -10,6 +10,10 @@ export const envDtoTemplate = {
       @IsString()
       @IsNotEmpty()
       public readonly DISCORD_TOKEN!: string;
+
+      @IsString()
+      @IsNotEmpty()
+      public readonly DISCORD_DEVELOPMENT_GUILD_ID!: string;
     }
 
     export default registerAs("discord_env", () => {
@@ -17,6 +21,7 @@ export const envDtoTemplate = {
 
       return {
         DISCORD_TOKEN: process.env.DISCORD_TOKEN || "",
+        DISCORD_DEVELOPMENT_GUILD_ID: process.env.DISCORD_DEVELOPMENT_GUILD_ID || ""
       };
     });
   `

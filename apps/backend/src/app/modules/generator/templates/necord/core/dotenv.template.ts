@@ -4,7 +4,7 @@ export const dotenvTemplate = {
 	templates: [
 		{
 			replacer: "",
-			content: "DISCORD_TOKEN = "
+			content: "DISCORD_TOKEN = \nDISCORD_DEVELOPMENT_GUILD_ID = "
 		}
 	]
 };
