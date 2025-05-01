@@ -51,6 +51,9 @@ export class GeneratorService extends BaseGenerator {
 		});
 		rootDirFiles.push(lockFile);
 
+		const configFile = await this.generateConfigFile(metadata, id);
+		rootDirFiles.push(configFile);
+
 		if (metadata.mainType === "fastify") {
 			for (const packageMeta of fastifyPackages) {
 				await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
@@ -114,6 +117,16 @@ export class GeneratorService extends BaseGenerator {
 		}, 10_000);
 
 		return zipFile;
+	}
+
+	public async generateConfigFile(metadata: MetadataDTO, id: string) {
+		const configFile = this.createFile(id, {
+			name: "nestjs-initializr.json",
+			path: "",
+			content: JSON.stringify(metadata, null, 2)
+		});
+
+		return configFile;
 	}
 
 	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>

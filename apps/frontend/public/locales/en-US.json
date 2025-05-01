@@ -98,6 +98,10 @@
 		"Docker": {
 			"description": "Dockerize your NestJS application"
 		},
-		"GenerateButton": "Generate"
+		"Submit": {
+			"title": "Generate",
+			"project": "Project",
+			"config": "Config"
+		}
 	}
 }

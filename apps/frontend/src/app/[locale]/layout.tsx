@@ -47,7 +47,7 @@ export default async function LocaleLayout(props: {
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange={true}>
 					<NextIntlClientProvider messages={messages}>
 						<TooltipProvider>
-							<main className="m-0 h-screen overflow-x-hidden bg-nest-background p-0 font-medium dark:bg-nest-background">
+							<main className="m-0 h-screen overflow-hidden bg-nest-background p-0 font-medium dark:bg-nest-background">
 								{children}
 								{/* <Analytics /> */}
 								<Toaster />
