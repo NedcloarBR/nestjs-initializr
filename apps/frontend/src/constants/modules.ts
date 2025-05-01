@@ -28,6 +28,12 @@ export const modules = (t: (args: string) => string) =>
 			description: t("Modules.necord-lavalink.description"),
 			dependsOn: "necord",
 			iconType: "svg"
+		},
+		{
+			title: "NestWhats",
+			name: "nestwhats",
+			description: t("Modules.nestwhats.description"),
+			iconType: "svg"
 		}
 	] as {
 		title: string;

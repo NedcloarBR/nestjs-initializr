@@ -90,6 +90,14 @@ export const NPM_DEPENDENCIES = {
 	"lavalink-client": {
 		name: "lavalink-client",
 		version: "^2.5.0"
+	},
+	nestwhats: {
+		name: "nestwhats",
+		version: "^1.0.3"
+	},
+	"whatsapp-web.js": {
+		name: "whatsapp-web.js",
+		version: "^1.26.0"
 	}
 };
 

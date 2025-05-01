@@ -56,6 +56,9 @@
 			},
 			"necord-lavalink": {
 				"description": "Transforme seu bot em um DJ profissional com o poder do ecossistema Lavalink. Este pacote usa lavalink-client nos bastidores, oferecendo uma solução de alto desempenho e eficiente para o gerenciamento de fluxos de áudio no Discord. Aproveitando o Lavalink, o seu bot ganha a capacidade de gerenciar a reprodução de áudio, filas, e controles em tempo real, com latência mínima, transformando-o em um sistema de música totalmente capaz e profissional."
+			},
+			"nestwhats": {
+				"description": "NestWhats é um módulo para NestJS que abstrai métodos do whatsapp-web.js para facilitar a criação de bots para WhatsApp.\nwhatsapp-web.js é um cliente da API do WhatsApp que se conecta através do aplicativo de navegador WhatsApp Web usando Puppeteer"
 			}
 		},
 		"Extra": {

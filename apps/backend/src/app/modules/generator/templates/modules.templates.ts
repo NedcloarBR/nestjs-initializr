@@ -3,6 +3,7 @@ import { NecordTemplates } from "./necord/core";
 import { NecordLavalinkTemplates } from "./necord/lavalink";
 import { NecordLocalizationTemplates } from "./necord/localization";
 import { NecordPaginationTemplates } from "./necord/pagination";
+import { NestWhatsTemplates } from "./nestwhats";
 
 export function modulesTemplates(withConfigModule: boolean, mainType: "fastify" | "express") {
 	return [
@@ -10,6 +11,7 @@ export function modulesTemplates(withConfigModule: boolean, mainType: "fastify" 
 		NecordTemplates(withConfigModule),
 		NecordLocalizationTemplates(withConfigModule),
 		NecordPaginationTemplates(withConfigModule),
-		NecordLavalinkTemplates(withConfigModule)
+		NecordLavalinkTemplates(withConfigModule),
+		NestWhatsTemplates
 	];
 }
