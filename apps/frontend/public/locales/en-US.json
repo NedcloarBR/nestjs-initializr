@@ -101,7 +101,8 @@
 		"Submit": {
 			"title": "Generate",
 			"project": "Project",
-			"config": "Config"
+			"config": "Config",
+			"reset": "Reset"
 		}
 	}
 }

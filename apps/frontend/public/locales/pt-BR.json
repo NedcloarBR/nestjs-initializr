@@ -101,7 +101,8 @@
 		"Submit": {
 			"title": "Gerar",
 			"project": "Projeto",
-			"config": "Configuração"
+			"config": "Configuração",
+			"reset": "Redefinir"
 		}
 	}
 }

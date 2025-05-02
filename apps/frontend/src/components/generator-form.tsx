@@ -1,8 +1,17 @@
 "use client";
 
+import { generateConfig, generateProject, loadConfig } from "@/actions";
+import { extraFields, modules, nodeVersions, packageManagers } from "@/constants";
+import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RefreshCcwIcon, UploadIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
+import { DockerCard } from "./docker-card";
+import { ExtraField } from "./extra-field";
+import { LinterFormatterCard } from "./linter-formatter-card";
+import { ModuleCard } from "./module-card";
 import {
 	Button,
 	Dialog,
@@ -25,32 +34,48 @@ import {
 	Separator
 } from "./ui";
 
-import { generateConfig, generateProject } from "@/actions";
-import { extraFields, modules, nodeVersions, packageManagers } from "@/constants";
-import { generatorFormSchema } from "@/forms/generator-form-schema";
-import { useTranslations } from "next-intl";
-import { DockerCard } from "./docker-card";
-import { ExtraField } from "./extra-field";
-import { LinterFormatterCard } from "./linter-formatter-card";
-import { ModuleCard } from "./module-card";
-
 export function GeneratorForm() {
 	const t = useTranslations("Generator");
 	const formSchema = generatorFormSchema(t);
+	const defaultValues: z.infer<typeof formSchema> = {
+		projectName: t("FormSchema.projectName.default"),
+		projectDescription: t("FormSchema.projectDescription.default"),
+		nodeVersion: "20",
+		mainType: "fastify",
+		packageManager: "npm",
+		modules: [],
+		extras: [],
+		linterFormatter: null,
+		docker: false
+	};
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {
-			projectName: t("FormSchema.projectName.default"),
-			projectDescription: t("FormSchema.projectDescription.default"),
-			nodeVersion: "20",
-			mainType: "fastify",
-			packageManager: "npm",
-			modules: [],
-			extras: [],
-			linterFormatter: null,
-			docker: false
-		}
+		defaultValues
 	});
+
+	function handleConfig(event: React.ChangeEvent<HTMLInputElement>) {
+		loadConfig(event, (data) => {
+			form.reset({
+				projectName: data.packageJson.name,
+				projectDescription: data.packageJson.description,
+				nodeVersion: data.packageJson.nodeVersion,
+				mainType: data.mainType,
+				packageManager: data.packageManager,
+				modules: data.modules,
+				extras: data.extras,
+				linterFormatter: data.linterFormatter,
+				docker: data.docker
+			});
+		});
+	}
+
+	function handleReset() {
+		form.reset(defaultValues);
+		const fileInput = document.getElementById("fileUpload") as HTMLInputElement;
+		if (fileInput) {
+			fileInput.value = "";
+		}
+	}
 
 	return (
 		<section id="generator-form" className="m-32">
@@ -93,7 +118,7 @@ export function GeneratorForm() {
 								render={({ field }) => (
 									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
-										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
+										<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-6">
 											{nodeVersions.map((version) => (
 												<div key={version} className="flex items-center">
 													<FormControl>
@@ -117,7 +142,7 @@ export function GeneratorForm() {
 								render={({ field }) => (
 									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
-										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-6">
+										<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-6">
 											<FormControl>
 												<Label
 													htmlFor="fastify"
@@ -144,7 +169,7 @@ export function GeneratorForm() {
 								render={({ field }) => (
 									<FormItem className="flex max-w-xl items-center space-x-4">
 										<FormLabel className="w-20">{t("Metadata.packageManager")}</FormLabel>
-										<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex gap-12">
+										<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-12">
 											{packageManagers.map((manager) => (
 												<FormControl key={manager}>
 													<Label
@@ -159,26 +184,41 @@ export function GeneratorForm() {
 									</FormItem>
 								)}
 							/>
-							<Dialog>
-								<DialogTrigger asChild>
-									<Button className="cursor-pointer">{t("Extra.trigger")}</Button>
-								</DialogTrigger>
-								<DialogContent className="flex">
-									<DialogHeader>
-										<DialogTitle>{t("Extra.title")}</DialogTitle>
-										<DialogDescription className="pt-4">
-											{extraFields(t).map((extra) => (
-												<ExtraField
-													key={extra.name}
-													name={extra.name}
-													title={extra.title}
-													description={extra.description}
-												/>
-											))}
-										</DialogDescription>
-									</DialogHeader>
-								</DialogContent>
-							</Dialog>
+
+							<div className="flex max-w-xl items-center space-x-4">
+								<Dialog>
+									<DialogTrigger asChild>
+										<Button className="cursor-pointer">{t("Extra.trigger")}</Button>
+									</DialogTrigger>
+									<DialogContent className="flex">
+										<DialogHeader>
+											<DialogTitle>{t("Extra.title")}</DialogTitle>
+											<DialogDescription className="pt-4">
+												{extraFields(t).map((extra) => (
+													<ExtraField
+														key={extra.name}
+														name={extra.name}
+														title={extra.title}
+														description={extra.description}
+													/>
+												))}
+											</DialogDescription>
+										</DialogHeader>
+									</DialogContent>
+								</Dialog>
+
+								<Button
+									type="button"
+									className="cursor-pointer"
+									onClick={() => document.getElementById("fileUpload")?.click()}>
+									<UploadIcon />
+								</Button>
+								<Input className="hidden" id="fileUpload" type="file" accept=".json" onChange={handleConfig} />
+
+								<Button type="button" onClick={handleReset} className="cursor-pointer">
+									<RefreshCcwIcon />
+								</Button>
+							</div>
 						</div>
 
 						<div className="pr-8 pl-8">
