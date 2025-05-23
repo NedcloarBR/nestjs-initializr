@@ -16,9 +16,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/components": ["apps/frontend/src/components"],
-			"@/lib": ["apps/frontend/src/lib"],
-			"@/hooks": ["apps/frontend/src/hooks"],
 			"@/components/ui": ["apps/frontend/src/components/ui"],
+			"@/hooks": ["apps/frontend/src/hooks"],
+			"@/lib": ["apps/frontend/src/lib"],
 			"@/lib/utils": ["apps/frontend/src/lib/utils"]
 		}
 	},
