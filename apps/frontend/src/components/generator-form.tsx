@@ -78,11 +78,11 @@ export function GeneratorForm() {
 	}
 
 	return (
-		<section id="generator-form" className="m-32">
+		<section id="generator-form" className="m-16">
 			<Form {...form}>
 				<form>
 					<div className="flex">
-						<div className="flex-1 space-y-8 rounded-lg bg-nest-header-background p-8">
+						<div className="w-1/3 space-y-8 rounded-lg bg-nest-header-background p-8">
 							<h2 className="font-bold">{t("Metadata.title")}</h2>
 
 							<FormField
@@ -225,7 +225,7 @@ export function GeneratorForm() {
 							<Separator orientation="vertical" />
 						</div>
 
-						<aside className="space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
+						<aside className="w-2/3 space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
 							<h2 className="font-bold">{t("Modules.title")}</h2>
 							<ScrollArea className="h-96">
 								<div className="flex flex-wrap justify-start gap-4">
