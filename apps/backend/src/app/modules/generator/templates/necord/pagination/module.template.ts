@@ -15,7 +15,7 @@ export function moduleTemplate(withConfigModule: boolean) {
 			},
 			{
 				replacer: "],",
-				content: `NecordPaginationModule.${
+				content: `,\nNecordPaginationModule.${
 					withConfigModule
 						? `forRootAsync({
                 useClass: NecordConfig

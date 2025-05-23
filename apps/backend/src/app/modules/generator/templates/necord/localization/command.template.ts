@@ -10,7 +10,7 @@ export const commandTemplate = {
 		{
 			replacer: 'description: "Pong!"',
 			content:
-				'description: "Pong!"\nnameLocalizations: localizationMapByKey("commands.ping.name"),\ndescriptionLocalizations: localizationMapByKey("commands.ping.description"),'
+				'description: "Pong!",\nnameLocalizations: localizationMapByKey("commands.ping.name"),\ndescriptionLocalizations: localizationMapByKey("commands.ping.description"),'
 		},
 		{
 			replacer: "@Context() [interaction]: SlashCommandContext",

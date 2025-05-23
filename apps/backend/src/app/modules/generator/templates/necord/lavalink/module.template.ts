@@ -16,7 +16,7 @@ export function NecordLavalinkModuleTemplate(withConfigModule: boolean) {
 					},
 			{
 				replacer: "],",
-				content: `NecordLavalinkModule.${
+				content: `,\nNecordLavalinkModule.${
 					withConfigModule
 						? `forRootAsync({
                 inject: [ConfigService],
@@ -41,7 +41,7 @@ export function NecordLavalinkModuleTemplate(withConfigModule: boolean) {
 			},
 			{
 				replacer: "providers: [NecordService,",
-				content: "providers: [NecordService, PlayCommand"
+				content: "providers: [NecordService, PlayCommand,"
 			}
 		]
 	};

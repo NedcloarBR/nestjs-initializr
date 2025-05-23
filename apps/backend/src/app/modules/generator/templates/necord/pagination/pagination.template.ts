@@ -8,9 +8,9 @@ export const paginationTemplate = {
 
     @Injectable()
     export class NecordPagination implements OnModuleInit {
-      public constructor(private readonly paginationService: NecordPaginationService) {
-      }
-      public onModuleInit(): void {
+      public constructor(private readonly paginationService: NecordPaginationService) {}
+
+      public onModuleInit() {
         return this.paginationService.register(builder =>
           builder
             .setCustomId("test")
@@ -21,7 +21,7 @@ export const paginationTemplate = {
               new PageBuilder().setContent("Page 4"),
               new PageBuilder().setContent("Page 5")
             ])
-            .setPagesFactory(page => new PageBuilder().setContent(\`Page\$ {page}\`))
+            .setPagesFactory(page => new PageBuilder().setContent(\`Page\${page}\`))
             .setMaxPages(5)
         );
       }

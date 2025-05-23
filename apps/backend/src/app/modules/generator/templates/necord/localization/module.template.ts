@@ -15,7 +15,7 @@ export function moduleTemplate(withConfigModule: boolean) {
 			},
 			{
 				replacer: "],",
-				content: `NecordLocalizationModule.${
+				content: `,\nNecordLocalizationModule.${
 					withConfigModule
 						? `forRootAsync({
                 inject: [ConfigService],
@@ -29,7 +29,7 @@ export function moduleTemplate(withConfigModule: boolean) {
                     "en-US": {
                       "commands": {
                         "ping": {
-                          name: "ping,
+                          name: "ping",
                           description: "Pong!"
                         }
                       }
