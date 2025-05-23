@@ -2,6 +2,7 @@ import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
 import type { ModuleTemplate } from "../../../generators/module.service";
 import { commandTemplate } from "./command.template";
 import { configTemplate } from "./config.template";
+import { NecordLocalizationConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
 import { JSONLocaleLoaderTemplate } from "./jsonlocale-loader.template";
@@ -18,6 +19,7 @@ export function NecordLocalizationTemplates(withConfigModule: boolean): ModuleTe
 			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate] : []),
 			dotenvTemplate
 		],
+		constants: NecordLocalizationConstants,
 		packages: [
 			{
 				...NPM_DEPENDENCIES["@necord/localization"],

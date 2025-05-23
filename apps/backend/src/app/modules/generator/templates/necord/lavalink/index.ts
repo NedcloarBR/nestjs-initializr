@@ -2,6 +2,7 @@ import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
 import type { ModuleTemplate } from "../../../generators/module.service";
 import { applicationYmlTemplate } from "./application-yml.template";
 import { configTemplate } from "./config.template";
+import { NecordLavalinkConstants } from "./constants.template";
 import { dockerComposeTemplate } from "./docker-compose.template";
 import { dockerFileTemplate } from "./docker-file.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
@@ -31,6 +32,7 @@ export function NecordLavalinkTemplates(withConfigModule: boolean): ModuleTempla
 			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate] : []),
 			NecordLavalinkModuleTemplate(withConfigModule)
 		],
+		constants: NecordLavalinkConstants,
 		packages: [
 			{
 				...NPM_DEPENDENCIES["@necord/lavalink"],

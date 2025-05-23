@@ -6,11 +6,11 @@ export type ModuleTemplate = {
 	name: string;
 	templates: Template[];
 	constants?: {
-		token: string;
-		import: string;
-		export: string;
-		inject: string;
-		importIn: string;
+		token?: string;
+		import?: string;
+		export?: string;
+		inject?: string;
+		importIn?: string;
 	};
 	mainTemplates?: { replacer: string; content: string }[];
 	filesToUpdate?: { path: string; name: string; templates: { replacer: string; content: string }[] }[];
@@ -22,7 +22,7 @@ export class ModuleService extends BaseGenerator {
 	public async generate(
 		id: string,
 		templates: Template[],
-		metadata: { import: string; export: string; importIn?: string },
+		metadata: { import: string; export?: string; importIn?: string },
 		mainType: "fastify" | "express"
 	) {
 		const rootFiles = [];
@@ -33,7 +33,10 @@ export class ModuleService extends BaseGenerator {
 				rootFiles.push(file);
 			}
 		}
-		this.updateExport(id, metadata.export);
+		console.log(metadata);
+		if (metadata.export) {
+			this.updateExport(id, metadata.export);
+		}
 		if (metadata.importIn) {
 			this.updateImport(id, metadata.import, metadata.importIn);
 		}
