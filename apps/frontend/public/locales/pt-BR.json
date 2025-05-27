@@ -59,6 +59,9 @@
 			},
 			"nestwhats": {
 				"description": "NestWhats é um módulo para NestJS que abstrai métodos do whatsapp-web.js para facilitar a criação de bots para WhatsApp.\nwhatsapp-web.js é um cliente da API do WhatsApp que se conecta através do aplicativo de navegador WhatsApp Web usando Puppeteer"
+			},
+			"graphql": {
+				"description": "GraphQL é uma linguagem de consulta para APIs e um runtime para executar essas consultas com seus dados existentes. Ele fornece uma alternativa mais eficiente, poderosa e flexível ao tradicional REST API. Este módulo permite que você crie uma API GraphQL com NestJS usando o pacote @nestjs/graphql."
 			}
 		},
 		"Extra": {

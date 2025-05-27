@@ -34,6 +34,12 @@ export const modules = (t: (args: string) => string) =>
 			name: "nestwhats",
 			description: t("Modules.nestwhats.description"),
 			iconType: "svg"
+		},
+		{
+			title: "GraphQL",
+			name: "graphql",
+			description: t("Modules.graphql.description"),
+			iconType: "svg"
 		}
 	] as {
 		title: string;
