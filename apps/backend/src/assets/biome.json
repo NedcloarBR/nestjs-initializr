@@ -3,5 +3,12 @@
 	"extends": ["@nedcloarbr/biome-config/nestjs"],
 	"formatter": {
 		"formatWithErrors": true
+	},
+	"linter": {
+		"rules": {
+			"style": {
+				"useImportType": "off"
+			}
+		}
 	}
 }
