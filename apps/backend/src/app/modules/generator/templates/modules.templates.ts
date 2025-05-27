@@ -1,4 +1,5 @@
 import { ConfigTemplates } from "./config";
+import { GraphQLTemplates } from "./graphql";
 import { NecordTemplates } from "./necord/core";
 import { NecordLavalinkTemplates } from "./necord/lavalink";
 import { NecordLocalizationTemplates } from "./necord/localization";
@@ -12,6 +13,7 @@ export function modulesTemplates(withConfigModule: boolean, mainType: "fastify" 
 		NecordLocalizationTemplates(withConfigModule),
 		NecordPaginationTemplates(withConfigModule),
 		NecordLavalinkTemplates(withConfigModule),
-		NestWhatsTemplates
+		NestWhatsTemplates,
+		GraphQLTemplates(mainType)
 	];
 }

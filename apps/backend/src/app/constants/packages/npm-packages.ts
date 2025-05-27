@@ -98,6 +98,26 @@ export const NPM_DEPENDENCIES = {
 	"whatsapp-web.js": {
 		name: "whatsapp-web.js",
 		version: "^1.26.0"
+	},
+	"@nestjs/graphql": {
+		name: "@nestjs/graphql",
+		version: "^13.1.0"
+	},
+	"@nestjs/apollo": {
+		name: "@nestjs/apollo",
+		version: "^13.1.0"
+	},
+	"@apollo/server": {
+		name: "@apollo/server",
+		version: "^4.12.1"
+	},
+	graphql: {
+		name: "graphql",
+		version: "^16.11.0"
+	},
+	"@as-integrations/fastify": {
+		name: "@as-integrations/fastify",
+		version: "^2.1.1"
 	}
 };
 
