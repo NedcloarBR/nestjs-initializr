@@ -37,11 +37,6 @@ export const commonPackages = [
 		dev: true
 	},
 	{
-		name: DEV_NPM_DEPENDENCIES["@nestjs/testing"].name,
-		version: DEV_NPM_DEPENDENCIES["@nestjs/testing"].version,
-		dev: true
-	},
-	{
 		name: DEV_NPM_DEPENDENCIES["globals"].name,
 		version: DEV_NPM_DEPENDENCIES["globals"].version,
 		dev: true

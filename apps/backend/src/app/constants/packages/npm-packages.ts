@@ -130,10 +130,6 @@ export const DEV_NPM_DEPENDENCIES = {
 		name: "@nestjs/schematics",
 		version: "^11.0.0"
 	},
-	"@nestjs/testing": {
-		name: "@nestjs/testing",
-		version: "^11.0.1"
-	},
 	"@types/express": {
 		name: "@types/express",
 		version: "^5.0.1"
@@ -209,5 +205,29 @@ export const DEV_NPM_DEPENDENCIES = {
 	"typescript-eslint": {
 		name: "typescript-eslint",
 		version: "^8.20.0"
+	},
+	"@nestjs/testing": {
+		name: "@nestjs/testing",
+		version: "^11.0.1"
+	},
+	jest: {
+		name: "jest",
+		version: "^29.7.0"
+	},
+	"@types/jest": {
+		name: "@types/jest",
+		version: "^29.5.14"
+	},
+	supertest: {
+		name: "supertest",
+		version: "^7.0.0"
+	},
+	"@types/supertest": {
+		name: "@types/supertest",
+		version: "^6.0.2"
+	},
+	"ts-jest": {
+		name: "ts-jest",
+		version: "^29.2.5"
 	}
 };
