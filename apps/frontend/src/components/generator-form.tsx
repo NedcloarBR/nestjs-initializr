@@ -1,18 +1,15 @@
 "use client";
 
 import { generateConfig, generateProject, loadConfig } from "@/actions";
-import { extraFields, modules, nodeVersions, packageManagers } from "@/constants";
+import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RefreshCcwIcon, UploadIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { DockerCard } from "./docker-card";
 import { ExtraField } from "./extra-field";
-import { LinterFormatterCard } from "./linter-formatter-card";
-import { ModuleCard } from "./module-card";
-import { TestRunnerCard } from "./test-runner-card";
+import { ModulesList } from "./modules-list";
 import {
 	Button,
 	Dialog,
@@ -229,81 +226,7 @@ export function GeneratorForm() {
 						<aside className="w-2/3 space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
 							<h2 className="font-bold">{t("Modules.title")}</h2>
 							<ScrollArea className="h-96">
-								<div className="flex flex-wrap justify-start gap-4">
-									{[
-										...modules(t).map((module) => ({
-											component: (
-												<ModuleCard
-													key={module.name}
-													title={module.title}
-													name={module.name}
-													description={module.description}
-													iconType={module.iconType}
-													dependsOn={module.dependsOn}
-												/>
-											),
-											name: module.name
-										})),
-										{
-											component: (
-												<LinterFormatterCard
-													key="biome"
-													title={t("LinterFormatter.biome.title")}
-													name="biome"
-													description={t("LinterFormatter.biome.description")}
-													disableText={t("LinterFormatter.biome.disableText")}
-													iconType="svg"
-												/>
-											),
-											name: "biome"
-										},
-										{
-											component: (
-												<LinterFormatterCard
-													key="eslint-prettier"
-													title={t("LinterFormatter.eslint-prettier.title")}
-													name="eslint-prettier"
-													description={t("LinterFormatter.eslint-prettier.description")}
-													disableText={t("LinterFormatter.eslint-prettier.disableText")}
-													iconType="png"
-												/>
-											),
-											name: "eslint-prettier"
-										},
-										{
-											component: (
-												<TestRunnerCard
-													key="jest"
-													title={t("TestRunner.jest.title")}
-													name="jest"
-													description={t("TestRunner.jest.description")}
-													disableText={t("TestRunner.jest.disableText")}
-													iconType="svg"
-												/>
-											),
-											name: "jest"
-										},
-										{
-											component: (
-												<TestRunnerCard
-													key="vitest"
-													title={t("TestRunner.vitest.title")}
-													name="vitest"
-													description={t("TestRunner.vitest.description")}
-													disableText={t("TestRunner.vitest.disableText")}
-													iconType="svg"
-												/>
-											),
-											name: "vitest"
-										},
-										{
-											component: <DockerCard key="docker" />,
-											name: "docker"
-										}
-									]
-										.sort((a, b) => a.name.localeCompare(b.name))
-										.map((item) => item.component)}
-								</div>
+								<ModulesList />
 							</ScrollArea>
 						</aside>
 					</div>
