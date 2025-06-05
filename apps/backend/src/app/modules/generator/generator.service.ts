@@ -176,6 +176,12 @@ export class GeneratorService extends BaseGenerator {
 				}
 			}
 
+			if (moduleFiles.scripts) {
+				for (const script of moduleFiles.scripts) {
+					await this.packageJsonGenerator.addScript(id, script.name, script.command);
+				}
+			}
+
 			if (moduleFiles.filesToUpdate) {
 				for (const file of moduleFiles.filesToUpdate) {
 					for (const template of file.templates) {

@@ -15,6 +15,7 @@ export type ModuleTemplate = {
 	mainTemplates?: { replacer: string; content: string }[];
 	filesToUpdate?: { path: string; name: string; templates: { replacer: string; content: string }[] }[];
 	packages?: { name: string; version: string; dev: boolean }[];
+	scripts?: { name: string; command: string }[];
 };
 
 @Injectable()
@@ -33,7 +34,7 @@ export class ModuleService extends BaseGenerator {
 				rootFiles.push(file);
 			}
 		}
-		console.log(metadata);
+
 		if (metadata.export) {
 			this.updateExport(id, metadata.export);
 		}
