@@ -229,5 +229,21 @@ export const DEV_NPM_DEPENDENCIES = {
 	"ts-jest": {
 		name: "ts-jest",
 		version: "^29.2.5"
+	},
+	vitest: {
+		name: "vitest",
+		version: "^3.2.2"
+	},
+	"vite-tsconfig-paths": {
+		name: "vite-tsconfig-paths",
+		version: "^5.1.4"
+	},
+	"@vitest/ui": {
+		name: "@vitest/ui",
+		version: "3.2.2"
+	},
+	"@vitest/coverage-v8": {
+		name: "@vitest/coverage-v8",
+		version: "3.2.2"
 	}
 };
