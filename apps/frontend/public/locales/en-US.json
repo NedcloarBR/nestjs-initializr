@@ -98,6 +98,16 @@
 				"disableText": "It is not possible to enable Eslint + Prettier and BiomeJS at the same time."
 			}
 		},
+		"TestRunner": {
+			"jest": {
+				"title": "Jest",
+				"description": "Jest is a delightful JavaScript Testing Framework with a focus on simplicity."
+			},
+			"vitest": {
+				"title": "Vitest",
+				"description": "Vitest is a blazing fast unit test framework powered by Vite, providing a modern and efficient testing experience."
+			}
+		},
 		"Docker": {
 			"description": "Dockerize your NestJS application"
 		},

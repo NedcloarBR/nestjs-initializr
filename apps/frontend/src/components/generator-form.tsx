@@ -12,6 +12,7 @@ import { DockerCard } from "./docker-card";
 import { ExtraField } from "./extra-field";
 import { LinterFormatterCard } from "./linter-formatter-card";
 import { ModuleCard } from "./module-card";
+import { TestRunnerCard } from "./test-runner-card";
 import {
 	Button,
 	Dialog,
@@ -268,6 +269,32 @@ export function GeneratorForm() {
 												/>
 											),
 											name: "eslint-prettier"
+										},
+										{
+											component: (
+												<TestRunnerCard
+													key="jest"
+													title={t("TestRunner.jest.title")}
+													name="jest"
+													description={t("TestRunner.jest.description")}
+													disableText={t("TestRunner.jest.disableText")}
+													iconType="svg"
+												/>
+											),
+											name: "jest"
+										},
+										{
+											component: (
+												<TestRunnerCard
+													key="vitest"
+													title={t("TestRunner.vitest.title")}
+													name="vitest"
+													description={t("TestRunner.vitest.description")}
+													disableText={t("TestRunner.vitest.disableText")}
+													iconType="svg"
+												/>
+											),
+											name: "vitest"
 										},
 										{
 											component: <DockerCard key="docker" />,
