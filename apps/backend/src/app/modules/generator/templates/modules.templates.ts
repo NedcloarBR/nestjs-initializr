@@ -8,6 +8,7 @@ import { NecordLocalizationTemplates } from "./necord/localization";
 import { NecordPaginationTemplates } from "./necord/pagination";
 import { NestWhatsTemplates } from "./nestwhats";
 import { JestTemplates } from "./test/jest";
+import { VitestTemplates } from "./test/vitest";
 
 export function modulesTemplates(
 	withConfigModule: boolean,
@@ -24,6 +25,7 @@ export function modulesTemplates(
 		NestWhatsTemplates,
 		GraphQLTemplates(mainType),
 		JestTemplates,
+		VitestTemplates,
 		HuskyTemplates(packageManager, linterFormatter)
 	];
 }
