@@ -5,6 +5,7 @@ import { NecordLavalinkTemplates } from "./necord/lavalink";
 import { NecordLocalizationTemplates } from "./necord/localization";
 import { NecordPaginationTemplates } from "./necord/pagination";
 import { NestWhatsTemplates } from "./nestwhats";
+import { JestTemplates } from "./test/jest";
 
 export function modulesTemplates(withConfigModule: boolean, mainType: "fastify" | "express") {
 	return [
@@ -14,6 +15,7 @@ export function modulesTemplates(withConfigModule: boolean, mainType: "fastify" 
 		NecordPaginationTemplates(withConfigModule),
 		NecordLavalinkTemplates(withConfigModule),
 		NestWhatsTemplates,
-		GraphQLTemplates(mainType)
+		GraphQLTemplates(mainType),
+		JestTemplates
 	];
 }
