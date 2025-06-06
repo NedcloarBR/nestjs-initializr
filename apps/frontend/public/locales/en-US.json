@@ -105,11 +105,13 @@
 		"TestRunner": {
 			"jest": {
 				"title": "Jest",
-				"description": "Jest is a delightful JavaScript Testing Framework with a focus on simplicity."
+				"description": "Jest is a delightful JavaScript Testing Framework with a focus on simplicity.",
+				"disableText": "It is not possible to enable Jest and Vitest at the same time."
 			},
 			"vitest": {
 				"title": "Vitest",
-				"description": "Vitest is a blazing fast unit test framework powered by Vite, providing a modern and efficient testing experience."
+				"description": "Vitest is a blazing fast unit test framework powered by Vite, providing a modern and efficient testing experience.",
+				"disableText": "It is not possible to enable Vitest and Jest at the same time."
 			}
 		},
 		"Docker": {
