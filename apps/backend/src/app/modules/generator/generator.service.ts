@@ -79,7 +79,14 @@ export class GeneratorService extends BaseGenerator {
 			rootDirFiles.push(file);
 		}
 
-		const modulesFiles = await this.generateModules(id, metadata.modules, metadata.mainType, metadata.packageJson.name);
+		const modulesFiles = await this.generateModules(
+			id,
+			metadata.modules,
+			metadata.mainType,
+			metadata.packageManager,
+			metadata.linterFormatter,
+			metadata.packageJson.name
+		);
 		rootDirFiles.push(...modulesFiles);
 
 		if (metadata.extras.length > 0) {
@@ -134,6 +141,8 @@ export class GeneratorService extends BaseGenerator {
 		id: string,
 		rawModules: MetadataDTO["modules"],
 		mainType: MetadataDTO["mainType"],
+		packageManager: MetadataDTO["packageManager"],
+		linterFormatter: MetadataDTO["linterFormatter"],
 		projectName: string
 	) {
 		const moduleGeneratedFiles = [];
@@ -154,7 +163,9 @@ export class GeneratorService extends BaseGenerator {
 				await this.swaggerGenerator.generate(id, mainType, withConfigModule, projectName);
 				continue;
 			}
-			const moduleFiles = modulesTemplates(withConfigModule, mainType).find((m) => m.name === module);
+			const moduleFiles = modulesTemplates(withConfigModule, mainType, packageManager, linterFormatter).find(
+				(m) => m.name === module
+			);
 			const moduleRootFiles = await this.moduleGenerator.generate(
 				id,
 				moduleFiles.templates,

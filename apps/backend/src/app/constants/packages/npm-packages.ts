@@ -245,5 +245,21 @@ export const DEV_NPM_DEPENDENCIES = {
 	"@vitest/coverage-v8": {
 		name: "@vitest/coverage-v8",
 		version: "3.2.2"
+	},
+	husky: {
+		name: "husky",
+		version: "^9.1.7"
+	},
+	"@commitlint/cli": {
+		name: "@commitlint/cli",
+		version: "^19.8.0"
+	},
+	"@commitlint/config-angular": {
+		name: "@commitlint/config-angular",
+		version: "^19.8.0"
+	},
+	"lint-staged": {
+		name: "lint-staged",
+		version: "^15.5.1"
 	}
 };
