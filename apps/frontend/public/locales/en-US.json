@@ -39,6 +39,7 @@
 			"title": "Optional modules",
 			"dependsOn": "This module depends on the following module(s): {ModuleNames}",
 			"dockerMissing": "This module requires Docker",
+			"linterFormatterMissing": "This module requires a BiomeJS or Eslint-Prettier to be enabled",
 			"config": {
 				"description": "@nestjs/config module but with a custom registration with validation and custom service with auto complete and type casting."
 			},
@@ -62,6 +63,9 @@
 			},
 			"graphql": {
 				"description": "GraphQL is a query language for APIs and a runtime for executing those queries with your existing data. It provides a more efficient, powerful, and flexible alternative to the traditional REST API. This module allows you to create a GraphQL API with NestJS using the @nestjs/graphql package."
+			},
+			"husky": {
+				"description": "Husky is a tool that allows you to easily manage Git hooks in your project. It helps you to enforce code quality and consistency by running scripts before committing or pushing code. Configured with commitlint and lint-staged."
 			}
 		},
 		"Extra": {

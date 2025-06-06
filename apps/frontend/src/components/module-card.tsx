@@ -1,4 +1,9 @@
-import { dockerRequiredModules, moduleDependencies } from "@/constants/modules";
+import {
+	type ModuleName,
+	dockerRequiredModules,
+	linterFormatterRequiredModules,
+	moduleDependencies
+} from "@/constants/modules";
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
 import {
@@ -17,7 +22,7 @@ import {
 
 interface Props {
 	title: string;
-	name: string;
+	name: ModuleName;
 	description: string;
 	iconType: "svg" | "png";
 	dependsOn?: string | string[];
@@ -35,7 +40,13 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 		name: "docker"
 	});
 
+	const { field: linterFormatterField } = useController({
+		name: "linterFormatter"
+	});
+
 	const dockerIsMissing = dockerRequiredModules.includes(name) && !dockerField.value;
+
+	const linterFormatterFieldIsMissing = linterFormatterRequiredModules.includes(name) && !linterFormatterField.value;
 
 	const isSelected = field.value?.includes(name);
 
@@ -45,16 +56,16 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 			: !field.value?.includes(dependsOn)
 		: false;
 
-	const isDisabled = isDisabledModules || dockerIsMissing;
+	const isDisabled = isDisabledModules || dockerIsMissing || linterFormatterFieldIsMissing;
 
-	function findDependents(moduleName: string, currentModules: string[]): string[] {
+	function findDependents(moduleName: ModuleName, currentModules: string[]): string[] {
 		const dependents: Set<string> = new Set();
 
-		function find(module: string) {
+		function find(module: ModuleName) {
 			for (const [mod, dependencies] of Object.entries(moduleDependencies)) {
 				if (dependencies.includes(module) && currentModules.includes(mod)) {
 					dependents.add(mod);
-					find(mod);
+					find(mod as ModuleName);
 				}
 			}
 		}
@@ -110,7 +121,9 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 							<TooltipContent>
 								{dockerIsMissing
 									? t("dockerMissing")
-									: t("dependsOn", { ModuleNames: Array.isArray(dependsOn) ? dependsOn.join(", ") : dependsOn })}
+									: linterFormatterFieldIsMissing
+										? t("linterFormatterMissing")
+										: t("dependsOn", { ModuleNames: Array.isArray(dependsOn) ? dependsOn.join(", ") : dependsOn })}
 							</TooltipContent>
 						)}
 					</Tooltip>
