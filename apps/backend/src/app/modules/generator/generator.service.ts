@@ -15,7 +15,8 @@ import {
 	LinterFormatterService,
 	ModuleService,
 	PackageJsonService,
-	SwaggerService
+	SwaggerService,
+	TestRunnerService
 } from "./generators";
 import { AppTemplates } from "./templates/app.templates";
 import { modulesTemplates } from "./templates/modules.templates";
@@ -30,7 +31,8 @@ export class GeneratorService extends BaseGenerator {
 		private readonly swaggerGenerator: SwaggerService,
 		private readonly extraGenerator: ExtraService,
 		private readonly linterFormatterGenerator: LinterFormatterService,
-		private readonly dockerGenerator: DockerService
+		private readonly dockerGenerator: DockerService,
+		private readonly testRunnerGenerator: TestRunnerService
 	) {
 		super();
 	}
@@ -109,6 +111,11 @@ export class GeneratorService extends BaseGenerator {
 			rootDirFiles.push(...dockerFiles);
 		}
 
+		if (metadata.testRunner) {
+			const testRunnerFiles = await this.testRunnerGenerator.generate(id, metadata.testRunner);
+			rootDirFiles.push(...testRunnerFiles);
+		}
+
 		await this.lintAndFormat(id);
 
 		const zipFile = await this.generateZipFile(rootDirFiles, id);
@@ -152,7 +159,7 @@ export class GeneratorService extends BaseGenerator {
 			...rawModules.filter((m) => m !== "config" && m !== "swagger"),
 			...rawModules.filter((m) => m === "swagger")
 		];
-
+		console.log(modules);
 		if (modules.length > 0 && !(modules.length === 1 && modules[0] === "swagger")) {
 			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
 		}

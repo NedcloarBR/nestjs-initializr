@@ -1,4 +1,4 @@
-export const JestConfigTemplates = {
+export const JestConfigTemplate = {
 	name: "jest.config.ts",
 	path: "",
 	content: `

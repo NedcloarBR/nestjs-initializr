@@ -32,4 +32,9 @@ export class MetadataDTO {
 	@IsOptional()
 	@IsBoolean()
 	public readonly docker?: boolean;
+
+	@IsOptional()
+	@IsString()
+	@IsIn(["jest", "vitest"])
+	public readonly testRunner?: "jest" | "vitest";
 }

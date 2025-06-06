@@ -8,7 +8,8 @@ import {
 	LinterFormatterService,
 	ModuleService,
 	PackageJsonService,
-	SwaggerService
+	SwaggerService,
+	TestRunnerService
 } from "./generators";
 import { DockerService } from "./generators/docker.service";
 
@@ -25,7 +26,8 @@ import { DockerService } from "./generators/docker.service";
 		SwaggerService,
 		ExtraService,
 		LinterFormatterService,
-		DockerService
+		DockerService,
+		TestRunnerService
 	]
 })
 export class GeneratorModule {}

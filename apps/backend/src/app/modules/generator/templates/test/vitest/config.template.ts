@@ -1,4 +1,4 @@
-export const VitestConfigTemplates = {
+export const VitestConfigTemplate = {
 	name: "vitest.config.ts",
 	path: "",
 	content: `
