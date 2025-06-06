@@ -45,7 +45,7 @@ export function GeneratorForm() {
 		extras: [],
 		linterFormatter: null,
 		docker: false,
-		testRunner: "jest"
+		testRunner: null
 	};
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),

@@ -21,7 +21,8 @@ export async function generateProject(values: z.infer<ReturnType<typeof generato
 				modules: values.modules,
 				extras: values.extras,
 				linterFormatter: values.linterFormatter,
-				docker: values.docker
+				docker: values.docker,
+				testRunner: values.testRunner
 			})
 		});
 
