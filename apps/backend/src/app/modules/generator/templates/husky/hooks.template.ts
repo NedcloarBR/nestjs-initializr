@@ -5,12 +5,12 @@ export function HuskyHooksTemplates(packageManager: MetadataDTO["packageManager"
 	return [
 		{
 			name: "pre-commit",
-			path: ".husky/pre-commit",
+			path: ".husky",
 			content: `${packageManager} lint-staged`
 		},
 		{
 			name: "commit-msg",
-			path: ".husky/commit-msg",
+			path: ".husky",
 			content: `${packageManager} commitlint --config .commitlintrc.json --edit $HUSKY_GIT_PARAMS`
 		}
 	];

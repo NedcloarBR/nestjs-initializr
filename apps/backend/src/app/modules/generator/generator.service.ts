@@ -118,7 +118,13 @@ export class GeneratorService extends BaseGenerator {
 
 		await this.lintAndFormat(id);
 
-		const zipFile = await this.generateZipFile(rootDirFiles, id);
+		const extraFolders = [];
+
+		if (metadata.modules.includes("husky")) {
+			extraFolders.push(".husky");
+		}
+
+		const zipFile = await this.generateZipFile(rootDirFiles, id, extraFolders);
 
 		setTimeout(() => {
 			fs.rm(path.join(__dirname, "__generated__", id), { recursive: true }, (err) => {
@@ -159,7 +165,7 @@ export class GeneratorService extends BaseGenerator {
 			...rawModules.filter((m) => m !== "config" && m !== "swagger"),
 			...rawModules.filter((m) => m === "swagger")
 		];
-		console.log(modules);
+
 		if (modules.length > 0 && !(modules.length === 1 && modules[0] === "swagger")) {
 			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
 		}
@@ -260,7 +266,8 @@ export class GeneratorService extends BaseGenerator {
 			fileName: string;
 			stream: fs.ReadStream;
 		}[],
-		id: string
+		id: string,
+		extraFolders: string[]
 	): Promise<fs.ReadStream> {
 		const dirPath = path.join(__dirname, "__generated__", id);
 		const srcPath = path.join(dirPath, "src");
@@ -280,6 +287,12 @@ export class GeneratorService extends BaseGenerator {
 		}
 
 		archive.directory(srcPath, "src");
+
+		if (extraFolders) {
+			for (const folder of extraFolders) {
+				archive.directory(path.join(dirPath, folder), folder);
+			}
+		}
 
 		await new Promise((resolve, reject) => {
 			output.on("close", resolve);

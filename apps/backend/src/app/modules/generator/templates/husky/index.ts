@@ -2,6 +2,7 @@ import { DEV_NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
 import type { MetadataDTO } from "../../dtos/metadata.dto";
 import type { ModuleTemplate } from "../../generators/module.service";
 import { HuskyConfigsTemplates } from "./configs.template";
+import { HuskyConstants } from "./constants.template";
 import { HuskyHooksTemplates } from "./hooks.template";
 
 export function HuskyTemplates(
@@ -10,6 +11,7 @@ export function HuskyTemplates(
 ): ModuleTemplate {
 	return {
 		name: "husky",
+		constants: HuskyConstants,
 		templates: [...HuskyHooksTemplates(packageManager), ...HuskyConfigsTemplates(linterFormatter)],
 		packages: [
 			{
