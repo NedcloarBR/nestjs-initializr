@@ -89,5 +89,15 @@ export const EslintPrettierTemplate = {
         );
       `
 		}
+	],
+	scripts: [
+		{
+			name: "format",
+			command: "prettier --write ."
+		},
+		{
+			name: "lint",
+			command: "eslint ."
+		}
 	]
 };

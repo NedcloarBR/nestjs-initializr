@@ -24,6 +24,9 @@ export class LinterFormatterService extends BaseGenerator {
 			for (const packageMeta of BiomeTemplate.packages) {
 				this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
 			}
+			for (const script of BiomeTemplate.scripts) {
+				this.packageJsonGenerator.addScript(id, script.name, script.command);
+			}
 		}
 
 		if (metadata === "eslint-prettier") {
@@ -33,6 +36,9 @@ export class LinterFormatterService extends BaseGenerator {
 			}
 			for (const packageMeta of EslintPrettierTemplate.packages) {
 				this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
+			}
+			for (const script of EslintPrettierTemplate.scripts) {
+				this.packageJsonGenerator.addScript(id, script.name, script.command);
 			}
 		}
 

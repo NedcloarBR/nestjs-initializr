@@ -24,5 +24,19 @@ export const BiomeTemplate = {
         }
       `
 		}
+	],
+	scripts: [
+		{
+			name: "format",
+			command: "biome format --write ./"
+		},
+		{
+			name: "lint",
+			command: "biome lint ./"
+		},
+		{
+			name: "check",
+			command: "biome check --write ./"
+		}
 	]
 };
