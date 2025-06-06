@@ -44,7 +44,8 @@ export function GeneratorForm() {
 		modules: [],
 		extras: [],
 		linterFormatter: null,
-		docker: false
+		docker: false,
+		testRunner: "jest"
 	};
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -62,7 +63,8 @@ export function GeneratorForm() {
 				modules: data.modules,
 				extras: data.extras,
 				linterFormatter: data.linterFormatter,
-				docker: data.docker
+				docker: data.docker,
+				testRunner: data.testRunner
 			});
 		});
 	}

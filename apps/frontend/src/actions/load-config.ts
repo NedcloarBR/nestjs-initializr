@@ -10,6 +10,7 @@ interface ConfigStructure {
 	extras: string[];
 	linterFormatter: "biome" | "eslint-prettier";
 	docker: boolean;
+	testRunner: "jest" | "vitest";
 }
 
 export function loadConfig(event: React.ChangeEvent<HTMLInputElement>, onDataLoaded: (data: ConfigStructure) => void) {
