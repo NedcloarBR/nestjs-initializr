@@ -4,7 +4,6 @@ export const paginationTemplate = {
 	content: `
     import { OnModuleInit, Injectable } from "@nestjs/common";
     import { NecordPaginationService, PageBuilder } from "@necord/pagination";
-    import { Context, SlashCommand, SlashCommandContext } from "necord";
 
     @Injectable()
     export class NecordPagination implements OnModuleInit {

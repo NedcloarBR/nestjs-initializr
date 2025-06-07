@@ -7,6 +7,7 @@ export const NecordConfigTemplate = {
     import { Services } from "@/constants/services";
     import type { NecordModuleOptions } from "necord";
     import { IntentsBitField } from 'discord.js';
+
     @Injectable()
     export class NecordConfig {
       public constructor(@Inject(Services.Config) private config: ConfigService) {}

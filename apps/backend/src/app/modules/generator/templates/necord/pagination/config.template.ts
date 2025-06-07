@@ -12,23 +12,38 @@ export const configTemplate = {
         public createNecordOptions(): NecordModuleOptions {
           return {
             token: this.config.get("DISCORD_TOKEN"),
-            intents: [IntentsBitField.Flags.Guilds]
+            intents: [
+              IntentsBitField.Flags.Guilds,
+              IntentsBitField.Flags.DirectMessages,
+              IntentsBitField.Flags.GuildMembers,
+              IntentsBitField.Flags.GuildMessages,
+              IntentsBitField.Flags.MessageContent
+            ],
+            development: this.config.get("DISCORD_DEVELOPMENT_GUILD_ID")
           }
         }
       `,
 			content: `
-        public createNecordOptions(): NecordModuleConfig {
+        public createNecordOptions(): NecordModuleOptions {
           return {
             token: this.config.get("DISCORD_TOKEN"),
-            intents: [IntentsBitField.Flags.Guilds]
+            intents: [
+              IntentsBitField.Flags.Guilds,
+              IntentsBitField.Flags.DirectMessages,
+              IntentsBitField.Flags.GuildMembers,
+              IntentsBitField.Flags.GuildMessages,
+              IntentsBitField.Flags.MessageContent
+            ],
+            development: this.config.get("DISCORD_DEVELOPMENT_GUILD_ID")
           }
-        }\n
+        }
+
         public createNecordPaginationOptions(): NecordPaginationOptions {
           return {
             allowSkip: false,
             allowTraversal: false,
             buttonsPostion: "end"
-          }
+          };
         }
       `
 		}

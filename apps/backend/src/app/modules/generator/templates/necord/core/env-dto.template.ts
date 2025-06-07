@@ -3,7 +3,7 @@ export const envDtoTemplate = {
 	path: "src/modules/necord/dtos",
 	content: `
     import { registerAs } from "@nestjs/config";
-    import { IsString, IsOptional } from "class-validator";
+    import { IsString, IsNotEmpty } from "class-validator";
     import validateConfig from "@/modules/config/config.validator";
 
     export class DiscordEnvDTO {

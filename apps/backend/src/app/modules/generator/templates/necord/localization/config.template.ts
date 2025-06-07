@@ -12,18 +12,33 @@ export const configTemplate = {
         public createNecordOptions(): NecordModuleOptions {
           return {
             token: this.config.get("DISCORD_TOKEN"),
-            intents: [IntentsBitField.Flags.Guilds]
+            intents: [
+              IntentsBitField.Flags.Guilds,
+              IntentsBitField.Flags.DirectMessages,
+              IntentsBitField.Flags.GuildMembers,
+              IntentsBitField.Flags.GuildMessages,
+              IntentsBitField.Flags.MessageContent
+            ],
+            development: this.config.get("DISCORD_DEVELOPMENT_GUILD_ID")
           }
         }
       `,
 			content: `
-        public createNecordOptions(): NecordModuleConfig {
+        public createNecordOptions(): NecordModuleOptions {
           return {
             token: this.config.get("DISCORD_TOKEN"),
-            intents: [IntentsBitField.Flags.Guilds]
+            intents: [
+              IntentsBitField.Flags.Guilds,
+              IntentsBitField.Flags.DirectMessages,
+              IntentsBitField.Flags.GuildMembers,
+              IntentsBitField.Flags.GuildMessages,
+              IntentsBitField.Flags.MessageContent
+            ],
+            development: this.config.get("DISCORD_DEVELOPMENT_GUILD_ID")
           }
-        }\n
-        public async createNecordLocalizationOptions(): <NecordLocalizationOptions> {
+        }
+
+        public async createNecordLocalizationOptions(): NecordLocalizationOptions {
           return {
             adapter: new NestedLocalizationAdapter({
 				      fallbackLocale: this.config.get("DISCORD_FALLBACK_LOCALE"),
@@ -31,7 +46,7 @@ export const configTemplate = {
 					      "./src/common/localization/necord/",
 				      ).loadTranslations(),
 			      }),
-			      resolvers: GuildResolver,
+			      resolvers: GuildResolver
 		      };
         }
       `

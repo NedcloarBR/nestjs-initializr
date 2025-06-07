@@ -5,7 +5,7 @@ export const commandTemplate = {
 		{
 			replacer: 'import { Injectable } from "@nestjs/common";',
 			content:
-				'import { Injectable, Inject } from "@nestjs/common";\nimport { CurrentTranslate, localizationMapByKey, TranslationFn } from "@necord/localization";'
+				'import { Injectable } from "@nestjs/common";\nimport { CurrentTranslate, localizationMapByKey, TranslationFn } from "@necord/localization";'
 		},
 		{
 			replacer: 'description: "Pong!"',
@@ -18,10 +18,7 @@ export const commandTemplate = {
 		},
 		{
 			replacer: 'return interaction.reply({ content: "Pong!" });',
-			content: `
-        const message = t("commands.ping.description");
-        return interaction.reply(message);
-      `
+			content: 'const message = t("commands.ping.description");\nreturn interaction.reply(message);'
 		}
 	]
 };

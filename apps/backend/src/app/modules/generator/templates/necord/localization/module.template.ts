@@ -5,13 +5,7 @@ export function moduleTemplate(withConfigModule: boolean) {
 		templates: [
 			{
 				replacer: 'import { NecordModule as NecordModuleCore } from "necord";',
-				content:
-					'import { NecordModule as NecordModuleCore } from "necord";\nimport { GuildResolver, NecordLocalizationModule, NestedLocalizationAdapter } from "@necord/localization";'
-			},
-			{
-				replacer: 'import { NecordCommand } from "./necord.command";',
-				content:
-					'import { NecordCommand } from "./necord.command";\nimport { NecordPagination } from "./necord.pagination";'
+				content: `import { NecordModule as NecordModuleCore } from "necord";\nimport { ${withConfigModule ? "" : "GuildResolver,"} NecordLocalizationModule ${withConfigModule ? "" : ", NestedLocalizationAdapter"} } from "@necord/localization";`
 			},
 			{
 				replacer: "],",

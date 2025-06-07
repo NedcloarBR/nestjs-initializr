@@ -26,6 +26,10 @@ export function moduleTemplate(withConfigModule: boolean) {
                 buttonsPostion: "end"
               })\n],`
 				}`
+			},
+			{
+				replacer: ", NecordCommand",
+				content: ", NecordCommand, NecordPagination"
 			}
 		]
 	};
