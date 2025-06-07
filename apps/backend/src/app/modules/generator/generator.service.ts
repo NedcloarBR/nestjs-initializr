@@ -185,7 +185,8 @@ export class GeneratorService extends BaseGenerator {
 				{
 					export: moduleFiles.constants.export,
 					import: moduleFiles.constants.import,
-					importIn: moduleFiles.constants.importIn
+					importIn: moduleFiles.constants.importIn,
+					importArray: moduleFiles.constants.importArray
 				},
 				mainType
 			);

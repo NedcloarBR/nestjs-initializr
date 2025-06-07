@@ -9,6 +9,7 @@ export type ModuleTemplate = {
 		token?: string;
 		import?: string;
 		export?: string;
+		importArray?: string;
 		inject?: string;
 		importIn?: string;
 	};
@@ -23,7 +24,7 @@ export class ModuleService extends BaseGenerator {
 	public async generate(
 		id: string,
 		templates: Template[],
-		metadata: { import: string; export?: string; importIn?: string },
+		metadata: { import: string; export?: string; importIn?: string; importArray?: string },
 		mainType: "fastify" | "express"
 	) {
 		const rootFiles = [];
@@ -39,7 +40,7 @@ export class ModuleService extends BaseGenerator {
 			this.updateExport(id, metadata.export);
 		}
 		if (metadata.importIn) {
-			this.updateImport(id, metadata.import, metadata.importIn);
+			this.updateImport(id, metadata.import, metadata.importArray, metadata.importIn);
 		}
 
 		return rootFiles;
@@ -52,7 +53,7 @@ export class ModuleService extends BaseGenerator {
 		this.writeFile(allModulesIndexPath, allModulesIndexContent);
 	}
 
-	public updateImport(id: string, importString: string, moduleToUpdatePath: string) {
+	public updateImport(id: string, importString: string, importArray: string, moduleToUpdatePath: string) {
 		const moduleToUpdatePathResolved = this.getPath(id, moduleToUpdatePath);
 		let moduleToUpdateContent = this.readFile(moduleToUpdatePathResolved);
 
@@ -60,11 +61,13 @@ export class ModuleService extends BaseGenerator {
 		const importFromModulesRegex = /import\s+\{\s*([^\}]+)\s*\}\s+from\s+['"]@\/modules['"]/;
 
 		const importsMatch = moduleToUpdateContent.match(importsSectionRegex);
-		if (importsMatch && !importsMatch[2].includes(importString)) {
+		if (importsMatch && !importsMatch[2].includes(importArray)) {
 			moduleToUpdateContent = moduleToUpdateContent.replace(importsSectionRegex, (match, before, middle, after) => {
-				return `${before}${middle.trim() ? `${middle.trim()},\n    ${importString}` : `\n    ${importString}`}${after}`;
+				return `${before}${middle.trim() ? `${middle.trim()},\n    ${importArray}` : `\n    ${importArray}`}${after}`;
 			});
 		}
+
+		if (importString === null) return this.writeFile(moduleToUpdatePathResolved, moduleToUpdateContent);
 
 		const importMatch = moduleToUpdateContent.match(importFromModulesRegex);
 		if (importMatch) {

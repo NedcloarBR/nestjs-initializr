@@ -3,17 +3,13 @@ export const GraphQLModuleTemplate = {
 	name: "app.module.ts",
 	templates: [
 		{
-			replacer: 'import { Module } from  "@nestjs/commom"',
+			replacer: 'import { Module } from "@nestjs/common";',
 			content:
-				'import { Module } from  "@nestjs/commom";\nimport { GraphQLModule } from "@nestjs/graphql";\nimport { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";\nimport path from "node:path";'
+				'import { Module } from "@nestjs/common";\nimport { GraphQLModule } from "@nestjs/graphql";\nimport { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";\nimport path from "node:path";\nimport { AppResolver } from "./app.resolver"'
 		},
 		{
-			replacer: "],",
-			content: `\nGraphQLModule.forRoot<ApolloDriverConfig>({
-          driver: ApolloDriver,
-          autoSchemaFile: path.resolve(process.cwd(), "src/schema.gql")
-        }),\n],
-        `
+			replacer: "providers: [",
+			content: "providers: [AppResolver,"
 		}
 	]
 };
