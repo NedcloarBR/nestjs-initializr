@@ -5,6 +5,8 @@ import { BaseGenerator } from "./base.generator";
 @Injectable()
 export class FileUpdaterService extends BaseGenerator {
 	public async update(id: string, filePath: string, fileName: string, template: { replacer: string; content: string }) {
+		if (template === null) return;
+
 		const File = fs.existsSync(this.getPath(id, `${filePath}/${fileName}`))
 			? this.getPath(id, `${filePath}/${fileName}`)
 			: undefined;
