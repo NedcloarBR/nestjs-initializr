@@ -59,12 +59,21 @@ const rawModules = [
 ] as const;
 
 export type ModuleName = (typeof rawModules)[number]["name"];
+type ModuleType = {
+	title: string;
+	name: ModuleName;
+	descriptionKey: string;
+	iconType: "svg" | "png";
+	dependsOn?: ModuleName | ModuleName[];
+};
 
-export const modules = (t: (key: string) => string) =>
-	rawModules.map((mod) => ({
+export const modules = (t: (key: string) => string) => {
+	const newModules = (rawModules as unknown as ModuleType[]).map((mod) => ({
 		...mod,
 		description: t(mod.descriptionKey)
 	}));
+	return newModules;
+};
 
 export const moduleDependencies: Record<string, ModuleName[]> = {
 	"necord-localization": ["necord"],
