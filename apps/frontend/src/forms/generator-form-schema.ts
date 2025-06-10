@@ -10,7 +10,7 @@ export const generatorFormSchema = (t: (arg: string) => string) =>
 			.regex(/^(?:@[a-z0-9-*~][a-z0-9-._~]*\/)?[a-z0-9-*~][a-z0-9-._~]*$/, t("FormSchema.projectName.regex"))
 			.default(t("FormSchema.projectName.default")),
 		projectDescription: z.string().optional().default(t("FormSchema.projectDescription.default")),
-		nodeVersion: z.enum(["20", "21", "22", "23"]).default("20"),
+		nodeVersion: z.enum(["20", "21", "22", "23", "24"]).default("20"),
 		packageManager: z.enum(["npm", "yarn", "pnpm"]).default("npm"),
 		modules: z.array(z.string()).optional().default([]),
 		extras: z.array(z.string()).optional().default([]),

@@ -11,6 +11,6 @@ export class PackageJsonMetadataDTO {
 	public readonly description?: string;
 
 	@IsString()
-	@IsIn(["20", "21", "22", "23"], { message: "Node version must be one of the following: 20, 21, 22, 23" })
-	public readonly nodeVersion!: "20" | "21" | "22" | "23";
+	@IsIn(["20", "21", "22", "23", "24"], { message: "Node version must be one of the following: 20, 21, 22, 23, 24" })
+	public readonly nodeVersion!: "20" | "21" | "22" | "23" | "24";
 }
