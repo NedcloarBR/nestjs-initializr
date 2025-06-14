@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { NPM_DEPENDENCIES } from "../../../constants/packages";
 // biome-ignore lint/style/useImportType:
 import { MetadataDTO } from "../dtos/metadata.dto";
 import { extrasMetadata } from "../templates/extra";
-import { helmet } from "../templates/extra/helmet";
-import { validation } from "../templates/extra/validation";
 import { BaseGenerator } from "./base.generator";
 // biome-ignore lint/style/useImportType:
 import { FileUpdaterService } from "./file-updater.service";

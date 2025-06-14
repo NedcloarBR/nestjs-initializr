@@ -21,9 +21,15 @@
 			}
 		],
 		"types": ["jest", "node"],
+		"rootDir": ".",
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@/components": ["./src/components"],
+			"@/components/ui": ["./src/components/ui"],
+			"@/hooks": ["./src/hooks"],
+			"@/lib": ["./src/lib"],
+			"@/lib/utils": ["./src/lib/utils"]
 		}
 	},
 	"include": [

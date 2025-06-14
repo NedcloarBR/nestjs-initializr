@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { MetadataDTO } from "../dtos/metadata.dto";
+import type { MetadataDTO } from "../dtos/metadata.dto";
 import { dockerComposeTemplate } from "../templates/docker/docker-compose.template";
 import { dockerfileTemplate } from "../templates/docker/docker-file.template";
 import { BaseGenerator } from "./base.generator";

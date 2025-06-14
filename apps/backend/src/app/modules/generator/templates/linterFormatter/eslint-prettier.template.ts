@@ -1,4 +1,4 @@
-import { DEV_NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
+import { DEV_NPM_DEPENDENCIES } from "@/app/constants/packages";
 
 export const EslintPrettierTemplate = {
 	packages: [

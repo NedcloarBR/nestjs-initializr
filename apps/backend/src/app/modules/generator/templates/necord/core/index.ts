@@ -1,5 +1,5 @@
-import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
-import type { ModuleTemplate } from "../../../generators/module.service";
+import { NPM_DEPENDENCIES } from "@/app/constants/packages";
+import type { ModuleTemplate } from "@/types";
 import { NecordCommandTemplate } from "./command.template";
 import { NecordConfigTemplate } from "./config.template";
 import { NecordConstants } from "./constants.template";

@@ -2,16 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import dedent from "dedent";
 
-type StaticTemplate = {
-	name: string;
-	path: string;
-	content: string;
-};
-
-type DynamicTemplate = (mainType: "fastify" | "express") => StaticTemplate;
-
-export type Template = StaticTemplate | DynamicTemplate;
-
 export class BaseGenerator {
 	public createFile(
 		id: string,

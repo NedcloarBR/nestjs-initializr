@@ -12,15 +12,7 @@
 		"module": "esnext",
 		"lib": ["es2020", "dom"],
 		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
-		"baseUrl": ".",
-		"paths": {
-			"@/components": ["apps/frontend/src/components"],
-			"@/components/ui": ["apps/frontend/src/components/ui"],
-			"@/hooks": ["apps/frontend/src/hooks"],
-			"@/lib": ["apps/frontend/src/lib"],
-			"@/lib/utils": ["apps/frontend/src/lib/utils"]
-		}
+		"skipDefaultLibCheck": true
 	},
 	"exclude": ["node_modules", "tmp"]
 }

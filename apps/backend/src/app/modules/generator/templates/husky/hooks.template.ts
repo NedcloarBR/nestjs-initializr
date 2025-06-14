@@ -1,5 +1,5 @@
+import type { Template } from "@/types";
 import type { MetadataDTO } from "../../dtos/metadata.dto";
-import type { Template } from "../../generators";
 
 export function HuskyHooksTemplates(packageManager: MetadataDTO["packageManager"]): Template[] {
 	return [

@@ -1,5 +1,5 @@
-import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
-import type { ModuleTemplate } from "../../generators/module.service";
+import { NPM_DEPENDENCIES } from "@/app/constants/packages";
+import type { ModuleTemplate } from "@/types";
 import { GraphQLConstants } from "./constants.template";
 import { GraphQLModuleTemplate } from "./module.template";
 import { GraphQLResolverTemplate } from "./resolver.template";

@@ -1,23 +1,7 @@
 import fs from "node:fs";
+import type { Template } from "@/types";
 import { Injectable } from "@nestjs/common";
-import { BaseGenerator, type Template } from "./base.generator";
-
-export type ModuleTemplate = {
-	name: string;
-	templates: Template[];
-	constants?: {
-		token?: string;
-		import?: string;
-		export?: string;
-		importArray?: string;
-		inject?: string;
-		importIn?: string;
-	};
-	mainTemplates?: { replacer: string; content: string }[];
-	filesToUpdate?: { path: string; name: string; templates: { replacer: string; content: string }[] }[];
-	packages?: { name: string; version: string; dev: boolean }[];
-	scripts?: { name: string; command: string }[];
-};
+import { BaseGenerator } from "./base.generator";
 
 @Injectable()
 export class ModuleService extends BaseGenerator {

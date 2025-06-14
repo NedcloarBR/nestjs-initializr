@@ -1,4 +1,4 @@
-import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
+import { NPM_DEPENDENCIES } from "@/app/constants/packages";
 import { compression } from "./compression";
 import { cors } from "./cors";
 import { helmet } from "./helmet";

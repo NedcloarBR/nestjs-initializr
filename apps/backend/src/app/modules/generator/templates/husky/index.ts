@@ -1,6 +1,6 @@
-import { DEV_NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
+import { DEV_NPM_DEPENDENCIES } from "@/app/constants/packages";
+import type { ModuleTemplate } from "@/types";
 import type { MetadataDTO } from "../../dtos/metadata.dto";
-import type { ModuleTemplate } from "../../generators/module.service";
 import { HuskyConfigsTemplates } from "./configs.template";
 import { HuskyConstants } from "./constants.template";
 import { HuskyHooksTemplates } from "./hooks.template";

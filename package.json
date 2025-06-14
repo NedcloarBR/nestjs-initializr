@@ -6,7 +6,7 @@
 	"packageManager": "yarn@4.7.0",
 	"workspaces": ["apps/*"],
 	"scripts": {
-		"shadcn:add": "TS_NODE_PROJECT=tsconfig.base.json npx shadcn@latest add",
+		"shadcn:add": "TS_NODE_PROJECT=apps/frontend/tsconfig.json npx shadcn@latest add",
 		"format": "biome format --write ./",
 		"lint": "biome lint ./",
 		"check": "biome check --write ./",

@@ -1,5 +1,5 @@
-import { NPM_DEPENDENCIES } from "apps/backend/src/app/constants/packages";
-import { ModuleTemplate } from "../../generators/module.service";
+import { NPM_DEPENDENCIES } from "@/app/constants/packages";
+import type { ModuleTemplate } from "@/types";
 import { configConstants } from "./constant.template";
 import { dotenvTemplate } from "./dotenv.template";
 import { envDtoTemplate } from "./env-dto.template";

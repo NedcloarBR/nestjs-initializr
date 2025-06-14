@@ -15,7 +15,6 @@ import { ConfigModule, GeneratorModule } from "./modules";
 		}),
 		GeneratorModule
 	],
-	controllers: [],
 	providers: [
 		{
 			provide: APP_GUARD,
