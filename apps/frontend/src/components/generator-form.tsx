@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { ExtraField } from "./extra-field";
 import { ModulesList } from "./modules-list";
+import { RecentHistory } from "./recent-history";
 import {
 	Button,
 	Dialog,
@@ -54,18 +55,7 @@ export function GeneratorForm() {
 
 	function handleConfig(event: React.ChangeEvent<HTMLInputElement>) {
 		loadConfig(event, (data) => {
-			form.reset({
-				projectName: data.packageJson.name,
-				projectDescription: data.packageJson.description,
-				nodeVersion: data.packageJson.nodeVersion,
-				mainType: data.mainType,
-				packageManager: data.packageManager,
-				modules: data.modules,
-				extras: data.extras,
-				linterFormatter: data.linterFormatter,
-				docker: data.docker,
-				testRunner: data.testRunner
-			});
+			form.reset(data);
 		});
 	}
 
@@ -218,6 +208,8 @@ export function GeneratorForm() {
 								<Button type="button" onClick={handleReset} className="cursor-pointer">
 									<RefreshCcwIcon />
 								</Button>
+
+								<RecentHistory />
 							</div>
 						</div>
 

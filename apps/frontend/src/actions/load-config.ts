@@ -1,4 +1,4 @@
-interface ConfigStructure {
+export interface ConfigStructure {
 	packageJson: {
 		name: string;
 		description: string;
