@@ -1,10 +1,10 @@
 import type { generatorFormSchema } from "@/forms/generator-form-schema";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
-import { z } from "zod";
-import { ConfigStructure } from "./load-config";
+import type { z } from "zod";
+import type { ConfigStructure } from "./load-config";
 
-export async function generateProject(values: z.infer<ReturnType<typeof generatorFormSchema>>) {
+export async function generate(values: z.infer<ReturnType<typeof generatorFormSchema>>, mode: "config" | "project") {
 	try {
 		const rawBody = {
 			mainType: values.mainType,
@@ -21,7 +21,15 @@ export async function generateProject(values: z.infer<ReturnType<typeof generato
 			testRunner: values.testRunner
 		};
 
-		const response = await fetch(`${process.env.BACKEND_URL}/api/generator`, {
+		const baseUrl = process.env.BACKEND_URL || "";
+		const url = new URL("/api/generator", baseUrl);
+		let filename = "project.zip";
+		if (mode === "config") {
+			url.pathname += "/config";
+			filename = "nestjs-initializr.json";
+		}
+
+		const response = await fetch(url, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -30,22 +38,23 @@ export async function generateProject(values: z.infer<ReturnType<typeof generato
 		});
 
 		if (!response.ok) {
-			throw new Error("Error generating the project zip file");
+			throw new Error(`Error generating the ${mode} file`);
 		}
 
 		const contentDisposition = response.headers.get("Content-Disposition");
-		const fileName = contentDisposition?.split("filename=")[1] || "project.zip";
+		const fileName = contentDisposition?.split("filename=")[1] || filename;
 
 		const blob = await response.blob();
 
 		saveAs(blob, fileName);
 
 		const MAX_HISTORY = 10;
-		const recentHistory = JSON.parse(localStorage.getItem("recentHistory") || "[]") as ConfigStructure[];
-		const filtered = recentHistory.filter((item) => item.packageJson.name !== rawBody.packageJson.name);
-		const updatedHistory = [rawBody, ...filtered];
-		const limitedHistory = updatedHistory.slice(0, MAX_HISTORY);
-		localStorage.setItem("recentHistory", JSON.stringify(limitedHistory));
+		const existing = JSON.parse(localStorage.getItem("recentHistory") || "[]") as ConfigStructure[];
+		const updated = [...existing, rawBody];
+		if (updated.length > MAX_HISTORY) {
+			updated.shift();
+		}
+		localStorage.setItem("recentHistory", JSON.stringify(updated));
 	} catch (error) {
 		console.error(error);
 		let message = "An unexpected error occurred.";

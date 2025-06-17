@@ -1,3 +1,2 @@
-export * from "./generate-config";
-export * from "./generate-project";
+export * from "./generate";
 export * from "./load-config";

@@ -1,6 +1,6 @@
 "use client";
 
-import { generateConfig, generateProject, loadConfig } from "@/actions";
+import { generate, loadConfig } from "@/actions";
 import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -230,10 +230,10 @@ export function GeneratorForm() {
 					<div className="flex flex-col items-center justify-center rounded-lg bg-nest-header-background">
 						<h2 className="mt-4 font-bold">{t("Submit.title")}</h2>
 						<div className="m-4 flex space-x-4">
-							<Button onClick={form.handleSubmit(generateProject)} className=" cursor-pointer">
+							<Button onClick={form.handleSubmit((values) => generate(values, "project"))} className="cursor-pointer">
 								{t("Submit.project")}
 							</Button>
-							<Button onClick={form.handleSubmit(generateConfig)} className=" cursor-pointer">
+							<Button onClick={form.handleSubmit((values) => generate(values, "config"))} className="cursor-pointer">
 								{t("Submit.config")}
 							</Button>
 						</div>
