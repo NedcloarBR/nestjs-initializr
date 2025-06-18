@@ -123,5 +123,10 @@
 			"config": "Config",
 			"reset": "Reset"
 		}
+	},
+	"RecentHistory": {
+		"title": "Recent Projects",
+		"description": "Recent Projects Generated",
+		"empty": "No recent projects found"
 	}
 }

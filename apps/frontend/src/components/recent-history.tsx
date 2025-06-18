@@ -1,19 +1,23 @@
 "use client";
 
 import type { ConfigStructure } from "@/actions";
-import { Button } from "@/components/ui/button";
 import {
+	Button,
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger
-} from "@/components/ui/dialog";
+	DialogTrigger,
+	ScrollArea
+} from "@/components/ui";
 import { HistoryIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export function RecentHistory() {
+	const t = useTranslations("RecentHistory");
+
 	const [recentHistory, setRecentHistory] = useState<ConfigStructure[]>([]);
 
 	function fetchRecentHistory() {
@@ -40,21 +44,21 @@ export function RecentHistory() {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Recent History</DialogTitle>
-					<DialogDescription>Recent Projects Generated</DialogDescription>
+					<DialogTitle>{t("title")}</DialogTitle>
+					<DialogDescription>{t("description")}</DialogDescription>
 				</DialogHeader>
 				{hasRecentHistory ? (
-					<div>
+					<ScrollArea className="max-h-[400px]">
 						{recentHistory.map((item, index) => (
 							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 							<div key={index} className="mb-2 rounded-md border p-2">
-								<h3 className="font-semibold text-lg">{item.packageJson?.name}</h3>
+								<p className="font-semibold text-lg">{item.packageJson?.name}</p>
 								<p className="text-gray-600 text-sm">{item.packageJson?.description}</p>
 							</div>
 						))}
-					</div>
+					</ScrollArea>
 				) : (
-					<p className="text-gray-600">No recent history available.</p>
+					<p className="text-gray-600">{t("empty")}</p>
 				)}
 			</DialogContent>
 		</Dialog>
