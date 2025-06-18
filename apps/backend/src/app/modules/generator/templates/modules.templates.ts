@@ -2,6 +2,7 @@ import type { MetadataDTO } from "../dtos/metadata.dto";
 import { ConfigTemplates } from "./config";
 import { GraphQLTemplates } from "./graphql";
 import { HuskyTemplates } from "./husky";
+import { Nestjsi18nTemplates } from "./i18n";
 import { NecordTemplates } from "./necord/core";
 import { NecordLavalinkTemplates } from "./necord/lavalink";
 import { NecordLocalizationTemplates } from "./necord/localization";
@@ -22,6 +23,7 @@ export function modulesTemplates(
 		NecordLavalinkTemplates(withConfigModule),
 		NestWhatsTemplates,
 		GraphQLTemplates(mainType),
-		HuskyTemplates(packageManager, linterFormatter)
+		HuskyTemplates(packageManager, linterFormatter),
+		Nestjsi18nTemplates(withConfigModule)
 	];
 }

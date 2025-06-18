@@ -62,6 +62,7 @@ export function RootFilesTemplates(mainType: "fastify" | "express") {
             "emitDecoratorMetadata": true,
             "experimentalDecorators": true,
             "allowSyntheticDefaultImports": true,
+            "esModuleInterop": true,
             "target": "ES2023",
             "sourceMap": true,
             "outDir": "./dist",

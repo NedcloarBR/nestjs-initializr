@@ -118,6 +118,10 @@ export const NPM_DEPENDENCIES = {
 	"@as-integrations/fastify": {
 		name: "@as-integrations/fastify",
 		version: "^2.1.1"
+	},
+	"nestjs-i18n": {
+		name: "nestjs-i18n",
+		version: "^10.5.1"
 	}
 };
 

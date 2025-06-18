@@ -55,6 +55,12 @@ const rawModules = [
 		name: "husky",
 		descriptionKey: "Modules.husky.description",
 		iconType: "svg"
+	},
+	{
+		title: "NestJS i18n",
+		name: "nestjs-i18n",
+		descriptionKey: "Modules.nestjs-i18n.description",
+		iconType: "svg"
 	}
 ] as const;
 

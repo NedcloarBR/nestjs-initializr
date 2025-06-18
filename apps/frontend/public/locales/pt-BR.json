@@ -66,6 +66,10 @@
 			},
 			"husky": {
 				"description": "Husky é uma ferramenta que permite gerenciar facilmente os hooks do Git em seu projeto. Ela ajuda a garantir qualidade e consistência no código ao executar scripts antes de commits ou push. Configurado com commitlint e lint-staged."
+			},
+
+			"nestjs-i18n": {
+				"description": "A biblioteca i18n para NestJS. Facilita o trabalho com idiomas em seu projeto NestJS. Tudo é altamente configurável. Você pode escrever e conectar seus próprios resolvers ou carregadores de idioma."
 			}
 		},
 		"Extra": {

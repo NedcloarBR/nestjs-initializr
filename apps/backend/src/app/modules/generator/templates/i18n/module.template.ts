@@ -1,0 +1,41 @@
+export function i18nModuleTemplate(withConfigModule: boolean) {
+	return {
+		name: "i18n.module.ts",
+		path: "src/modules/i18n",
+		content: `
+      import { Module } from "@nestjs/common";
+      import { AcceptLanguageResolver, I18nModule as I18nModuleCore, QueryResolver, HeaderResolver } from "nestjs-i18n";
+      ${withConfigModule ? 'import { I18nConfig } from "./i18n.config"\nimport { ConfigService } from "@/modules/config/config.service"' : 'import path from "node:path";'}
+
+      @Module({
+        imports: [
+          I18nModuleCore.${
+						withConfigModule
+							? `forRootAsync({
+              inject: [ConfigService],
+              useClass: I18nConfig,
+              resolvers: [
+    			    	{ use: QueryResolver, options: ["lang", "locale", "language"] },
+    			    	AcceptLanguageResolver,
+    			    	new HeaderResolver(["x-lang", "x-locale", "x-language"]),
+    			    ],
+            })`
+							: `forRoot({
+              fallbackLanguage: "en-US",
+              loaderOptions: {
+                path: path.join(__dirname, "/locales/"),
+                watch: true
+              },
+              resolvers: [
+    			    	{ use: QueryResolver, options: ["lang", "locale", "language"] },
+    			    	AcceptLanguageResolver,
+    			    	new HeaderResolver(["x-lang", "x-locale", "x-language"]),
+    			    ],
+            })`
+					}
+        ]
+      })
+      export class I18nModule {}
+    `
+	};
+}
