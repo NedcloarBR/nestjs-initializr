@@ -122,11 +122,17 @@
 			"project": "Projeto",
 			"config": "Configuração",
 			"reset": "Redefinir"
+		},
+		"ActionsTooltip": {
+			"loadConfig": "Carregar configuração de um arquivo",
+			"resetConfig": "Redefinir configuração"
 		}
 	},
 	"RecentHistory": {
+		"tooltip": "Ver projetos recentes",
 		"title": "Projetos Recentes",
 		"description": "Projetos Recentes Gerados",
-		"empty": "Nenhum projeto recente encontrado"
+		"empty": "Nenhum projeto recente encontrado",
+		"clear": "Limpar Projetos Recentes"
 	}
 }

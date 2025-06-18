@@ -10,7 +10,10 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-	ScrollArea
+	ScrollArea,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger
 } from "@/components/ui";
 import { HistoryIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -43,11 +46,16 @@ export function RecentHistory() {
 
 	return (
 		<Dialog>
-			<DialogTrigger asChild>
-				<Button className="cursor-pointer" onClick={fetchRecentHistory}>
-					<HistoryIcon />
-				</Button>
-			</DialogTrigger>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<DialogTrigger asChild>
+						<Button className="cursor-pointer" onClick={fetchRecentHistory}>
+							<HistoryIcon />
+						</Button>
+					</DialogTrigger>
+				</TooltipTrigger>
+				<TooltipContent>{t("tooltip")}</TooltipContent>
+			</Tooltip>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>{t("title")}</DialogTitle>
@@ -67,9 +75,14 @@ export function RecentHistory() {
 					<p className="text-gray-600">{t("empty")}</p>
 				)}
 				<DialogFooter>
-					<Button className="cursor-pointer" onClick={clearRecentHistory}>
-						<Trash2Icon />
-					</Button>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button className="cursor-pointer" onClick={clearRecentHistory}>
+								<Trash2Icon />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>{t("clear")}</TooltipContent>
+					</Tooltip>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

@@ -30,7 +30,10 @@ import {
 	RadioGroup,
 	RadioGroupItem,
 	ScrollArea,
-	Separator
+	Separator,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger
 } from "./ui";
 
 export function GeneratorForm() {
@@ -197,17 +200,27 @@ export function GeneratorForm() {
 									</DialogContent>
 								</Dialog>
 
-								<Button
-									type="button"
-									className="cursor-pointer"
-									onClick={() => document.getElementById("fileUpload")?.click()}>
-									<UploadIcon />
-								</Button>
-								<Input className="hidden" id="fileUpload" type="file" accept=".json" onChange={handleConfig} />
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<Button
+											type="button"
+											className="cursor-pointer"
+											onClick={() => document.getElementById("fileUpload")?.click()}>
+											<UploadIcon />
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>{t("ActionsTooltip.loadConfig")}</TooltipContent>
+									<Input className="hidden" id="fileUpload" type="file" accept=".json" onChange={handleConfig} />
+								</Tooltip>
 
-								<Button type="button" onClick={handleReset} className="cursor-pointer">
-									<RefreshCcwIcon />
-								</Button>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<Button type="button" onClick={handleReset} className="cursor-pointer">
+											<RefreshCcwIcon />
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>{t("ActionsTooltip.resetConfig")}</TooltipContent>
+								</Tooltip>
 
 								<RecentHistory />
 							</div>
