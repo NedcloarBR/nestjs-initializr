@@ -6,12 +6,13 @@ import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 	ScrollArea
 } from "@/components/ui";
-import { HistoryIcon } from "lucide-react";
+import { HistoryIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -33,12 +34,17 @@ export function RecentHistory() {
 		}
 	}
 
+	function clearRecentHistory() {
+		localStorage.removeItem("recentHistory");
+		setRecentHistory([]);
+	}
+
 	const hasRecentHistory = recentHistory && recentHistory.length > 0;
 
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button onClick={fetchRecentHistory}>
+				<Button className="cursor-pointer" onClick={fetchRecentHistory}>
 					<HistoryIcon />
 				</Button>
 			</DialogTrigger>
@@ -60,6 +66,11 @@ export function RecentHistory() {
 				) : (
 					<p className="text-gray-600">{t("empty")}</p>
 				)}
+				<DialogFooter>
+					<Button className="cursor-pointer" onClick={clearRecentHistory}>
+						<Trash2Icon />
+					</Button>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);
