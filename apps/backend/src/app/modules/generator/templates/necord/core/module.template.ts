@@ -4,7 +4,7 @@ export function NecordModuleTemplate(withConfigModule: boolean) {
 		path: "src/modules/necord",
 		content: `
       import { Module } from "@nestjs/common";
-      ${withConfigModule ? 'import { ConfigService } from "@/modules/config/config.service";' : ""}
+      ${withConfigModule ? 'import { Services } from "@/constants/services";' : ""}
       import { NecordModule as NecordModuleCore } from "necord";
       import { NecordService } from "./necord.service";
       import { NecordCommand } from "./necord.command";
@@ -16,7 +16,7 @@ export function NecordModuleTemplate(withConfigModule: boolean) {
           NecordModuleCore.${
 						withConfigModule
 							? `forRootAsync({
-                  inject: [ConfigService],
+                  inject: [Services.Config],
                   useClass: NecordConfig
                 })`
 							: `forRoot({

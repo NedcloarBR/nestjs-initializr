@@ -2,16 +2,11 @@ export const configModuleTemplate = {
 	name: "config.module.ts",
 	path: "src/modules/config",
 	content: `
-    import { Module, type Provider } from "@nestjs/common";
+    import { Module } from "@nestjs/common";
     import { ConfigModule as NestConfigModule } from "@nestjs/config";
     import { ConfigService } from "./config.service";
     import EnvConfig from "./dtos/env.dto";
     import { Services } from "../../constants/services";
-
-    const provider: Provider<ConfigService> = {
-      provide: Services.Config,
-      useClass: ConfigService,
-    }
 
     @Module({
       imports: [
@@ -20,8 +15,13 @@ export const configModuleTemplate = {
           load: [EnvConfig]
         })
       ],
-      providers: [provider],
-      exports: [provider],
+      providers: [
+        {
+          provide: Services.Config,
+          useClass: ConfigService,
+        }
+      ],
+      exports: [Services.Config],
     })
     export class ConfigModule {}
   `

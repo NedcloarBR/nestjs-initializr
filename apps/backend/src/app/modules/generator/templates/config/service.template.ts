@@ -6,7 +6,7 @@ export const configServiceTemplate = {
     import { ConfigService as NestConfigService } from "@nestjs/config";
     import { EnvDTO } from "./dtos/env.dto";
 
-    export type ConfigSchema = EnvDTO
+    export type ConfigSchema = InstanceType<typeof EnvDTO>;
 
     @Injectable()
     export class ConfigService {

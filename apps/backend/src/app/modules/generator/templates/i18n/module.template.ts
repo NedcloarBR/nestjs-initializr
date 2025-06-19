@@ -5,14 +5,14 @@ export function i18nModuleTemplate(withConfigModule: boolean) {
 		content: `
       import { Module } from "@nestjs/common";
       import { AcceptLanguageResolver, I18nModule as I18nModuleCore, QueryResolver, HeaderResolver } from "nestjs-i18n";
-      ${withConfigModule ? 'import { I18nConfig } from "./i18n.config"\nimport { ConfigService } from "@/modules/config/config.service"' : 'import path from "node:path";'}
+      ${withConfigModule ? 'import { I18nConfig } from "./i18n.config"\nimport { Services } from "@/constants/services"' : 'import path from "node:path";'}
 
       @Module({
         imports: [
           I18nModuleCore.${
 						withConfigModule
 							? `forRootAsync({
-              inject: [ConfigService],
+              inject: [Services.Config],
               useClass: I18nConfig,
               resolvers: [
     			    	{ use: QueryResolver, options: ["lang", "locale", "language"] },

@@ -19,7 +19,7 @@ export function NecordLavalinkModuleTemplate(withConfigModule: boolean) {
 				content: `,\nNecordLavalinkModule.${
 					withConfigModule
 						? `forRootAsync({
-                inject: [ConfigService],
+                inject: [Services.Config],
                 useClass: NecordConfig
               })\n],`
 						: `forRoot({

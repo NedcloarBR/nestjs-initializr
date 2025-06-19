@@ -12,7 +12,7 @@ export function moduleTemplate(withConfigModule: boolean) {
 				content: `,\nNecordLocalizationModule.${
 					withConfigModule
 						? `forRootAsync({
-                inject: [ConfigService],
+                inject: [Services.Config],
                 useClass: NecordConfig
               })\n],`
 						: `forRoot({
