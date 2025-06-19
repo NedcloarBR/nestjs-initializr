@@ -1,6 +1,7 @@
 import { NPM_DEPENDENCIES } from "@/app/constants/packages";
 import type { ModuleTemplate } from "@/types";
 import { appServiceTemplate } from "./app-service.template";
+import { configServiceTemplate } from "./config-service.template";
 import { i18nConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
@@ -19,7 +20,7 @@ export function Nestjsi18nTemplates(withConfigModule: boolean): ModuleTemplate {
 		],
 		filesToUpdate: [
 			nestCliJsonTemplate,
-			...(withConfigModule ? [updateConfigModuleTemplate, dotenvTemplate] : []),
+			...(withConfigModule ? [updateConfigModuleTemplate, dotenvTemplate, configServiceTemplate] : []),
 			appServiceTemplate
 		],
 		constants: i18nConstants,
