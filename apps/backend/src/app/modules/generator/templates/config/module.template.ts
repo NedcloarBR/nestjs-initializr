@@ -2,16 +2,16 @@ export const configModuleTemplate = {
 	name: "config.module.ts",
 	path: "src/modules/config",
 	content: `
-    import { Module } from "@nestjs/common";
+    import { Global, Module } from "@nestjs/common";
     import { ConfigModule as NestConfigModule } from "@nestjs/config";
     import { ConfigService } from "./config.service";
     import EnvConfig from "./dtos/env.dto";
     import { Services } from "../../constants/services";
 
+    @Global()
     @Module({
       imports: [
         NestConfigModule.forRoot({
-          isGlobal: true,
           load: [EnvConfig]
         })
       ],
