@@ -85,16 +85,16 @@ export class ModuleService extends BaseGenerator {
 			this.createFile(id, {
 				name: "services.ts",
 				path: "src/constants",
-				content: "export enum Services {\n}\n"
+				content: "export const Services = Object.freeze({\n})\n"
 			});
 			constantFile = this.getPath(id, "src/constants/services.ts");
 		}
 		const constantContent = this.readFile(constantFile);
 
-		const constantRegex = /export enum Services {\n}/g;
+		const constantRegex = /export const Services = Object\.freeze\({\n}\)/g;
 		const newConstantContent = constantContent.replace(
 			constantRegex,
-			`export enum Services {\n\t${serviceConstant},\n}`
+			`export const Services = Object.freeze({\n\t${serviceConstant},\n})`
 		);
 		this.writeFile(constantFile, newConstantContent);
 	}

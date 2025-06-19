@@ -1,5 +1,5 @@
 export const configConstants = {
-	token: 'Config = "CONFIG_SERVICE"',
+	token: 'Config: Symbol("CONFIG_SERVICE")',
 	import: "ConfigModule",
 	export: 'export { ConfigModule } from "./config/config.module"',
 	importArray: "ConfigModule",
