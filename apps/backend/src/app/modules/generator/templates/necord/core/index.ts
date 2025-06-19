@@ -1,6 +1,7 @@
 import { NPM_DEPENDENCIES } from "@/app/constants/packages";
 import type { ModuleTemplate } from "@/types";
 import { NecordCommandTemplate } from "./command.template";
+import { configServiceTemplate } from "./config-service.template";
 import { NecordConfigTemplate } from "./config.template";
 import { NecordConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
@@ -18,7 +19,10 @@ export function NecordTemplates(withConfigModule: boolean): ModuleTemplate {
 			NecordCommandTemplate,
 			...(withConfigModule ? [NecordConfigTemplate, envDtoTemplate] : [])
 		],
-		filesToUpdate: [dotenvTemplate, ...(withConfigModule ? [updateConfigModuleTemplate, indexDTemplate] : [])],
+		filesToUpdate: [
+			dotenvTemplate,
+			...(withConfigModule ? [updateConfigModuleTemplate, configServiceTemplate, indexDTemplate] : [])
+		],
 		constants: NecordConstants,
 		packages: [
 			{

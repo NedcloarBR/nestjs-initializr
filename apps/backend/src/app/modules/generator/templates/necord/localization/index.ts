@@ -1,6 +1,7 @@
 import { NPM_DEPENDENCIES } from "@/app/constants/packages";
 import type { ModuleTemplate } from "@/types";
 import { commandTemplate } from "./command.template";
+import { configServiceTemplate } from "./config-service.template";
 import { configTemplate } from "./config.template";
 import { NecordLocalizationConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
@@ -17,7 +18,7 @@ export function NecordLocalizationTemplates(withConfigModule: boolean): ModuleTe
 		filesToUpdate: [
 			commandTemplate,
 			moduleTemplate(withConfigModule),
-			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate, indexDTemplate] : []),
+			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate, configServiceTemplate, indexDTemplate] : []),
 			dotenvTemplate
 		],
 		constants: NecordLocalizationConstants,

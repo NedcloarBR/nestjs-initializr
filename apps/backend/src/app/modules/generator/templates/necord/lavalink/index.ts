@@ -1,6 +1,7 @@
 import { NPM_DEPENDENCIES } from "@/app/constants/packages";
 import type { ModuleTemplate } from "@/types";
 import { applicationYmlTemplate } from "./application-yml.template";
+import { configServiceTemplate } from "./config-service.template";
 import { configTemplate } from "./config.template";
 import { NecordLavalinkConstants } from "./constants.template";
 import { dockerComposeTemplate } from "./docker-compose.template";
@@ -30,7 +31,7 @@ export function NecordLavalinkTemplates(withConfigModule: boolean): ModuleTempla
 			sourceAutocompleteTemplate
 		],
 		filesToUpdate: [
-			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate, indexDTemplate] : []),
+			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate, configServiceTemplate, indexDTemplate] : []),
 			NecordLavalinkModuleTemplate(withConfigModule)
 		],
 		constants: NecordLavalinkConstants,
