@@ -6,6 +6,7 @@ import { i18nConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
 import { i18nConfigTemplate } from "./i18n-config.template";
+import { indexDTemplate } from "./index-d.template";
 import { i18nModuleTemplate } from "./module.template";
 import { nestCliJsonTemplate } from "./nest-cli-json.template";
 import { translationTemplate } from "./translation.template";
@@ -20,7 +21,7 @@ export function Nestjsi18nTemplates(withConfigModule: boolean): ModuleTemplate {
 		],
 		filesToUpdate: [
 			nestCliJsonTemplate,
-			...(withConfigModule ? [updateConfigModuleTemplate, dotenvTemplate, configServiceTemplate] : []),
+			...(withConfigModule ? [updateConfigModuleTemplate, dotenvTemplate, configServiceTemplate, indexDTemplate] : []),
 			appServiceTemplate
 		],
 		constants: i18nConstants,

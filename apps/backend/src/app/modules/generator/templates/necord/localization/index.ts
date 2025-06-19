@@ -5,6 +5,7 @@ import { configTemplate } from "./config.template";
 import { NecordLocalizationConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
+import { indexDTemplate } from "./index-d.template";
 import { JSONLocaleLoaderTemplate } from "./jsonlocale-loader.template";
 import { moduleTemplate } from "./module.template";
 import { pingTranslationTemplate } from "./ping-translation.template";
@@ -16,7 +17,7 @@ export function NecordLocalizationTemplates(withConfigModule: boolean): ModuleTe
 		filesToUpdate: [
 			commandTemplate,
 			moduleTemplate(withConfigModule),
-			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate] : []),
+			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate, indexDTemplate] : []),
 			dotenvTemplate
 		],
 		constants: NecordLocalizationConstants,

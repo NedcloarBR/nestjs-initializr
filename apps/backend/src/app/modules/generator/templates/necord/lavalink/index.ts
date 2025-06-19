@@ -6,6 +6,7 @@ import { NecordLavalinkConstants } from "./constants.template";
 import { dockerComposeTemplate } from "./docker-compose.template";
 import { dockerFileTemplate } from "./docker-file.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
+import { indexDTemplate } from "./index-d.template";
 import { ListenersTemplate } from "./listeners.template";
 import { NecordLavalinkModuleTemplate } from "./module.template";
 import { playTemplate } from "./play-command.template";
@@ -29,7 +30,7 @@ export function NecordLavalinkTemplates(withConfigModule: boolean): ModuleTempla
 			sourceAutocompleteTemplate
 		],
 		filesToUpdate: [
-			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate] : []),
+			...(withConfigModule ? [configTemplate, updateConfigModuleTemplate, indexDTemplate] : []),
 			NecordLavalinkModuleTemplate(withConfigModule)
 		],
 		constants: NecordLavalinkConstants,

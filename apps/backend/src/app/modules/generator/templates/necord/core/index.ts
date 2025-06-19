@@ -5,6 +5,7 @@ import { NecordConfigTemplate } from "./config.template";
 import { NecordConstants } from "./constants.template";
 import { dotenvTemplate } from "./dotenv.template";
 import { envDtoTemplate, updateConfigModuleTemplate } from "./env-dto.template";
+import { indexDTemplate } from "./index-d.template";
 import { NecordModuleTemplate } from "./module.template";
 import { NecordServiceTemplate } from "./service.template";
 
@@ -17,7 +18,7 @@ export function NecordTemplates(withConfigModule: boolean): ModuleTemplate {
 			NecordCommandTemplate,
 			...(withConfigModule ? [NecordConfigTemplate, envDtoTemplate] : [])
 		],
-		filesToUpdate: [dotenvTemplate, ...(withConfigModule ? [updateConfigModuleTemplate] : [])],
+		filesToUpdate: [dotenvTemplate, ...(withConfigModule ? [updateConfigModuleTemplate, indexDTemplate] : [])],
 		constants: NecordConstants,
 		packages: [
 			{
