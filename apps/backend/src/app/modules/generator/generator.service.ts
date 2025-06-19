@@ -128,15 +128,15 @@ export class GeneratorService extends BaseGenerator {
 
 		const zipFile = await this.generateZipFile(rootDirFiles, id, extraFolders);
 
-		// setTimeout(() => {
-		// 	fs.rm(path.join(__dirname, "__generated__", id), { recursive: true }, (err) => {
-		// 		if (err) {
-		// 			Logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
-		// 		} else {
-		// 			Logger.log("Directory deleted successfully", `Delete:${id}`);
-		// 		}
-		// 	});
-		// }, 10_000);
+		setTimeout(() => {
+			fs.rm(path.join(__dirname, "__generated__", id), { recursive: true }, (err) => {
+				if (err) {
+					Logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
+				} else {
+					Logger.log("Directory deleted successfully", `Delete:${id}`);
+				}
+			});
+		}, 10_000);
 
 		return zipFile;
 	}
