@@ -37,6 +37,7 @@ export class GeneratorService extends BaseGenerator {
 		super();
 	}
 
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 	public async generate(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
 		const packageJson = await this.packageJsonGenerator.generate(metadata.packageJson, id);
 		const rootDirFiles = [packageJson];
@@ -78,6 +79,7 @@ export class GeneratorService extends BaseGenerator {
 
 		for (const template of RootFilesTemplates(metadata.mainType)) {
 			const file = this.createFile(id, template);
+			if (template.name === "main.ts") continue;
 			rootDirFiles.push(file);
 		}
 
