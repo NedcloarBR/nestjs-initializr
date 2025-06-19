@@ -234,6 +234,27 @@ export class GeneratorService extends BaseGenerator {
 		const dirPath = this.getPath(id);
 		const configPath = path.join(__dirname, "assets");
 
+		const packageJsonPath = path.join(dirPath, "package.json");
+		const rawPackageJson = this.readFile(packageJsonPath);
+		const packageJson = JSON.parse(rawPackageJson);
+
+		function sortObject(obj: Record<string, string>) {
+			return Object.keys(obj)
+				.sort((a, b) => a.localeCompare(b))
+				.reduce(
+					(acc, key) => {
+						acc[key] = obj[key];
+						return acc;
+					},
+					{} as Record<string, string>
+				);
+		}
+
+		packageJson.dependencies = sortObject(packageJson.dependencies);
+		packageJson.devDependencies = sortObject(packageJson.devDependencies);
+
+		this.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
 		async function runBiomeCommand(args: string[]): Promise<void> {
 			return new Promise((resolve, reject) => {
 				const process = spawn("biome", [...args, "--config-path", configPath, dirPath]);
