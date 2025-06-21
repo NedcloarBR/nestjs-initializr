@@ -33,6 +33,19 @@ export const updateConfigModuleTemplate = {
 		{
 			replacer: "load: [EnvConfig",
 			content: "load: [EnvConfig, I18nEnvDTO"
+		},
+		{
+			replacer: 'import { Services } from "../../constants/services";',
+			content:
+				'import { Services } from "../../constants/services";\nimport { I18nConfig } from "@/modules/i18n/i18n.config";'
+		},
+		{
+			replacer: "},",
+			content: "},\nI18nConfig"
+		},
+		{
+			replacer: "exports: [Services.Config",
+			content: "exports: [Services.Config, Services.I18nConfig"
 		}
 	]
 };
