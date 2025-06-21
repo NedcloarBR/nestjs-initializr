@@ -4,12 +4,12 @@ export function i18nModuleTemplate(withConfigModule: boolean) {
 		path: "src/modules/i18n",
 		content: `
       import { Module } from "@nestjs/common";
-      import { AcceptLanguageResolver, I18nModule as I18nModuleCore, QueryResolver, HeaderResolver } from "nestjs-i18n";
+      import { AcceptLanguageResolver, I18nModule, QueryResolver, HeaderResolver } from "nestjs-i18n";
       ${withConfigModule ? 'import { I18nConfig } from "./i18n.config"' : 'import path from "node:path";'}
 
       @Module({
         imports: [
-          I18nModuleCore.${
+          I18nModule.${
 						withConfigModule
 							? `forRootAsync({
               useClass: I18nConfig,
@@ -34,7 +34,7 @@ export function i18nModuleTemplate(withConfigModule: boolean) {
 					}
         ]
       })
-      export class I18nModule {}
+      export class I18nWrapperModule {}
     `
 	};
 }

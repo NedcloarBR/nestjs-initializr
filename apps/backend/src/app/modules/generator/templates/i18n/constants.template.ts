@@ -1,8 +1,8 @@
 export const i18nConstants = {
 	token: null,
-	import: "I18nModule",
-	export: "export { I18nModule } from './i18n/i18n.module'",
-	importArray: "I18nModule",
+	import: "I18nWrapperModule",
+	export: "export { I18nWrapperModule } from './i18n/i18n.module'",
+	importArray: "I18nWrapperModule",
 	inject: null,
 	importIn: "src/app.module.ts"
 };

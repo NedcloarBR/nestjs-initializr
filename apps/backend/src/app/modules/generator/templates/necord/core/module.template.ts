@@ -5,7 +5,7 @@ export function NecordModuleTemplate(withConfigModule: boolean) {
 		content: `
       import { Module } from "@nestjs/common";
       ${withConfigModule ? 'import { Services } from "@/constants/services";' : ""}
-      import { NecordModule as NecordModuleCore } from "necord";
+      import { NecordModule } from "necord";
       import { NecordService } from "./necord.service";
       import { NecordCommand } from "./necord.command";
       ${withConfigModule ? 'import { NecordConfig } from "./necord.config";' : ""}
@@ -13,7 +13,7 @@ export function NecordModuleTemplate(withConfigModule: boolean) {
 
       @Module({
         imports: [
-          NecordModuleCore.${
+          NecordModule.${
 						withConfigModule
 							? `forRootAsync({
                   inject: [Services.Config],
@@ -34,7 +34,7 @@ export function NecordModuleTemplate(withConfigModule: boolean) {
         ],
         providers: [NecordService, NecordCommand]
       })
-      export class NecordModule {}
+      export class NecordWrapperModule {}
     `
 	};
 }
