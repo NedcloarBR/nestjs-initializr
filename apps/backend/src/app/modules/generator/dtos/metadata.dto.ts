@@ -1,3 +1,4 @@
+import type { ExtraNames, ModuleNames } from "@/types";
 import { Type } from "class-transformer";
 import { IsBoolean, IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from "class-validator";
 import { PackageJsonMetadataDTO } from "./package-json-metadata.dto";
@@ -14,7 +15,7 @@ export class MetadataDTO {
 
 	@IsOptional()
 	@IsString({ each: true })
-	public readonly modules?: string[];
+	public readonly modules?: ModuleNames[];
 
 	@IsString()
 	@IsIn(["npm", "yarn", "pnpm"])
@@ -22,7 +23,7 @@ export class MetadataDTO {
 
 	@IsOptional()
 	@IsString({ each: true })
-	public readonly extras?: string[];
+	public readonly extras?: ExtraNames[];
 
 	@IsOptional()
 	@IsString()

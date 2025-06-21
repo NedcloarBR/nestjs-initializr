@@ -31,8 +31,8 @@ export class ExtraService extends BaseGenerator {
 					await this.fileUpdaterGenerator.update(id, "src", "main.ts", template);
 				}
 
-			if (metadata[extra].packages) {
-				for (const pkg of metadata[extra].packages) {
+			if (metadata[extra.toString()].packages) {
+				for (const pkg of metadata[extra.toString()].packages) {
 					await this.packageJsonGenerator.addPackage(id, pkg.name, pkg.version);
 				}
 			}

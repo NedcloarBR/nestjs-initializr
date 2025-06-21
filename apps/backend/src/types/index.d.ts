@@ -24,3 +24,17 @@ export type ModuleTemplate = {
 	packages?: { name: string; version: string; dev: boolean }[];
 	scripts?: { name: string; command: string }[];
 };
+
+export type ModuleNames =
+	| "config"
+	| "graphql"
+	| "husky"
+	| "i18n"
+	| "necord"
+	| "necord-lavalink"
+	| "necord-localization"
+	| "necord-pagination"
+	| "nestwhats"
+	| "swagger";
+
+export type ExtraNames = "compression" | "cors" | "helmet" | "validation";
