@@ -13,7 +13,7 @@ export const envDtoTemplate = {
 
       @IsString()
       @IsNotEmpty()
-      public readonly DISCORD_DEVELOPMENT_GUILD_ID!: string;
+      public readonly DISCORD_DEVELOPMENT_GUILD_ID!: string[];
     }
 
     export default registerAs("discord_env", () => {
@@ -21,7 +21,7 @@ export const envDtoTemplate = {
 
       return {
         DISCORD_TOKEN: process.env.DISCORD_TOKEN || "",
-        DISCORD_DEVELOPMENT_GUILD_ID: process.env.DISCORD_DEVELOPMENT_GUILD_ID || ""
+        DISCORD_DEVELOPMENT_GUILD_ID: [process.env.DISCORD_DEVELOPMENT_GUILD_ID]
       };
     });
   `
@@ -34,7 +34,7 @@ export const updateConfigModuleTemplate = {
 		{
 			replacer: 'import EnvConfig from "./dtos/env.dto"',
 			content:
-				'import EnvConfig from "./dtos/env.dto"\nimport DiscordEnvConfig from "@/modules/necord/dtos/discord-env.dto.ts"'
+				'import EnvConfig from "./dtos/env.dto"\nimport DiscordEnvConfig from "@/modules/necord/dtos/discord-env.dto"'
 		},
 		{
 			replacer: "load: [EnvConfig",

@@ -47,7 +47,7 @@ export const updateConfigModuleTemplate = {
 		{
 			replacer: 'import EnvConfig from "./dtos/env.dto"',
 			content:
-				'import EnvConfig from "./dtos/env.dto"\nimport LavalinkEnvConfig from "@/modules/necord/dtos/lavalink-env.dto.ts"'
+				'import EnvConfig from "./dtos/env.dto"\nimport LavalinkEnvConfig from "@/modules/necord/dtos/lavalink-env.dto"'
 		},
 		{
 			replacer: "load: [EnvConfig",

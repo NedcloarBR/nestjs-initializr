@@ -29,7 +29,7 @@ export const updateConfigModuleTemplate = {
 		{
 			replacer: 'import EnvConfig from "./dtos/env.dto"',
 			content:
-				'import EnvConfig from "./dtos/env.dto"\nimport LocalizationEnvConfig from "@/modules/necord/dtos/localization-env.dto.ts"'
+				'import EnvConfig from "./dtos/env.dto"\nimport LocalizationEnvConfig from "@/modules/necord/dtos/localization-env.dto"'
 		},
 		{
 			replacer: "load: [EnvConfig",
