@@ -21,9 +21,10 @@ export class SwaggerService extends BaseGenerator {
 		id: string,
 		mainType: "fastify" | "express",
 		withConfigModule: boolean,
+		withI18nModule: boolean,
 		projectName: string
 	): Promise<void> {
-		const swagger = SwaggerTemplates(mainType, withConfigModule);
+		const swagger = SwaggerTemplates(mainType, withConfigModule, withI18nModule);
 
 		let libIndex = fs.existsSync(this.getPath(id, "src/lib/index.ts"))
 			? this.getPath(id, "src/lib/index.ts")

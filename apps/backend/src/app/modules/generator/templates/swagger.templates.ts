@@ -1,4 +1,4 @@
-export function SwaggerTemplates(mainType: "fastify" | "express", withConfigModule: boolean) {
+export function SwaggerTemplates(mainType: "fastify" | "express", withConfigModule: boolean, withI18nModule: boolean) {
 	return {
 		templates: [
 			{
@@ -15,6 +15,20 @@ export function SwaggerTemplates(mainType: "fastify" | "express", withConfigModu
               .setTitle("{{PROJECT_NAME}}")
               .setDescription("API Documentation for the {{PROJECT_NAME}}")
               .setVersion("v1.0.0")
+              ${
+								withI18nModule
+									? `
+                 .addGlobalParameters({
+                    in: 'header',
+                    required: false,
+                    name: 'x-lang',
+                    schema: {
+                      example: 'en-US',
+                    },
+                  })
+                `
+									: ""
+							}
               .build();
 
             const documentFactory = () => SwaggerModule.createDocument(app, documentConfig);

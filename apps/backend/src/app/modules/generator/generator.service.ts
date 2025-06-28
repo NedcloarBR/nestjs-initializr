@@ -173,9 +173,10 @@ export class GeneratorService extends BaseGenerator {
 		}
 
 		const withConfigModule = modules.includes("config");
+		const withI18nModule = modules.includes("i18n");
 		for (const module of modules) {
 			if (module === "swagger") {
-				await this.swaggerGenerator.generate(id, mainType, withConfigModule, projectName);
+				await this.swaggerGenerator.generate(id, mainType, withConfigModule, withI18nModule, projectName);
 				continue;
 			}
 			const moduleFiles = modulesTemplates(withConfigModule, mainType, packageManager, linterFormatter).find(
