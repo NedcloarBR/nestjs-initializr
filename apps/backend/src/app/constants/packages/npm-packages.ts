@@ -55,6 +55,10 @@ export const NPM_DEPENDENCIES = {
 		name: "@nestjs/swagger",
 		version: "^11.0.7"
 	},
+	"@scalar/nestjs-api-reference": {
+		name: "@scalar/nestjs-api-reference",
+		version: "^1.0.2"
+	},
 	"@fastify/static": {
 		name: "@fastify/static",
 		version: "^8.1.1"

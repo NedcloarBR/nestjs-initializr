@@ -22,9 +22,10 @@ export class SwaggerService extends BaseGenerator {
 		mainType: "fastify" | "express",
 		withConfigModule: boolean,
 		withI18nModule: boolean,
+		withScalarApiReference: boolean,
 		projectName: string
 	): Promise<void> {
-		const swagger = SwaggerTemplates(mainType, withConfigModule, withI18nModule);
+		const swagger = SwaggerTemplates(mainType, withConfigModule, withI18nModule, withScalarApiReference);
 
 		let libIndex = fs.existsSync(this.getPath(id, "src/lib/index.ts"))
 			? this.getPath(id, "src/lib/index.ts")
@@ -45,6 +46,12 @@ export class SwaggerService extends BaseGenerator {
 				id,
 				NPM_DEPENDENCIES["@fastify/static"].name,
 				NPM_DEPENDENCIES["@fastify/static"].version
+			);
+		if (withScalarApiReference)
+			this.packageJsonGenerator.addPackage(
+				id,
+				NPM_DEPENDENCIES["@scalar/nestjs-api-reference"].name,
+				NPM_DEPENDENCIES["@scalar/nestjs-api-reference"].version
 			);
 		this.createFile(id, {
 			name: swagger.templates[0].name,

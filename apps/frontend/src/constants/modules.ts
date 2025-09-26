@@ -61,6 +61,13 @@ const rawModules = [
 		name: "nestjs-i18n",
 		descriptionKey: "Modules.nestjs-i18n.description",
 		iconType: "svg"
+	},
+	{
+		title: "Scalar API Reference",
+		name: "scalar-api-reference",
+		descriptionKey: "Modules.scalar-api-reference.description",
+		dependsOn: "swagger",
+		iconType: "png"
 	}
 ] as const;
 
@@ -84,7 +91,8 @@ export const modules = (t: (key: string) => string) => {
 export const moduleDependencies: Record<string, ModuleName[]> = {
 	"necord-localization": ["necord"],
 	"necord-pagination": ["necord"],
-	"necord-lavalink": ["necord"]
+	"necord-lavalink": ["necord"],
+	"scalar-api-reference": ["swagger"]
 };
 
 export const dockerRequiredModules: ModuleName[] = ["necord-lavalink"];

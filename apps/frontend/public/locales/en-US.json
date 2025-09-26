@@ -46,6 +46,9 @@
 			"swagger": {
 				"description": "@nestjs/swagger module configured with ui, json and yaml endpoints."
 			},
+			"scalar-api-reference": {
+				"description": "This module adds a dedicated endpoint for Scalar API Reference documentation, providing a comprehensive overview of your API's structure and capabilities. It enhances the developer experience by offering clear and organized information about available endpoints, request/response formats, and other essential details."
+			},
 			"necord": {
 				"description": "This package uses the best of the NodeJS world under the hood. Discord.js is the most powerful library for creating bots and Nest.js is a progressive framework for creating well-architectured applications. This module provides fast and easy way for creating Discord bots and deep integration with your NestJS application."
 			},

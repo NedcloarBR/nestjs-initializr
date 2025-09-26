@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import type { ModuleNames } from "@/types";
 import { Injectable, Logger } from "@nestjs/common";
 import archiver from "archiver";
 import { commonPackages, expressPackages, fastifyPackages } from "../../constants/packages";
@@ -168,17 +169,36 @@ export class GeneratorService extends BaseGenerator {
 			...rawModules.filter((m) => m === "swagger")
 		];
 
-		if (modules.length > 0 && !(modules.length === 1 && modules[0] === "swagger")) {
+		if (
+			modules.length > 0 &&
+			!(
+				(modules.length === 1 && modules[0] === "swagger") ||
+				(modules.length === 2 && modules[0] === "swagger" && modules[1] === "scalar-api-reference")
+			)
+		) {
 			this.createFile(id, { name: "index.ts", path: "src/modules", content: "" });
 		}
 
+		const modulesToIgnore: ModuleNames[] = ["scalar-api-reference"];
+
 		const withConfigModule = modules.includes("config");
 		const withI18nModule = modules.includes("i18n");
+		const withScalarApiReference = modules.includes("scalar-api-reference");
 		for (const module of modules) {
 			if (module === "swagger") {
-				await this.swaggerGenerator.generate(id, mainType, withConfigModule, withI18nModule, projectName);
+				await this.swaggerGenerator.generate(
+					id,
+					mainType,
+					withConfigModule,
+					withI18nModule,
+					withScalarApiReference,
+					projectName
+				);
 				continue;
 			}
+
+			if (modulesToIgnore.includes(module)) continue;
+
 			const moduleFiles = modulesTemplates(withConfigModule, mainType, packageManager, linterFormatter).find(
 				(m) => m.name === module
 			);

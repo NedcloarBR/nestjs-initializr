@@ -52,6 +52,20 @@ export function SwaggerTemplates(
               },
             });
 
+            ${
+							withScalarApiReference
+								? `
+              app.use(
+                \`/\${globalPrefix}/docs/reference\`,
+                apiReference({
+                  content: documentFactory,
+                  ${mainType === "fastify" ? "withFastify: true" : ""}
+                }),
+              );
+            `
+								: ""
+						}
+            ${withScalarApiReference ? "logger.verbose(`API Reference is available at: http://localhost:${port}/${globalPrefix}/docs/reference`);" : ""}
             logger.verbose(\`Swagger is available at: http://localhost:\${port}/\${globalPrefix}/docs\`);
             logger.verbose(\`JSON is available at: http://localhost:\${port}/\${globalPrefix}/docs/json\`);
             logger.verbose(\`YAML is available at: http://localhost:\${port}/\${globalPrefix}/docs/yaml\`);
