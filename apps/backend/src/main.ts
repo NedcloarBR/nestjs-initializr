@@ -29,10 +29,10 @@ async function bootstrap() {
 		origin: configService.get("BACKEND_CORS_ORIGIN")
 	});
 
-	setupSwagger(app, globalPrefix, port);
+	await setupSwagger(app, globalPrefix, port);
 
 	await app.listen(port, "0.0.0.0");
 	Logger.log(`Application is running on: http://localhost:${port}/${globalPrefix}`, "Bootstrap");
 }
 
-bootstrap();
+void bootstrap();

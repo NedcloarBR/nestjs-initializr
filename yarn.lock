@@ -3417,6 +3417,7 @@ __metadata:
     "@radix-ui/react-slot": "npm:^1.1.2"
     "@radix-ui/react-switch": "npm:^1.1.4"
     "@radix-ui/react-tooltip": "npm:^1.2.3"
+    "@scalar/nestjs-api-reference": "npm:^1.0.2"
     "@swc-node/register": "npm:~1.9.1"
     "@swc/core": "npm:~1.5.7"
     "@swc/helpers": "npm:~0.5.11"
@@ -5565,6 +5566,44 @@ __metadata:
   version: 1.0.1
   resolution: "@rspack/lite-tapable@npm:1.0.1"
   checksum: 10c0/90bb1bc414dc51ea2d0933e09f78d25584f3f50a85f4cb8228930bd29e5931bf55eff4f348a06c51dd3149fc73b8ae3920bf0ae5ae8a0c9fe1d9b404e6ecf5b7
+  languageName: node
+  linkType: hard
+
+"@scalar/core@npm:0.3.17":
+  version: 0.3.17
+  resolution: "@scalar/core@npm:0.3.17"
+  dependencies:
+    "@scalar/types": "npm:0.2.16"
+  checksum: 10c0/d9492c4da22ad74b29783c5a7e8295b9c987ee5e9bc681fbeb5311f9f60196dc7d5d47efa6b2f4eab6b4871c82aa326aa871993d7e3ad9974aca34ffc5990c4f
+  languageName: node
+  linkType: hard
+
+"@scalar/nestjs-api-reference@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@scalar/nestjs-api-reference@npm:1.0.2"
+  dependencies:
+    "@scalar/core": "npm:0.3.17"
+  checksum: 10c0/916993e990cd8b59b7592fd99db2e72533ef53607e63b68e73a7b90b6b7fe39cec4ed644ad6b6caf6a0ed5144b3dce801d82346018af5320414eb5c38e7bd90e
+  languageName: node
+  linkType: hard
+
+"@scalar/openapi-types@npm:0.3.7":
+  version: 0.3.7
+  resolution: "@scalar/openapi-types@npm:0.3.7"
+  dependencies:
+    zod: "npm:3.24.1"
+  checksum: 10c0/1ade1dd298ad33dfded43d06e704bd281ebd160d156f1c7fc162b2bb44a6107eb983b208c9ce871f6c973a2a555c399424e0ac71cc4b05c7e1b3efd2d4183b2b
+  languageName: node
+  linkType: hard
+
+"@scalar/types@npm:0.2.16":
+  version: 0.2.16
+  resolution: "@scalar/types@npm:0.2.16"
+  dependencies:
+    "@scalar/openapi-types": "npm:0.3.7"
+    nanoid: "npm:5.1.5"
+    zod: "npm:3.24.1"
+  checksum: 10c0/88a58037e62d990f7d8c923f331c822872c277d7dc4e77429017da1c44ad8a229dac976abb9334e93e5e62b057333a0be0a57c5fc47e94d256bdd2de43f2660e
   languageName: node
   linkType: hard
 
@@ -12966,6 +13005,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanoid@npm:5.1.5":
+  version: 5.1.5
+  resolution: "nanoid@npm:5.1.5"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 10c0/e6004f1ad6c7123eeb037062c4441d44982037dc043aabb162457ef6986e99964ba98c63c975f96c547403beb0bf95bc537bd7bf9a09baf381656acdc2975c3c
+  languageName: node
+  linkType: hard
+
 "nanoid@npm:^3.3.6, nanoid@npm:^3.3.8":
   version: 3.3.11
   resolution: "nanoid@npm:3.3.11"
@@ -17490,6 +17538,13 @@ __metadata:
     compress-commons: "npm:^6.0.2"
     readable-stream: "npm:^4.0.0"
   checksum: 10c0/50f2fb30327fb9d09879abf7ae2493705313adf403e794b030151aaae00009162419d60d0519e807673ec04d442e140c8879ca14314df0a0192de3b233e8f28b
+  languageName: node
+  linkType: hard
+
+"zod@npm:3.24.1":
+  version: 3.24.1
+  resolution: "zod@npm:3.24.1"
+  checksum: 10c0/0223d21dbaa15d8928fe0da3b54696391d8e3e1e2d0283a1a070b5980a1dbba945ce631c2d1eccc088fdbad0f2dfa40155590bf83732d3ac4fcca2cc9237591b
   languageName: node
   linkType: hard
 
