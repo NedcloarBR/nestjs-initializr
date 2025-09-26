@@ -1,4 +1,9 @@
-export function SwaggerTemplates(mainType: "fastify" | "express", withConfigModule: boolean, withI18nModule: boolean) {
+export function SwaggerTemplates(
+	mainType: "fastify" | "express",
+	withConfigModule: boolean,
+	withI18nModule: boolean,
+	withScalarApiReference: boolean
+) {
 	return {
 		templates: [
 			{
@@ -8,12 +13,13 @@ export function SwaggerTemplates(mainType: "fastify" | "express", withConfigModu
           import { Logger } from "@nestjs/common";
           import type { ${mainType === "fastify" ? "NestFastifyApplication" : "NestExpressApplication"} } from "@nestjs/platform-${mainType}";
           import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+          ${withScalarApiReference ? 'import { apiReference } from "@scalar/nestjs-api-reference";' : ""}
 
           export function setupSwagger(app: ${mainType === "fastify" ? "NestFastifyApplication" : "NestExpressApplication"}, globalPrefix: string, port: number): void {
             const logger = new Logger("Documentation");
             const documentConfig = new DocumentBuilder()
-              .setTitle("{{PROJECT_NAME}}")
-              .setDescription("API Documentation for the {{PROJECT_NAME}}")
+              .setTitle("${SwaggerTemplateReplaceKeys.PROJECT_NAME}")
+              .setDescription("API Documentation for the ${SwaggerTemplateReplaceKeys.PROJECT_NAME}")
               .setVersion("v1.0.0")
               ${
 								withI18nModule
@@ -35,7 +41,15 @@ export function SwaggerTemplates(mainType: "fastify" | "express", withConfigModu
 
             SwaggerModule.setup(\`\${globalPrefix}/docs\`, app, documentFactory, {
               jsonDocumentUrl: \`\${globalPrefix}/docs/json\`,
-              yamlDocumentUrl: \`\${globalPrefix}/docs/yaml\`
+              yamlDocumentUrl: \`\${globalPrefix}/docs/yaml\`,
+              swaggerOptions: {
+                operationsSorter: (a, b) => {
+                  const methodOrder = ['get', 'post', 'patch', 'put', 'delete'];
+                  const methodA = methodOrder.indexOf(a.get('method').toLowerCase());
+                  const methodB = methodOrder.indexOf(b.get('method').toLowerCase());
+                  return methodA - methodB;
+                },
+              },
             });
 
             logger.verbose(\`Swagger is available at: http://localhost:\${port}/\${globalPrefix}/docs\`);
