@@ -28,7 +28,7 @@ export function RootFilesTemplates(mainType: "fastify" | "express") {
           Logger.log(\`Application is running on: http://localhost:\${port}/\${globalPrefix}\`, "Bootstrap");
         }
 
-        bootstrap();
+        void bootstrap();
       `
 		},
 		{
