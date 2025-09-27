@@ -249,7 +249,9 @@ export function GeneratorForm() {
 								<div className="flex items-center space-x-4">
 									<ModuleTermFilter value={searchTerm} onChange={setSearchTerm} />
 									<ModuleCategoryFilter value={selectedCategory} onSelect={setSelectedCategory} />
-									<Button onClick={() => clearFilters()}>{t("Filter.clearFilter")}</Button>
+									<Button className="cursor-pointer" type="button" onClick={() => clearFilters()}>
+										{t("Filter.clearFilter")}
+									</Button>
 								</div>
 							</div>
 							<ScrollArea className="h-96">
