@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
-import { Card, CardDescription, CardFooter, CardTitle, FormControl, Separator, Switch } from "./ui";
+import { Card, CardDescription, CardFooter, CardTitle, FormControl, Icon, Separator, Switch } from "./ui";
 
 export function DockerCard() {
 	const t = useTranslations("Generator.Docker");
@@ -20,7 +20,7 @@ export function DockerCard() {
 		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
 			<div>
 				<CardTitle className="flex items-center justify-center gap-2">
-					<img className="size-8" src="/icons/docker.svg" alt="Docker icon" />
+					<Icon name="docker" iconType={"svg"} className="size-8" />
 					Docker
 				</CardTitle>
 				<Separator className="my-2" />

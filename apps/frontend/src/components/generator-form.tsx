@@ -3,12 +3,16 @@
 import { generate, loadConfig } from "@/actions";
 import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
+import type { ModuleCategory } from "@/types/module";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RefreshCcwIcon, UploadIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { z } from "zod";
+import { set, type z } from "zod";
 import { ExtraField } from "./extra-field";
+import { ModuleCategoryFilter } from "./module-category-filter";
+import { ModuleTermFilter } from "./module-term-filter";
 import { ModulesList } from "./modules-list";
 import { RecentHistory } from "./recent-history";
 import {
@@ -55,6 +59,15 @@ export function GeneratorForm() {
 		resolver: zodResolver(formSchema),
 		defaultValues
 	});
+
+	const [selectedCategory, setSelectedCategory] = useState<ModuleCategory | null>(null);
+
+	const [searchTerm, setSearchTerm] = useState<string | null>(null);
+
+	function clearFilters() {
+		setSelectedCategory(null);
+		setSearchTerm(null);
+	}
 
 	function handleConfig(event: React.ChangeEvent<HTMLInputElement>) {
 		loadConfig(event, (data) => {
@@ -231,9 +244,16 @@ export function GeneratorForm() {
 						</div>
 
 						<aside className="w-2/3 space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
-							<h2 className="font-bold">{t("Modules.title")}</h2>
+							<div className="mb-4 flex items-center justify-between">
+								<h2 className="font-bold">{t("Modules.title")}</h2>
+								<div className="flex items-center space-x-4">
+									<ModuleTermFilter value={searchTerm} onChange={setSearchTerm} />
+									<ModuleCategoryFilter value={selectedCategory} onSelect={setSelectedCategory} />
+									<Button onClick={() => clearFilters()}>{t("Filter.clearFilter")}</Button>
+								</div>
+							</div>
 							<ScrollArea className="h-96">
-								<ModulesList />
+								<ModulesList category={selectedCategory} term={searchTerm} />
 							</ScrollArea>
 						</aside>
 					</div>

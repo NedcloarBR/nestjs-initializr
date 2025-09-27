@@ -12,6 +12,7 @@ import {
 	CardFooter,
 	CardTitle,
 	FormControl,
+	Icon,
 	ScrollArea,
 	Separator,
 	Switch,
@@ -95,7 +96,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
 			<div className="flex flex-col gap-2 overflow-hidden">
 				<CardTitle className="flex items-center justify-center gap-2">
-					<img className="size-8" src={`/icons/modules/${name}.${iconType}`} alt={`${name} icon`} />
+					<Icon name={name} iconType={iconType} subfolder="modules" className="size-8" />
 					{title}
 				</CardTitle>
 				<Separator />

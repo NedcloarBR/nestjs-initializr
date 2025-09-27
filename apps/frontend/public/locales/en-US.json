@@ -132,6 +132,19 @@
 		"ActionsTooltip": {
 			"loadConfig": "Load configuration from a file",
 			"resetConfig": "Reset configuration"
+		},
+		"Filter": {
+			"searchByTerm": "Filter modules by...",
+			"selectCategory": "Select a category",
+			"clearFilter": "Clear filter",
+			"categories": {
+				"linter-formatter": "Linter + Formatter",
+				"test-runner": "Tests",
+				"config": "Configuration",
+				"documentation": "Documentation",
+				"utility": "Utility",
+				"infra": "Infrastructure"
+			}
 		}
 	},
 	"RecentHistory": {

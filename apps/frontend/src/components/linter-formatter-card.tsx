@@ -5,6 +5,7 @@ import {
 	CardFooter,
 	CardTitle,
 	FormControl,
+	Icon,
 	Separator,
 	Switch,
 	Tooltip,
@@ -40,7 +41,7 @@ export function LinterFormatterCard({ title, name, description, disableText, ico
 		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
 			<div>
 				<CardTitle className="flex items-center justify-center gap-2">
-					<img className="size-8" src={`/icons/linterFormatter/${name}.${iconType}`} alt={`${name} icon`} />
+					<Icon name={name} iconType={iconType ?? "svg"} subfolder="linterFormatter" className="size-8" />
 					{title}
 				</CardTitle>
 				<Separator className="my-2" />

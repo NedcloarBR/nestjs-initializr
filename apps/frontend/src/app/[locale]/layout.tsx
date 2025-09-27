@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { routing } from "@/lib/i18n/routing";
 import { ThemeProvider } from "@/providers/theme-provider";
-// import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -49,7 +48,6 @@ export default async function LocaleLayout(props: {
 						<TooltipProvider>
 							<main className="m-0 h-screen overflow-hidden bg-nest-background p-0 font-medium dark:bg-nest-background">
 								{children}
-								{/* <Analytics /> */}
 								<Toaster />
 							</main>
 						</TooltipProvider>

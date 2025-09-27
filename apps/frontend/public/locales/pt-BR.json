@@ -133,6 +133,20 @@
 		"ActionsTooltip": {
 			"loadConfig": "Carregar configuração de um arquivo",
 			"resetConfig": "Redefinir configuração"
+		},
+		"Filter": {
+			"searchByTerm": "Filtrar módulos por...",
+			"selectCategory": "Selecionar uma categoria",
+			"allCategories": "Todas as categorias",
+			"clearFilter": "Limpar filtros",
+			"categories": {
+				"linter-formatter": "Linter + Formatter",
+				"test-runner": "Testes",
+				"config": "Configuração",
+				"documentation": "Documentação",
+				"utility": "Utilitário",
+				"infra": "Infraestrutura"
+			}
 		}
 	},
 	"RecentHistory": {
