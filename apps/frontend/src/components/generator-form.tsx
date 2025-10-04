@@ -3,14 +3,17 @@
 import { generate, loadConfig } from "@/actions";
 import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
+import { useExtraPackages } from "@/hooks/use-extra-packages";
 import type { ModuleCategory } from "@/types/module";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RefreshCcwIcon, UploadIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { set, type z } from "zod";
+import type { z } from "zod";
 import { ExtraField } from "./extra-field";
+import { ExtraPackageModal } from "./extra-package-modal";
+import { ExtraPackagesList } from "./extra-packages-list";
 import { ModuleCategoryFilter } from "./module-category-filter";
 import { ModuleTermFilter } from "./module-term-filter";
 import { ModulesList } from "./modules-list";
@@ -53,7 +56,8 @@ export function GeneratorForm() {
 		extras: [],
 		linterFormatter: null,
 		docker: false,
-		testRunner: null
+		testRunner: null,
+		extraPackages: []
 	};
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -63,6 +67,15 @@ export function GeneratorForm() {
 	const [selectedCategory, setSelectedCategory] = useState<ModuleCategory | null>(null);
 
 	const [searchTerm, setSearchTerm] = useState<string | null>(null);
+
+	const [isOpenExtraPackageModal, setIsOpenExtraPackageModal] = useState(false);
+	const { packages, fetchPackages } = useExtraPackages();
+
+	useEffect(() => {
+		if (isOpenExtraPackageModal && packages.length === 0) {
+			fetchPackages();
+		}
+	}, [isOpenExtraPackageModal, packages.length, fetchPackages]);
 
 	function clearFilters() {
 		setSelectedCategory(null);
@@ -84,7 +97,7 @@ export function GeneratorForm() {
 	}
 
 	return (
-		<section id="generator-form" className="m-16">
+		<section id="generator-form" className="m-12">
 			<Form {...form}>
 				<form>
 					<div className="flex">
@@ -256,6 +269,33 @@ export function GeneratorForm() {
 							</div>
 							<ScrollArea className="h-96">
 								<ModulesList category={selectedCategory} term={searchTerm} />
+							</ScrollArea>
+						</aside>
+
+						<div className="pr-8 pl-8">
+							<Separator orientation="vertical" />
+						</div>
+
+						<ExtraPackageModal
+							packages={packages}
+							isOpen={isOpenExtraPackageModal}
+							onOpenChange={() => setIsOpenExtraPackageModal((prev) => !prev)}
+							fetchPackages={fetchPackages}
+						/>
+						<aside className="w-1/3 space-y-4 overflow-hidden rounded-lg bg-nest-header-background p-8">
+							<div className="mb-4 flex items-center justify-between">
+								<h2 className="font-bold">{t("ExtraPackages.title")}</h2>
+								<div className="flex items-center space-x-4">
+									<Button
+										className="cursor-pointer"
+										type="button"
+										onClick={() => setIsOpenExtraPackageModal((prev) => !prev)}>
+										{t("ExtraPackages.add")}
+									</Button>
+								</div>
+							</div>
+							<ScrollArea className="h-96">
+								<ExtraPackagesList />
 							</ScrollArea>
 						</aside>
 					</div>

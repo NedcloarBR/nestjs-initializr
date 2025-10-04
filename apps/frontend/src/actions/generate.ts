@@ -18,7 +18,8 @@ export async function generate(values: z.infer<ReturnType<typeof generatorFormSc
 			extras: values.extras,
 			linterFormatter: values.linterFormatter,
 			docker: values.docker,
-			testRunner: values.testRunner
+			testRunner: values.testRunner,
+			extraPackages: values.extraPackages.map((pkg) => ({ name: pkg.name, version: pkg.version, dev: pkg.dev }))
 		};
 
 		const baseUrl = process.env.BACKEND_URL || "";

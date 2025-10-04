@@ -16,5 +16,20 @@ export const generatorFormSchema = (t: (arg: string) => string) =>
 		extras: z.array(z.string()).optional().default([]),
 		linterFormatter: z.enum(["biome", "eslint-prettier"]).optional().nullable().default(null),
 		docker: z.boolean().optional().default(false),
-		testRunner: z.enum(["jest", "vitest"]).optional().nullable().default(null)
+		testRunner: z.enum(["jest", "vitest"]).optional().nullable().default(null),
+		extraPackages: z
+			.array(
+				z.object({
+					name: z.string(),
+					version: z.string(),
+					dev: z.boolean().optional().default(false),
+					description: z.string().optional(),
+					links: z.object({
+						npm: z.string().url().optional(),
+						repository: z.string().url().optional()
+					})
+				})
+			)
+			.optional()
+			.default([])
 	});

@@ -1,6 +1,7 @@
 import type { ExtraNames, ModuleNames } from "@/types";
 import { Type } from "class-transformer";
 import { IsBoolean, IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from "class-validator";
+import { ExtraPackagesDTO } from "./extra-packages.dto";
 import { PackageJsonMetadataDTO } from "./package-json-metadata.dto";
 
 export class MetadataDTO {
@@ -38,4 +39,9 @@ export class MetadataDTO {
 	@IsString()
 	@IsIn(["jest", "vitest"])
 	public readonly testRunner?: "jest" | "vitest";
+
+	@IsOptional()
+	@ValidateNested()
+	@Type(() => ExtraPackagesDTO)
+	public readonly extraPackages?: ExtraPackagesDTO[];
 }

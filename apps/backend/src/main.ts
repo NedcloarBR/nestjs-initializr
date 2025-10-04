@@ -2,6 +2,7 @@ import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
 import { AppModule } from "./app/app.module";
+import { AxiosInterceptor } from "./app/common/interceptors/axios.interceptor";
 import { RequestIdInterceptor } from "./app/common/interceptors/request-id.interceptor";
 import { Services } from "./app/constants/services";
 import type { ConfigService } from "./app/modules/config";
@@ -23,7 +24,7 @@ async function bootstrap() {
 		})
 	);
 
-	app.useGlobalInterceptors(new RequestIdInterceptor());
+	app.useGlobalInterceptors(new RequestIdInterceptor(), new AxiosInterceptor());
 
 	app.enableCors({
 		origin: configService.get("BACKEND_CORS_ORIGIN")

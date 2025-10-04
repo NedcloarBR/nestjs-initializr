@@ -119,6 +119,12 @@ export class GeneratorService extends BaseGenerator {
 			rootDirFiles.push(...testRunnerFiles);
 		}
 
+		if (metadata.extraPackages) {
+			for (const packageMeta of metadata.extraPackages) {
+				await this.packageJsonGenerator.addPackage(id, packageMeta.name, packageMeta.version, packageMeta.dev);
+			}
+		}
+
 		await this.lintAndFormat(id);
 
 		const extraFolders = [];

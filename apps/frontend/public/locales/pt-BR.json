@@ -147,6 +147,18 @@
 				"utility": "Utilitário",
 				"infra": "Infraestrutura"
 			}
+		},
+		"ExtraPackages": {
+			"title": "Pacotes Extras",
+			"add": "Adicionar",
+			"remove": "Remover",
+			"version": "Versão:",
+			"viewOnNPM": "Ver no NPM",
+			"Dependency": {
+				"dev": "Dependência de Desenvolvimento",
+				"prod": "Dependência de Produção"
+			},
+			"search": "Pesquisar pacotes por..."
 		}
 	},
 	"RecentHistory": {

@@ -145,6 +145,18 @@
 				"utility": "Utility",
 				"infra": "Infrastructure"
 			}
+		},
+		"ExtraPackages": {
+			"title": "Extra Packages",
+			"add": "Add",
+			"remove": "Remove",
+			"version": "Version:",
+			"viewOnNPM": "View on NPM",
+			"Dependency": {
+				"dev": "Development Dependency",
+				"prod": "Production Dependency"
+			},
+			"search": "Search packages by..."
 		}
 	},
 	"RecentHistory": {
