@@ -1,8 +1,9 @@
 import type { generatorFormSchema } from "@/forms/generator-form-schema";
+import type { ConfigStructure } from "@/types/config";
+import { addRecentHistory } from "@/utils/history";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
 import type { z } from "zod";
-import type { ConfigStructure } from "./load-config";
 
 export async function generate(values: z.infer<ReturnType<typeof generatorFormSchema>>, mode: "config" | "project") {
 	try {
@@ -20,7 +21,7 @@ export async function generate(values: z.infer<ReturnType<typeof generatorFormSc
 			docker: values.docker,
 			testRunner: values.testRunner,
 			extraPackages: values.extraPackages.map((pkg) => ({ name: pkg.name, version: pkg.version, dev: pkg.dev }))
-		};
+		} as ConfigStructure;
 
 		const baseUrl = process.env.BACKEND_URL || "";
 		const url = new URL("/api/generator", baseUrl);
@@ -49,13 +50,7 @@ export async function generate(values: z.infer<ReturnType<typeof generatorFormSc
 
 		saveAs(blob, fileName);
 
-		const MAX_HISTORY = 10;
-		const existing = JSON.parse(localStorage.getItem("recentHistory") || "[]") as ConfigStructure[];
-		const updated = [...existing, rawBody];
-		if (updated.length > MAX_HISTORY) {
-			updated.shift();
-		}
-		localStorage.setItem("recentHistory", JSON.stringify(updated));
+		addRecentHistory(rawBody);
 	} catch (error) {
 		console.error(error);
 		let message = "An unexpected error occurred.";

@@ -1,6 +1,5 @@
 "use client";
 
-import type { ConfigStructure } from "@/actions";
 import {
 	Button,
 	Dialog,
@@ -15,6 +14,8 @@ import {
 	TooltipContent,
 	TooltipTrigger
 } from "@/components/ui";
+import type { ConfigStructure } from "@/types/config";
+import { clearRecentHistory as clearHistory, getRecentHistory } from "@/utils/history";
 import { ArrowBigRightIcon, HistoryIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -25,35 +26,26 @@ interface Props {
 
 export function RecentHistory({ loadData }: Props) {
 	const t = useTranslations("RecentHistory");
-
 	const [recentHistory, setRecentHistory] = useState<ConfigStructure[]>([]);
 
-	function fetchRecentHistory() {
-		try {
-			const data = localStorage.getItem("recentHistory");
-			if (data) {
-				setRecentHistory(JSON.parse(data) as ConfigStructure[]);
-			} else {
-				setRecentHistory([]);
-			}
-		} catch {
-			setRecentHistory([]);
-		}
-	}
+	const hasRecentHistory = recentHistory.length > 0;
 
-	function clearRecentHistory() {
-		localStorage.removeItem("recentHistory");
+	const handleGetRecentHistory = () => {
+		const history = getRecentHistory();
+		setRecentHistory(history);
+	};
+
+	const handleClearHistory = () => {
+		clearHistory();
 		setRecentHistory([]);
-	}
-
-	const hasRecentHistory = recentHistory && recentHistory.length > 0;
+	};
 
 	return (
 		<Dialog>
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<DialogTrigger asChild>
-						<Button className="cursor-pointer" onClick={fetchRecentHistory}>
+						<Button className="cursor-pointer" onClick={handleGetRecentHistory}>
 							<HistoryIcon />
 						</Button>
 					</DialogTrigger>
@@ -90,7 +82,7 @@ export function RecentHistory({ loadData }: Props) {
 				<DialogFooter>
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<Button className="cursor-pointer" onClick={clearRecentHistory}>
+							<Button className="cursor-pointer" onClick={handleClearHistory}>
 								<Trash2Icon />
 							</Button>
 						</TooltipTrigger>
