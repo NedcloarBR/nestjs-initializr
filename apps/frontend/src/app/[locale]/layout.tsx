@@ -2,6 +2,7 @@ import "@/styles/global.css";
 import "flag-icons/css/flag-icons.css";
 import { Toaster } from "@/components/ui";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { materialIcons, sourceSans } from "@/fonts";
 import { routing } from "@/lib/i18n/routing";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
@@ -40,7 +41,7 @@ export default async function LocaleLayout(props: {
 	const messages = await getMessages({ locale });
 
 	return (
-		<html lang={locale} suppressHydrationWarning={true}>
+		<html lang={locale} suppressHydrationWarning={true} className={`${sourceSans.variable} ${materialIcons.variable}`}>
 			<body>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange={true}>
 					<NextIntlClientProvider messages={messages}>
