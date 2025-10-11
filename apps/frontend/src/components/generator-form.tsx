@@ -248,7 +248,7 @@ export function GeneratorForm() {
 									<TooltipContent>{t("ActionsTooltip.resetConfig")}</TooltipContent>
 								</Tooltip>
 
-								<RecentHistory />
+								<RecentHistory loadData={form.reset} />
 							</div>
 						</div>
 

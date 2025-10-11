@@ -15,11 +15,15 @@ import {
 	TooltipContent,
 	TooltipTrigger
 } from "@/components/ui";
-import { HistoryIcon, Trash2Icon } from "lucide-react";
+import { ArrowBigRightIcon, HistoryIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-export function RecentHistory() {
+interface Props {
+	loadData: (data: ConfigStructure) => void;
+}
+
+export function RecentHistory({ loadData }: Props) {
 	const t = useTranslations("RecentHistory");
 
 	const [recentHistory, setRecentHistory] = useState<ConfigStructure[]>([]);
@@ -65,9 +69,18 @@ export function RecentHistory() {
 					<ScrollArea className="max-h-[400px]">
 						{recentHistory.map((item, index) => (
 							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-							<div key={index} className="mb-2 rounded-md border p-2">
-								<p className="font-semibold text-lg">{item.packageJson?.name}</p>
-								<p className="text-gray-600 text-sm">{item.packageJson?.description}</p>
+							<div key={index} className="mb-2 flex rounded-md border p-2">
+								<div>
+									<p className="font-semibold text-lg">{item.packageJson?.name}</p>
+									<p className="text-gray-600 text-sm">{item.packageJson?.description}</p>
+								</div>
+								<Button
+									type="button"
+									variant="outline"
+									onClick={() => loadData(item)}
+									className="mt-2 mr-2 cursor-pointer">
+									<ArrowBigRightIcon />
+								</Button>
 							</div>
 						))}
 					</ScrollArea>
