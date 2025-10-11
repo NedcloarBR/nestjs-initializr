@@ -5,7 +5,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 	Input,
-	ScrollArea
+	ScrollArea,
+	Spinner
 } from "@/components/ui";
 import type { NPMPackage } from "@/types/npm";
 import { useTranslations } from "next-intl";
@@ -14,12 +15,13 @@ import { ExtraPackage } from ".";
 
 interface Props {
 	packages: NPMPackage[];
+	loading: boolean;
 	isOpen: boolean;
 	onOpenChange: (isOpen: boolean) => void;
 	fetchPackages: (packageName?: string) => void;
 }
 
-export function ExtraPackageModal({ packages, isOpen, onOpenChange, fetchPackages }: Props) {
+export function ExtraPackageModal({ packages, isOpen, onOpenChange, fetchPackages, loading }: Props) {
 	const t = useTranslations("Generator.ExtraPackages");
 	const [value, setValue] = useState<string | null>(null);
 
@@ -44,9 +46,17 @@ export function ExtraPackageModal({ packages, isOpen, onOpenChange, fetchPackage
 					/>
 				</DialogHeader>
 				<ScrollArea className="h-80">
-					{packages.map((pkg) => (
-						<ExtraPackage.Card className="w-110" key={pkg.package.name} packageData={pkg} inModal />
-					))}
+					{loading ? (
+						<div className="flex h-80 w-full items-center justify-center">
+							<Spinner className="size-10" />
+						</div>
+					) : (
+						<>
+							{packages.map((pkg) => (
+								<ExtraPackage.Card className="w-110" key={pkg.package.name} packageData={pkg} inModal />
+							))}
+						</>
+					)}
 				</ScrollArea>
 			</DialogContent>
 		</Dialog>

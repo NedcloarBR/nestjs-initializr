@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 
 export function useExtraPackages() {
 	const [packages, setPackages] = useState<NPMPackage[]>([]);
+	const [loading, setLoading] = useState(false);
 
 	const fetchPackages = useCallback(async (packageName?: string) => {
 		const baseUrl = process.env.BACKEND_URL!;
@@ -13,6 +14,7 @@ export function useExtraPackages() {
 		}
 
 		try {
+			setLoading(true);
 			const response = await fetch(url, {
 				method: "GET"
 			});
@@ -24,8 +26,10 @@ export function useExtraPackages() {
 			setPackages(data);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setLoading(false);
 		}
 	}, []);
 
-	return { packages, fetchPackages };
+	return { packages, fetchPackages, loading };
 }

@@ -66,7 +66,7 @@ export function GeneratorForm() {
 	const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
 	const [isOpenExtraPackageModal, setIsOpenExtraPackageModal] = useState(false);
-	const { packages, fetchPackages } = useExtraPackages();
+	const { packages, fetchPackages, loading: packagesLoading } = useExtraPackages();
 
 	useEffect(() => {
 		if (isOpenExtraPackageModal && packages.length === 0) {
@@ -275,6 +275,7 @@ export function GeneratorForm() {
 
 						<ExtraPackage.Modal
 							packages={packages}
+							loading={packagesLoading}
 							isOpen={isOpenExtraPackageModal}
 							onOpenChange={() => setIsOpenExtraPackageModal((prev) => !prev)}
 							fetchPackages={fetchPackages}

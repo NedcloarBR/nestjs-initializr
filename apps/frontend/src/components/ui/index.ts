@@ -11,5 +11,6 @@ export * from "./select";
 export * from "./separator";
 export * from "./scroll-area";
 export * from "./sonner";
+export * from "./spinner";
 export * from "./switch";
 export * from "./tooltip";
