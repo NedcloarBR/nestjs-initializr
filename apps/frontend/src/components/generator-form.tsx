@@ -5,7 +5,7 @@ import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useExtraPackages } from "@/hooks/use-extra-packages";
 import type { ModuleCategory } from "@/types/module";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { RefreshCcwIcon, UploadIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -57,7 +57,7 @@ export function GeneratorForm() {
 		extraPackages: []
 	};
 	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+		resolver: standardSchemaResolver(formSchema),
 		defaultValues
 	});
 
