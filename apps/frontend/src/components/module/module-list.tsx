@@ -2,10 +2,7 @@ import { modules } from "@/constants";
 import { ModuleCategory } from "@/types/module";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { DockerCard } from "./docker-card";
-import { LinterFormatterCard } from "./linter-formatter-card";
-import { ModuleCard } from "./module-card";
-import { TestRunnerCard } from "./test-runner-card";
+import { Module } from ".";
 
 interface Props {
 	category: ModuleCategory | null;
@@ -97,7 +94,7 @@ export function ModulesList({ category, term }: Props) {
 				switch (item.type) {
 					case "module":
 						return (
-							<ModuleCard
+							<Module.Card
 								key={item.name}
 								title={item.data.title}
 								name={item.name}
@@ -108,7 +105,7 @@ export function ModulesList({ category, term }: Props) {
 						);
 					case "linter":
 						return (
-							<LinterFormatterCard
+							<Module.LinterFormatter
 								key={item.name}
 								title={item.data?.title}
 								name={item.name}
@@ -119,7 +116,7 @@ export function ModulesList({ category, term }: Props) {
 						);
 					case "test":
 						return (
-							<TestRunnerCard
+							<Module.TestRunner
 								key={item.name}
 								title={item.data?.title}
 								name={item.name}
@@ -129,7 +126,7 @@ export function ModulesList({ category, term }: Props) {
 							/>
 						);
 					case "docker":
-						return <DockerCard key="docker" />;
+						return <Module.Docker key="docker" />;
 				}
 			})}
 		</div>

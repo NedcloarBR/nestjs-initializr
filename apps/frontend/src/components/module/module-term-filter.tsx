@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Input } from "./ui";
+import { Input } from "../ui";
 
 interface Props {
 	value: string | null;

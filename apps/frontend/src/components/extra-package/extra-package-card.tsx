@@ -3,7 +3,7 @@ import type { NPMPackage, SimpleNPMPackage } from "@/types/npm";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Switch } from "./ui";
+import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Switch } from "../ui";
 
 interface Props {
 	className?: string;

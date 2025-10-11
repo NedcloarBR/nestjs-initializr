@@ -11,7 +11,7 @@ import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger
-} from "./ui";
+} from "../ui";
 
 interface Props {
 	title: string;
@@ -21,10 +21,10 @@ interface Props {
 	iconType?: "svg" | "png";
 }
 
-export function LinterFormatterCard({ title, name, description, disableText, iconType }: Props) {
+export function TestRunnerCard({ title, name, description, disableText, iconType }: Props) {
 	const { control } = useFormContext();
 	const { field } = useController({
-		name: "linterFormatter",
+		name: "testRunner",
 		control
 	});
 
@@ -32,16 +32,16 @@ export function LinterFormatterCard({ title, name, description, disableText, ico
 
 	const disabled = field.value && field.value !== name;
 
-	function toggleLinterFormatter() {
-		const updatedLinterFormatter = isSelected ? "" : name;
-		field.onChange(updatedLinterFormatter);
+	function toggleTestRunner() {
+		const updatedTestRunner = isSelected ? "" : name;
+		field.onChange(updatedTestRunner);
 	}
 
 	return (
 		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
 			<div>
 				<CardTitle className="flex items-center justify-center gap-2">
-					<Icon name={name} iconType={iconType ?? "svg"} subfolder="linterFormatter" className="size-8" />
+					<Icon name={name} iconType={iconType ?? "svg"} subfolder="testRunner" className="size-8" />
 					{title}
 				</CardTitle>
 				<Separator className="my-2" />
@@ -58,7 +58,7 @@ export function LinterFormatterCard({ title, name, description, disableText, ico
 									className="cursor-pointer"
 									disabled={disabled}
 									checked={isSelected}
-									onCheckedChange={toggleLinterFormatter}
+									onCheckedChange={toggleTestRunner}
 								/>
 							</span>
 						</TooltipTrigger>

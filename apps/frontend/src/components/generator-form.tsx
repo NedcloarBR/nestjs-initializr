@@ -12,11 +12,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { ExtraField } from "./extra-field";
-import { ExtraPackageModal } from "./extra-package-modal";
-import { ExtraPackagesList } from "./extra-packages-list";
-import { ModuleCategoryFilter } from "./module-category-filter";
-import { ModuleTermFilter } from "./module-term-filter";
-import { ModulesList } from "./modules-list";
+import { ExtraPackage } from "./extra-package";
+import { Module } from "./module";
 import { RecentHistory } from "./recent-history";
 import {
 	Button,
@@ -260,15 +257,15 @@ export function GeneratorForm() {
 							<div className="mb-4 flex items-center justify-between">
 								<h2 className="font-bold">{t("Modules.title")}</h2>
 								<div className="flex items-center space-x-4">
-									<ModuleTermFilter value={searchTerm} onChange={setSearchTerm} />
-									<ModuleCategoryFilter value={selectedCategory} onSelect={setSelectedCategory} />
+									<Module.TermFilter value={searchTerm} onChange={setSearchTerm} />
+									<Module.CategoryFilter value={selectedCategory} onSelect={setSelectedCategory} />
 									<Button className="cursor-pointer" type="button" onClick={() => clearFilters()}>
 										{t("Filter.clearFilter")}
 									</Button>
 								</div>
 							</div>
 							<ScrollArea className="h-96">
-								<ModulesList category={selectedCategory} term={searchTerm} />
+								<Module.List category={selectedCategory} term={searchTerm} />
 							</ScrollArea>
 						</aside>
 
@@ -276,7 +273,7 @@ export function GeneratorForm() {
 							<Separator orientation="vertical" />
 						</div>
 
-						<ExtraPackageModal
+						<ExtraPackage.Modal
 							packages={packages}
 							isOpen={isOpenExtraPackageModal}
 							onOpenChange={() => setIsOpenExtraPackageModal((prev) => !prev)}
@@ -295,7 +292,7 @@ export function GeneratorForm() {
 								</div>
 							</div>
 							<ScrollArea className="h-96">
-								<ExtraPackagesList />
+								<ExtraPackage.List />
 							</ScrollArea>
 						</aside>
 					</div>

@@ -19,7 +19,7 @@ import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger
-} from "./ui";
+} from "../ui";
 
 interface Props {
 	title: string;

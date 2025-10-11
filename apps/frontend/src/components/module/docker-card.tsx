@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
-import { Card, CardDescription, CardFooter, CardTitle, FormControl, Icon, Separator, Switch } from "./ui";
+import { Card, CardDescription, CardFooter, CardTitle, FormControl, Icon, Separator, Switch } from "../ui";
 
 export function DockerCard() {
 	const t = useTranslations("Generator.Docker");

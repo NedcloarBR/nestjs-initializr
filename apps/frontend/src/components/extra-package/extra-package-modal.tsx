@@ -10,7 +10,7 @@ import {
 import type { NPMPackage } from "@/types/npm";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { ExtraPackageCard } from "./extra-package-card";
+import { ExtraPackage } from ".";
 
 interface Props {
 	packages: NPMPackage[];
@@ -45,7 +45,7 @@ export function ExtraPackageModal({ packages, isOpen, onOpenChange, fetchPackage
 				</DialogHeader>
 				<ScrollArea className="h-80">
 					{packages.map((pkg) => (
-						<ExtraPackageCard className="w-110" key={pkg.package.name} packageData={pkg} inModal />
+						<ExtraPackage.Card className="w-110" key={pkg.package.name} packageData={pkg} inModal />
 					))}
 				</ScrollArea>
 			</DialogContent>
