@@ -27,6 +27,10 @@
 			"Generate": "Error generating the project zip file",
 			"Download": "Error downloading the project zip file"
 		},
+		"loadConfig": {
+			"noFileSelected": "No file selected.",
+			"fileReadError": "Error reading the file. {ERROR}"
+		},
 		"Metadata": {
 			"title": "Project Metadata",
 			"name": "Name",

@@ -83,7 +83,7 @@ export function GeneratorForm() {
 	}
 
 	function handleConfig(event: React.ChangeEvent<HTMLInputElement>) {
-		loadConfig(event, (data) => {
+		loadConfig(event, t, (data) => {
 			form.reset(data);
 		});
 	}
