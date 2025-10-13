@@ -81,6 +81,13 @@ const rawModules = [
 		dependsOn: "swagger",
 		iconType: "png",
 		category: ModuleCategory.DOCUMENTATION
+	},
+	{
+		title: "@nedcloarbr/nestjs-toolkit",
+		name: "nestjs-toolkit",
+		descriptionKey: "Modules.nestjs-toolkit.description",
+		iconType: "svg",
+		category: ModuleCategory.UTILITY
 	}
 ] as const;
 

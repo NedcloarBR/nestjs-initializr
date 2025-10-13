@@ -8,6 +8,7 @@ import { NecordLavalinkTemplates } from "./necord/lavalink";
 import { NecordLocalizationTemplates } from "./necord/localization";
 import { NecordPaginationTemplates } from "./necord/pagination";
 import { NestWhatsTemplates } from "./nestwhats";
+import { NestjsToolkitTemplates } from "./toolkit";
 
 export function modulesTemplates(
 	withConfigModule: boolean,
@@ -24,6 +25,7 @@ export function modulesTemplates(
 		NestWhatsTemplates,
 		GraphQLTemplates(mainType),
 		HuskyTemplates(packageManager, linterFormatter),
-		Nestjsi18nTemplates(withConfigModule)
+		Nestjsi18nTemplates(withConfigModule),
+		NestjsToolkitTemplates(withConfigModule)
 	];
 }

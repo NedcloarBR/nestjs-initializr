@@ -77,6 +77,9 @@
 
 			"nestjs-i18n": {
 				"description": "A biblioteca i18n para NestJS. Facilita o trabalho com idiomas em seu projeto NestJS. Tudo é altamente configurável. Você pode escrever e conectar seus próprios resolvers ou carregadores de idioma."
+			},
+			"nestjs-toolkit": {
+				"description": "NestJS Toolkit é uma ferramenta CLI abrangente projetada para simplificar seu fluxo de trabalho de desenvolvimento NestJS. Construído com nest-commander e NestJS, fornece utilitários essenciais para gerenciar configurações, gerar chaves seguras e organizar sua estrutura de projeto de forma eficiente."
 			}
 		},
 		"Extra": {

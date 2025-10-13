@@ -76,6 +76,9 @@
 			},
 			"nestjs-i18n": {
 				"description": "The i18n library for nestjs. It makes working with languages in your nestjs project easy. Everything is made to be highly configurable. You can write and plug-in your own language resolvers or loaders."
+			},
+			"nestjs-toolkit": {
+				"description": "NestJS Toolkit is a comprehensive CLI tool designed to streamline your NestJS development workflow. Built with nest-commander and NestJS, it provides essential utilities for managing configurations, generating secure keys, and organizing your project structure efficiently."
 			}
 		},
 		"Extra": {

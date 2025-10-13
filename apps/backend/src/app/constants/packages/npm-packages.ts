@@ -126,6 +126,10 @@ export const NPM_DEPENDENCIES = {
 	"nestjs-i18n": {
 		name: "nestjs-i18n",
 		version: "^10.5.1"
+	},
+	"@nedcloarbr/nestjs-toolkit": {
+		name: "@nedcloarbr/nestjs-toolkit",
+		version: "^1.1.0"
 	}
 };
 
