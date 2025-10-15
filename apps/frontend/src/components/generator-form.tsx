@@ -6,9 +6,9 @@ import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useExtraPackages } from "@/hooks/use-extra-packages";
 import type { ModuleCategory } from "@/types/module";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { RefreshCcwIcon, UploadIcon } from "lucide-react";
+import { PackagePlus, RefreshCcw, Rocket, Save, Settings2, Sparkles, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { ExtraField } from "./extra-field";
@@ -79,7 +79,7 @@ export function GeneratorForm() {
 		setSearchTerm(null);
 	}
 
-	function handleConfig(event: React.ChangeEvent<HTMLInputElement>) {
+	function handleConfig(event: ChangeEvent<HTMLInputElement>) {
 		loadConfig(event, t, (data) => {
 			form.reset(data);
 		});
@@ -94,221 +94,306 @@ export function GeneratorForm() {
 	}
 
 	return (
-		<section id="generator-form" className="m-12">
+		<section id="generator-form" className="container mx-auto px-3 py-6 md:px-4 lg:px-6">
 			<Form {...form}>
-				<form>
-					<div className="flex">
-						<div className="w-1/3 space-y-8 rounded-lg bg-nest-header-background p-8">
-							<h2 className="font-bold">{t("Metadata.title")}</h2>
+				<form className="space-y-6">
+					<div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
+						{/* Metadata */}
+						<div className="lg:col-span-4">
+							<div className="flex h-[700px] flex-col space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm">
+								<div className="space-y-1">
+									<h2 className="font-semibold text-xl tracking-tight">{t("Metadata.title")}</h2>
+									<p className="text-muted-foreground text-sm">Configure your NestJS project settings</p>
+								</div>
 
-							<FormField
-								name="projectName"
-								control={form.control}
-								render={({ field }) => (
-									<FormItem className="flex max-w-xl items-center space-x-4">
-										<FormLabel className="w-20">{t("Metadata.name")}</FormLabel>
-										<FormControl className="flex-1">
-											<Input {...field} className="w-full" />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								name="projectDescription"
-								control={form.control}
-								render={({ field }) => (
-									<FormItem className="flex max-w-xl items-center space-x-4">
-										<FormLabel className="w-20">{t("Metadata.description")}</FormLabel>
-										<FormControl className="flex-1">
-											<Input {...field} className="w-full" />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								name="nodeVersion"
-								control={form.control}
-								render={({ field }) => (
-									<FormItem className="flex max-w-xl items-center space-x-4">
-										<FormLabel className="w-20">{t("Metadata.nodeVersion")}</FormLabel>
-										<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-6">
-											{nodeVersions.map((version) => (
-												<div key={version} className="flex items-center">
+								<div className="h-[580px] rounded-lg border border-border/50 bg-muted/50 p-3">
+									<div className="space-y-4 pr-4">
+										<FormField
+											name="projectName"
+											control={form.control}
+											render={({ field }) => (
+												<FormItem className="space-y-2">
+													<FormLabel className="font-medium text-sm">{t("Metadata.name")}</FormLabel>
 													<FormControl>
-														<Label
-															htmlFor={version}
-															className={`ml-2 cursor-pointer ${field.value === version ? "text-nest-primary" : ""}`}>
-															<RadioGroupItem className="custom-radio cursor-pointer" value={version} id={version} />
-															{version}
-														</Label>
+														<Input {...field} className="w-full" placeholder="@organization/project-name" />
 													</FormControl>
-												</div>
-											))}
-										</RadioGroup>
-									</FormItem>
-								)}
-							/>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
 
-							<FormField
-								name="mainType"
-								control={form.control}
-								render={({ field }) => (
-									<FormItem className="flex max-w-xl items-center space-x-4">
-										<FormLabel className="w-20">{t("Metadata.mainType")}</FormLabel>
-										<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-6">
-											<FormControl>
-												<Label
-													htmlFor="fastify"
-													className={`ml-2 cursor-pointer ${field.value === "fastify" ? "text-nest-primary" : ""}`}>
-													<RadioGroupItem className="custom-radio cursor-pointer" value="fastify" id="fastify" />
-													Fastify
-												</Label>
-											</FormControl>
-											<FormControl>
-												<Label
-													htmlFor="express"
-													className={`ml-2 cursor-pointer ${field.value === "express" ? "text-nest-primary" : ""}`}>
-													<RadioGroupItem className="custom-radio cursor-pointer" value="express" id="express" />
-													Express
-												</Label>
-											</FormControl>
-										</RadioGroup>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								name="packageManager"
-								control={form.control}
-								render={({ field }) => (
-									<FormItem className="flex max-w-xl items-center space-x-4">
-										<FormLabel className="w-20">{t("Metadata.packageManager")}</FormLabel>
-										<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-12">
-											{packageManagers.map((manager) => (
-												<FormControl key={manager}>
-													<Label
-														htmlFor={manager}
-														className={`ml-2 cursor-pointer ${field.value === manager ? "text-nest-primary" : ""}`}>
-														<RadioGroupItem className="custom-radio cursor-pointer" value={manager} id={manager} />
-														<img src={`/icons/packageManagers/${manager}.svg`} alt={`${manager} icon`} />
-													</Label>
-												</FormControl>
-											))}
-										</RadioGroup>
-									</FormItem>
-								)}
-							/>
+										<FormField
+											name="projectDescription"
+											control={form.control}
+											render={({ field }) => (
+												<FormItem className="space-y-2">
+													<FormLabel className="font-medium text-sm">{t("Metadata.description")}</FormLabel>
+													<FormControl>
+														<Input {...field} className="w-full" placeholder="Project description" />
+													</FormControl>
+												</FormItem>
+											)}
+										/>
 
-							<div className="flex max-w-xl items-center space-x-4">
-								<Dialog>
-									<DialogTrigger asChild>
-										<Button className="cursor-pointer">{t("Extra.trigger")}</Button>
-									</DialogTrigger>
-									<DialogContent className="flex">
-										<DialogHeader>
-											<DialogTitle>{t("Extra.title")}</DialogTitle>
-											<DialogDescription className="pt-4">
-												{extraFields(t).map((extra) => (
-													<ExtraField
-														key={extra.name}
-														name={extra.name}
-														title={extra.title}
-														description={extra.description}
-													/>
-												))}
-											</DialogDescription>
-										</DialogHeader>
-									</DialogContent>
-								</Dialog>
+										<FormField
+											name="nodeVersion"
+											control={form.control}
+											render={({ field }) => (
+												<FormItem className="space-y-2">
+													<FormLabel className="font-medium text-sm">{t("Metadata.nodeVersion")}</FormLabel>
+													<RadioGroup
+														onValueChange={field.onChange}
+														value={field.value}
+														className="flex flex-wrap gap-2">
+														{nodeVersions.map((version) => (
+															<div key={version} className="flex items-center">
+																<FormControl>
+																	<Label
+																		htmlFor={version}
+																		className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 transition-all hover:bg-accent ${
+																			field.value === version
+																				? "border-primary bg-primary/5 text-primary"
+																				: "border-border"
+																		}`}>
+																		<RadioGroupItem className="sr-only" value={version} id={version} />
+																		<span className="font-medium text-sm">{version}</span>
+																	</Label>
+																</FormControl>
+															</div>
+														))}
+													</RadioGroup>
+												</FormItem>
+											)}
+										/>
 
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<Button
-											type="button"
-											className="cursor-pointer"
-											onClick={() => document.getElementById("fileUpload")?.click()}>
-											<UploadIcon />
-										</Button>
-									</TooltipTrigger>
-									<TooltipContent>{t("ActionsTooltip.loadConfig")}</TooltipContent>
-									<Input className="hidden" id="fileUpload" type="file" accept=".json" onChange={handleConfig} />
-								</Tooltip>
+										<FormField
+											name="mainType"
+											control={form.control}
+											render={({ field }) => (
+												<FormItem className="space-y-2">
+													<FormLabel className="font-medium text-sm">{t("Metadata.mainType")}</FormLabel>
+													<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-2">
+														<FormControl>
+															<Label
+																htmlFor="fastify"
+																className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 py-2 transition-all hover:bg-accent ${
+																	field.value === "fastify"
+																		? "border-primary bg-primary/5 text-primary"
+																		: "border-border"
+																}`}>
+																<RadioGroupItem className="sr-only" value="fastify" id="fastify" />
+																<span className="font-medium text-sm">Fastify</span>
+															</Label>
+														</FormControl>
+														<FormControl>
+															<Label
+																htmlFor="express"
+																className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 py-2 transition-all hover:bg-accent ${
+																	field.value === "express"
+																		? "border-primary bg-primary/5 text-primary"
+																		: "border-border"
+																}`}>
+																<RadioGroupItem className="sr-only" value="express" id="express" />
+																<span className="font-medium text-sm">Express</span>
+															</Label>
+														</FormControl>
+													</RadioGroup>
+												</FormItem>
+											)}
+										/>
 
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<Button type="button" onClick={handleReset} className="cursor-pointer">
-											<RefreshCcwIcon />
-										</Button>
-									</TooltipTrigger>
-									<TooltipContent>{t("ActionsTooltip.resetConfig")}</TooltipContent>
-								</Tooltip>
+										<FormField
+											name="packageManager"
+											control={form.control}
+											render={({ field }) => (
+												<FormItem className="space-y-2">
+													<FormLabel className="font-medium text-sm">{t("Metadata.packageManager")}</FormLabel>
+													<RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-2">
+														{packageManagers.map((manager) => (
+															<FormControl key={manager}>
+																<Label
+																	htmlFor={manager}
+																	className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border p-2 transition-all hover:bg-accent ${
+																		field.value === manager ? "border-primary bg-primary/5" : "border-border"
+																	}`}>
+																	<RadioGroupItem className="sr-only" value={manager} id={manager} />
+																	<img
+																		src={`/icons/packageManagers/${manager}.svg`}
+																		alt={`${manager} icon`}
+																		className="h-5 w-5"
+																	/>
+																</Label>
+															</FormControl>
+														))}
+													</RadioGroup>
+												</FormItem>
+											)}
+										/>
 
-								<RecentHistory loadData={form.reset} />
+										<Separator />
+
+										<div className="flex flex-wrap gap-2">
+											<Dialog>
+												<DialogTrigger asChild>
+													<Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
+														<Settings2 className="mr-1.5 h-4 w-4" />
+														{t("Extra.trigger")}
+													</Button>
+												</DialogTrigger>
+												<DialogContent className="flex">
+													<DialogHeader>
+														<DialogTitle>{t("Extra.title")}</DialogTitle>
+														<DialogDescription className="pt-4">
+															{extraFields(t).map((extra) => (
+																<ExtraField
+																	key={extra.name}
+																	name={extra.name}
+																	title={extra.title}
+																	description={extra.description}
+																/>
+															))}
+														</DialogDescription>
+													</DialogHeader>
+												</DialogContent>
+											</Dialog>
+
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<Button
+														type="button"
+														variant="outline"
+														size="sm"
+														className="cursor-pointer bg-transparent"
+														onClick={() => document.getElementById("fileUpload")?.click()}>
+														<Upload className="h-4 w-4" />
+													</Button>
+												</TooltipTrigger>
+												<TooltipContent>{t("ActionsTooltip.loadConfig")}</TooltipContent>
+												<Input className="hidden" id="fileUpload" type="file" accept=".json" onChange={handleConfig} />
+											</Tooltip>
+
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<Button
+														type="button"
+														variant="outline"
+														size="sm"
+														onClick={handleReset}
+														className="cursor-pointer bg-transparent">
+														<RefreshCcw className="h-4 w-4" />
+													</Button>
+												</TooltipTrigger>
+												<TooltipContent>{t("ActionsTooltip.resetConfig")}</TooltipContent>
+											</Tooltip>
+
+											<RecentHistory loadData={form.reset} />
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
-						<div className="pr-8 pl-8">
-							<Separator orientation="vertical" />
-						</div>
+						{/* Modules */}
+						<div className="lg:col-span-5">
+							<div className="flex h-[700px] flex-col space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm">
+								<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+									<div className="space-y-1">
+										<h2 className="font-semibold text-xl tracking-tight">{t("Modules.title")}</h2>
+										<p className="text-muted-foreground text-sm">Select optional modules for your project</p>
+									</div>
+								</div>
 
-						<aside className="w-2/3 space-y-8 overflow-hidden rounded-lg bg-nest-header-background p-8">
-							<div className="mb-4 flex items-center justify-between">
-								<h2 className="font-bold">{t("Modules.title")}</h2>
-								<div className="flex items-center space-x-4">
+								<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 									<Module.TermFilter value={searchTerm} onChange={setSearchTerm} />
 									<Module.CategoryFilter value={selectedCategory} onSelect={setSelectedCategory} />
-									<Button className="cursor-pointer" type="button" onClick={() => clearFilters()}>
-										{t("Filter.clearFilter")}
-									</Button>
+									{(selectedCategory || searchTerm) && (
+										<Button
+											variant="outline"
+											size="sm"
+											className="cursor-pointer bg-transparent"
+											type="button"
+											onClick={() => clearFilters()}>
+											<Sparkles className="mr-1.5 h-4 w-4" />
+											{t("Filter.clearFilter")}
+										</Button>
+									)}
+								</div>
+
+								<div className="flex-1 overflow-hidden rounded-lg border border-border/50 bg-muted/50 p-4">
+									<ScrollArea className="h-full">
+										<div className="pr-4">
+											<Module.List category={selectedCategory} term={searchTerm} />
+										</div>
+									</ScrollArea>
 								</div>
 							</div>
-							<ScrollArea className="h-96">
-								<Module.List category={selectedCategory} term={searchTerm} />
-							</ScrollArea>
-						</aside>
-
-						<div className="pr-8 pl-8">
-							<Separator orientation="vertical" />
 						</div>
 
-						<ExtraPackage.Modal
-							packages={packages}
-							loading={packagesLoading}
-							isOpen={isOpenExtraPackageModal}
-							onOpenChange={() => setIsOpenExtraPackageModal((prev) => !prev)}
-							fetchPackages={fetchPackages}
-						/>
-						<aside className="w-1/3 space-y-4 overflow-hidden rounded-lg bg-nest-header-background p-8">
-							<div className="mb-4 flex items-center justify-between">
-								<h2 className="font-bold">{t("ExtraPackages.title")}</h2>
-								<div className="flex items-center space-x-4">
-									<Button
-										className="cursor-pointer"
-										type="button"
-										onClick={() => setIsOpenExtraPackageModal((prev) => !prev)}>
-										{t("ExtraPackages.add")}
-									</Button>
+						{/* Extra Packages */}
+						<div className="lg:col-span-3">
+							<div className="flex h-[700px] flex-col space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm">
+								<div className="flex items-center justify-between">
+									<div className="space-y-1">
+										<h2 className="font-semibold text-xl tracking-tight">{t("ExtraPackages.title")}</h2>
+										<p className="text-muted-foreground text-sm">Add extra npm packages</p>
+									</div>
+								</div>
+
+								<Button
+									variant="outline"
+									size="sm"
+									className="w-full cursor-pointer bg-transparent"
+									type="button"
+									onClick={() => setIsOpenExtraPackageModal((prev) => !prev)}>
+									<PackagePlus className="mr-1.5 h-4 w-4" />
+									{t("ExtraPackages.add")}
+								</Button>
+
+								<div className="flex-1 overflow-hidden rounded-lg border border-border/50 bg-muted/50 p-3">
+									<ScrollArea className="h-full">
+										<div>
+											<ExtraPackage.List />
+										</div>
+									</ScrollArea>
 								</div>
 							</div>
-							<ScrollArea className="h-96">
-								<ExtraPackage.List />
-							</ScrollArea>
-						</aside>
+						</div>
 					</div>
 
-					<Separator className="my-8" />
+					{/* Modals */}
+					<ExtraPackage.Modal
+						packages={packages}
+						loading={packagesLoading}
+						isOpen={isOpenExtraPackageModal}
+						onOpenChange={() => setIsOpenExtraPackageModal((prev) => !prev)}
+						fetchPackages={fetchPackages}
+					/>
 
-					<div className="flex flex-col items-center justify-center rounded-lg bg-nest-header-background">
-						<h2 className="mt-4 font-bold">{t("Submit.title")}</h2>
-						<div className="m-4 flex space-x-4">
-							<Button onClick={form.handleSubmit((values) => generate(values, "project"))} className="cursor-pointer">
-								{t("Submit.project")}
-							</Button>
-							<Button onClick={form.handleSubmit((values) => generate(values, "config"))} className="cursor-pointer">
-								{t("Submit.config")}
-							</Button>
+					{/* Submit */}
+					<div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+						<div className="flex flex-col items-center justify-center space-y-2">
+							<div className="space-y-2 text-center">
+								<h2 className="font-semibold text-2xl tracking-tight">{t("Submit.title")}</h2>
+								<p className="text-muted-foreground text-sm">Generate your NestJS project or configuration file</p>
+							</div>
+							<div className="flex flex-col gap-3 sm:flex-row">
+								<Button
+									onClick={form.handleSubmit((values) => generate(values, "project"))}
+									variant="outline"
+									className="cursor-pointer"
+									size="lg">
+									<Rocket className="mr-2 h-5 w-5" />
+									{t("Submit.project")}
+								</Button>
+								<Button
+									onClick={form.handleSubmit((values) => generate(values, "config"))}
+									variant="outline"
+									className="cursor-pointer"
+									size="lg">
+									<Save className="mr-2 h-5 w-5" />
+									{t("Submit.config")}
+								</Button>
+							</div>
 						</div>
 					</div>
 				</form>

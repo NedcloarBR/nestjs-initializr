@@ -38,17 +38,21 @@ export function TestRunnerCard({ title, name, description, disableText, iconType
 	}
 
 	return (
-		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
-			<div>
-				<CardTitle className="flex items-center justify-center gap-2">
-					<Icon name={name} iconType={iconType ?? "svg"} subfolder="testRunner" className="size-8" />
+		<Card className="group hover:-translate-y-0.5 relative flex h-48 w-full flex-col justify-between overflow-hidden p-3 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
+			<div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+			<div className="relative">
+				<CardTitle className="flex items-center justify-center gap-2 text-base transition-colors group-hover:text-primary">
+					<div className="rounded-lg bg-primary/10 p-1.5 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
+						<Icon name={name} iconType={iconType ?? "svg"} subfolder="testRunner" className="size-6" />
+					</div>
 					{title}
 				</CardTitle>
-				<Separator className="my-2" />
-				<CardDescription>{description}</CardDescription>
+				<Separator className="my-1.5 transition-colors group-hover:bg-primary/20" />
+				<CardDescription className="text-xs leading-relaxed">{description}</CardDescription>
 			</div>
 
-			<CardFooter className="flex items-center justify-center">
+			<CardFooter className="relative flex items-center justify-center p-0 pt-2">
 				<FormControl>
 					<Tooltip>
 						<TooltipTrigger asChild>

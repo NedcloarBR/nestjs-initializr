@@ -45,7 +45,11 @@ export function RecentHistory({ loadData }: Props) {
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<DialogTrigger asChild>
-						<Button className="cursor-pointer" onClick={handleGetRecentHistory}>
+						<Button
+							className="cursor-pointer bg-transparent"
+							size="sm"
+							variant="outline"
+							onClick={handleGetRecentHistory}>
 							<HistoryIcon />
 						</Button>
 					</DialogTrigger>
@@ -82,7 +86,11 @@ export function RecentHistory({ loadData }: Props) {
 				<DialogFooter>
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<Button className="cursor-pointer" onClick={handleClearHistory}>
+							<Button
+								className="cursor-pointer bg-transparent"
+								size="sm"
+								variant="outline"
+								onClick={handleClearHistory}>
 								<Trash2Icon />
 							</Button>
 						</TooltipTrigger>

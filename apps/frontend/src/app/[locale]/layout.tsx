@@ -42,11 +42,11 @@ export default async function LocaleLayout(props: {
 
 	return (
 		<html lang={locale} suppressHydrationWarning={true} className={`${sourceSans.variable} ${materialIcons.variable}`}>
-			<body>
+			<body className="bg-nest-background dark:bg-nest-background">
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange={true}>
 					<NextIntlClientProvider messages={messages}>
 						<TooltipProvider>
-							<main className="m-0 h-screen overflow-hidden bg-nest-background p-0 font-medium dark:bg-nest-background">
+							<main className="m-0 h-screen p-0 font-medium">
 								{children}
 								<Toaster />
 							</main>

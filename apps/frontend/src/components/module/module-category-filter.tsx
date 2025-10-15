@@ -17,7 +17,7 @@ export function ModuleCategoryFilter({ value, onSelect }: Props) {
 			</SelectTrigger>
 			<SelectContent>
 				{Object.values(ModuleCategory).map((value) => (
-					<SelectItem key={value} value={value}>
+					<SelectItem className="cursor-pointer" key={value} value={value}>
 						{t(`categories.${value}`)}
 					</SelectItem>
 				))}

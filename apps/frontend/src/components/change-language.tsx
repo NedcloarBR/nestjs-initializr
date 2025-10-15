@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { ReactElement } from "react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui";
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui";
 
 export function ChangeLanguage() {
 	const t = useTranslations("Languages");
@@ -35,7 +35,10 @@ export function ChangeLanguage() {
 		const arr: ReactElement[] = [];
 		for (const element of Languages) {
 			arr.push(
-				<DropdownMenuItem key={`key_${element.code}`} onClick={() => changeLanguageHandler(element.code)}>
+				<DropdownMenuItem
+					key={`key_${element.code}`}
+					onClick={() => changeLanguageHandler(element.code)}
+					className="cursor-pointer">
 					<div className="flex items-center gap-1">
 						<span className={`fi fi-${element.flag}`} />
 						<div>{element.name}</div>
@@ -50,10 +53,10 @@ export function ChangeLanguage() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild={true}>
-				<button type="button" className="flex cursor-pointer focus:outline-none">
+				<Button type="button" variant="ghost" className="flex cursor-pointer focus:outline-none">
 					{currentLang}
 					<span className="sr-only">{}</span>
-				</button>
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="center">{DropdownLanguages()}</DropdownMenuContent>
 		</DropdownMenu>

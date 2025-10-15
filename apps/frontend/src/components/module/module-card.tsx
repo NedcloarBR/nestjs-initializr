@@ -47,7 +47,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 
 	const dockerIsMissing = dockerRequiredModules.includes(name) && !dockerField.value;
 
-	const linterFormatterFieldIsMissing = linterFormatterRequiredModules.includes(name) && !linterFormatterField.value;
+	const anotherLinterFormatterEnabled = linterFormatterRequiredModules.includes(name) && !linterFormatterField.value;
 
 	const isSelected = field.value?.includes(name);
 
@@ -57,7 +57,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 			: !field.value?.includes(dependsOn)
 		: false;
 
-	const isDisabled = isDisabledModules || dockerIsMissing || linterFormatterFieldIsMissing;
+	const isDisabled = isDisabledModules || dockerIsMissing || anotherLinterFormatterEnabled;
 
 	function findDependents(moduleName: ModuleName, currentModules: string[]): string[] {
 		const dependents: Set<string> = new Set();
@@ -92,20 +92,41 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 		field.onChange(updatedModules);
 	}
 
+	function getTooltipMessage() {
+		const missingMessages: string[] = [];
+
+		if (dockerIsMissing) missingMessages.push(t("dockerMissing"));
+		if (anotherLinterFormatterEnabled) missingMessages.push(t("anotherLinterFormatterEnabled"));
+
+		const hasDepends = Boolean(dependsOn && (Array.isArray(dependsOn) ? dependsOn.length : true));
+
+		if (hasDepends) {
+			const ModuleNames = Array.isArray(dependsOn) ? dependsOn.join(", ") : (dependsOn ?? "");
+			missingMessages.push(t("dependsOn", { ModuleNames }));
+		}
+
+		// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+		return missingMessages.length > 0 ? missingMessages.map((msg, i) => <div key={i}>{msg}</div>) : null;
+	}
+
 	return (
-		<Card className="flex h-64 w-80 max-w-80 flex-col justify-between p-4">
-			<div className="flex flex-col gap-2 overflow-hidden">
-				<CardTitle className="flex items-center justify-center gap-2">
-					<Icon name={name} iconType={iconType} subfolder="modules" className="size-8" />
+		<Card className="group hover:-translate-y-0.5 relative flex h-48 w-full flex-col justify-between overflow-hidden p-3 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
+			<div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+			<div className="relative flex flex-col gap-1.5 overflow-hidden">
+				<CardTitle className="flex items-center justify-center gap-2 text-base transition-colors group-hover:text-primary">
+					<div className="rounded-lg bg-primary/10 p-1.5 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
+						<Icon name={name} iconType={iconType} subfolder="modules" className="size-6" />
+					</div>
 					{title}
 				</CardTitle>
-				<Separator />
-				<ScrollArea className="h-28 pr-2">
-					<CardDescription className="text-sm">{description}</CardDescription>
+				<Separator className="transition-colors group-hover:bg-primary/20" />
+				<ScrollArea className="h-20 pr-2">
+					<CardDescription className="text-xs leading-relaxed">{description}</CardDescription>
 				</ScrollArea>
 			</div>
 
-			<CardFooter className="flex items-center justify-center">
+			<CardFooter className="relative flex items-center justify-center p-0 pt-2">
 				<FormControl>
 					<Tooltip>
 						<TooltipTrigger asChild>
@@ -118,15 +139,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 								/>
 							</span>
 						</TooltipTrigger>
-						{isDisabled && (
-							<TooltipContent>
-								{dockerIsMissing
-									? t("dockerMissing")
-									: linterFormatterFieldIsMissing
-										? t("linterFormatterMissing")
-										: t("dependsOn", { ModuleNames: Array.isArray(dependsOn) ? dependsOn.join(", ") : dependsOn })}
-							</TooltipContent>
-						)}
+						{isDisabled && <TooltipContent>{getTooltipMessage()}</TooltipContent>}
 					</Tooltip>
 				</FormControl>
 			</CardFooter>

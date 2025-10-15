@@ -43,7 +43,7 @@
 			"title": "Módulos opcionais",
 			"dependsOn": "Este módulo depende do(s) seguinte(s) módulo(s): {ModuleNames}",
 			"dockerMissing": "Este módulo requer Docker",
-			"linterFormatterMissing": "Este módulo requer que o BiomeJS ou Eslint-Prettier esteja habilitado",
+			"anotherLinterFormatterEnabled": "Este módulo requer que o BiomeJS ou Eslint-Prettier esteja habilitado",
 			"config": {
 				"description": "Módulo @nestjs/config, mas com um registro personalizado com validação e serviço personalizado com preenchimento automático e conversão de tipos."
 			},

@@ -51,11 +51,11 @@ export function ExtraPackageModal({ packages, isOpen, onOpenChange, fetchPackage
 							<Spinner className="size-10" />
 						</div>
 					) : (
-						<>
+						<div className="space-y-3">
 							{packages.map((pkg) => (
 								<ExtraPackage.Card className="w-110" key={pkg.package.name} packageData={pkg} inModal />
 							))}
-						</>
+						</div>
 					)}
 				</ScrollArea>
 			</DialogContent>

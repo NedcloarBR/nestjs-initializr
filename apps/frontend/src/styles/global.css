@@ -57,6 +57,16 @@
 	body {
 		font-family: var(--font-source-sans) sans-serif;
 	}
+
+	html {
+		overflow-y: scroll;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	html::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 .custom-radio {
