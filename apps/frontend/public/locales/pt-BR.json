@@ -6,6 +6,11 @@
 		}
 	},
 
+  "Header": {
+    "title": "NestJS Initializr",
+    "description": "Inicie seus projetos NestJS com facilidade"
+  },
+
 	"Languages": {
 		"en-US": "English",
 		"pt-BR": "Português (Brasil)"
@@ -33,6 +38,7 @@
 		},
 		"Metadata": {
 			"title": "Metadados do Projeto",
+      "meta_description": "Configure as configurações do seu projeto NestJS",
 			"name": "Nome",
 			"description": "Descrição",
 			"nodeVersion": "Versão do NodeJS",
@@ -41,6 +47,7 @@
 		},
 		"Modules": {
 			"title": "Módulos opcionais",
+      "description": "Selectione módulos opcionais para o seu projeto",
 			"dependsOn": "Este módulo depende do(s) seguinte(s) módulo(s): {ModuleNames}",
 			"dockerMissing": "Este módulo requer Docker",
 			"anotherLinterFormatterEnabled": "Este módulo requer que o BiomeJS ou Eslint-Prettier esteja habilitado",
@@ -133,6 +140,7 @@
 		},
 		"Submit": {
 			"title": "Gerar",
+      "description": "Gere seu projeto NestJS ou arquivo de configuração",
 			"project": "Projeto",
 			"config": "Configuração",
 			"reset": "Redefinir"
@@ -157,6 +165,9 @@
 		},
 		"ExtraPackages": {
 			"title": "Pacotes Extras",
+      "description": "Adicione pacotes npm extras",
+      "noPackages": "Nenhum pacote extra adicionado",
+      "info": "Clique em \"Adicionar\" para adicionar pacotes npm.",
 			"add": "Adicionar",
 			"remove": "Remover",
 			"version": "Versão:",

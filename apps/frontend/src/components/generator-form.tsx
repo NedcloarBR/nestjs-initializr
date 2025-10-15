@@ -103,7 +103,7 @@ export function GeneratorForm() {
 							<div className="flex h-[700px] flex-col space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm">
 								<div className="space-y-1">
 									<h2 className="font-semibold text-xl tracking-tight">{t("Metadata.title")}</h2>
-									<p className="text-muted-foreground text-sm">Configure your NestJS project settings</p>
+									<p className="text-muted-foreground text-sm">{t("Metadata.meta_description")}</p>
 								</div>
 
 								<div className="h-[580px] rounded-lg border border-border/50 bg-muted/50 p-3">
@@ -299,7 +299,7 @@ export function GeneratorForm() {
 								<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 									<div className="space-y-1">
 										<h2 className="font-semibold text-xl tracking-tight">{t("Modules.title")}</h2>
-										<p className="text-muted-foreground text-sm">Select optional modules for your project</p>
+										<p className="text-muted-foreground text-sm">{t("Modules.description")}</p>
 									</div>
 								</div>
 
@@ -335,7 +335,7 @@ export function GeneratorForm() {
 								<div className="flex items-center justify-between">
 									<div className="space-y-1">
 										<h2 className="font-semibold text-xl tracking-tight">{t("ExtraPackages.title")}</h2>
-										<p className="text-muted-foreground text-sm">Add extra npm packages</p>
+										<p className="text-muted-foreground text-sm">{t("ExtraPackages.description")}</p>
 									</div>
 								</div>
 
@@ -374,7 +374,7 @@ export function GeneratorForm() {
 						<div className="flex flex-col items-center justify-center space-y-2">
 							<div className="space-y-2 text-center">
 								<h2 className="font-semibold text-2xl tracking-tight">{t("Submit.title")}</h2>
-								<p className="text-muted-foreground text-sm">Generate your NestJS project or configuration file</p>
+								<p className="text-muted-foreground text-sm">{t("Submit.description")}</p>
 							</div>
 							<div className="flex flex-col gap-3 sm:flex-row">
 								<Button

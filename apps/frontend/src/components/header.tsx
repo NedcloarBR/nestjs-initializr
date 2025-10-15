@@ -1,4 +1,5 @@
 import { Package } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { SiGithub } from "react-icons/si";
 import { ChangeLanguage } from "./change-language";
@@ -6,6 +7,8 @@ import { ToggleTheme } from "./toggle-theme";
 import { Button } from "./ui";
 
 export function Header() {
+  const t = useTranslations("Header");
+
 	return (
 		<header className="sticky top-0 z-50 border-border border-b bg-card/50 backdrop-blur-sm">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,8 +18,8 @@ export function Header() {
 							<Package className="h-5 w-5 text-primary-foreground" />
 						</div>
 						<div>
-							<h1 className="font-semibold text-foreground text-lg">NestJS Initializr</h1>
-							<p className="text-muted-foreground text-xs">Configure your project</p>
+							<h1 className="font-semibold text-foreground text-lg">{t("title")}</h1>
+							<p className="text-muted-foreground text-xs">{t("description")}</p>
 						</div>
 					</div>
 					<div className="flex items-center gap-2">

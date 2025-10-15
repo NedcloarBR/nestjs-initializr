@@ -1,9 +1,11 @@
 import type { SimpleNPMPackage } from "@/types/npm";
 import { Package } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
 import { ExtraPackage } from ".";
 
 export function ExtraPackagesList() {
+  const t = useTranslations("Generator.ExtraPackages");
 	const { control } = useFormContext();
 	const { field } = useController({
 		name: "extraPackages",
@@ -18,8 +20,8 @@ export function ExtraPackagesList() {
 						<Package className="h-8 w-8 text-muted-foreground/60" />
 					</div>
 					<div className="space-y-1">
-						<p className="font-medium text-muted-foreground text-sm">No extra packages selected</p>
-						<p className="text-muted-foreground/70 text-xs">Click "Adicionar" to add npm packages</p>
+						<p className="font-medium text-muted-foreground text-sm">{t("noPackages")}</p>
+						<p className="text-muted-foreground/70 text-xs">{t("info")}</p>
 					</div>
 				</div>
 			)}
