@@ -7,7 +7,7 @@ import { ToggleTheme } from "./toggle-theme";
 import { Button } from "./ui";
 
 export function Header() {
-  const t = useTranslations("Header");
+	const t = useTranslations("Header");
 
 	return (
 		<header className="sticky top-0 z-50 border-border border-b bg-card/50 backdrop-blur-sm">

@@ -11,10 +11,10 @@
 		"pt-BR": "Português (Brasil)"
 	},
 
-  "Header": {
-    "title": "NestJS Initializr",
-    "description": "Start your NestJS projects with ease"
-  },
+	"Header": {
+		"title": "NestJS Initializr",
+		"description": "Start your NestJS projects with ease"
+	},
 
 	"Generator": {
 		"FormSchema": {
@@ -38,7 +38,7 @@
 		},
 		"Metadata": {
 			"title": "Project Metadata",
-      "meta_description": "Configure your NestJS project settings",
+			"meta_description": "Configure your NestJS project settings",
 			"name": "Name",
 			"description": "Description",
 			"nodeVersion": "NodeJS Version",
@@ -47,7 +47,7 @@
 		},
 		"Modules": {
 			"title": "Optional modules",
-      "description": "Select optional modules for your project",
+			"description": "Select optional modules for your project",
 			"dependsOn": "This module depends on the following module(s): {ModuleNames}",
 			"dockerMissing": "This module requires Docker",
 			"anotherLinterFormatterEnabled": "This module requires a BiomeJS or Eslint-Prettier to be enabled",
@@ -139,7 +139,7 @@
 		},
 		"Submit": {
 			"title": "Generate",
-      "description": "Generate your NestJS project or configuration file",
+			"description": "Generate your NestJS project or configuration file",
 			"project": "Project",
 			"config": "Config",
 			"reset": "Reset"
@@ -163,9 +163,9 @@
 		},
 		"ExtraPackages": {
 			"title": "Extra Packages",
-      "description": "Add extra npm packages",
-      "noPackages": "No extra packages added",
-      "info": "Click \"Add\" to add npm packages.",
+			"description": "Add extra npm packages",
+			"noPackages": "No extra packages added",
+			"info": "Click \"Add\" to add npm packages.",
 			"add": "Add",
 			"remove": "Remove",
 			"version": "Version:",

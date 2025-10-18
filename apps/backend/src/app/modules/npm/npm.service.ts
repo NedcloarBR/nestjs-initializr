@@ -3,11 +3,17 @@ import { resolveAxiosObservable } from "@/app/utils/resolve-axios-observable";
 import type { NPMResponse } from "@/types/npm";
 // biome-ignore lint/style/useImportType: <>
 import { HttpService } from "@nestjs/axios";
-import { Injectable } from "@nestjs/common";
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Inject, Injectable } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: <>
+import { Cache } from "cache-manager";
 
 @Injectable()
 export class NpmService {
-	public constructor(private readonly httpService: HttpService) {}
+	public constructor(
+		@Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+		private readonly httpService: HttpService
+	) {}
 
 	// Exclude packages that are already included in NPM_DEPENDENCIES or are not relevant and clone of others
 	private blacklistPackages = [
@@ -18,11 +24,16 @@ export class NpmService {
 	];
 
 	public async getPackages(name: string) {
+		const cacheKey = `npm:packages:${name}`;
+		const cached = await this.cacheManager.get(cacheKey);
+		if (cached) return cached;
+
 		const { data } = await resolveAxiosObservable<NPMResponse>(
 			this.httpService.get<NPMResponse>(`https://registry.npmjs.org/-/v1/search?text=${name}`)
 		);
 
 		const packages = this.filterPackages(data.objects);
+		await this.cacheManager.set(cacheKey, packages);
 		return packages;
 	}
 

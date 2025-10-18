@@ -5,7 +5,7 @@ import { useController, useFormContext } from "react-hook-form";
 import { ExtraPackage } from ".";
 
 export function ExtraPackagesList() {
-  const t = useTranslations("Generator.ExtraPackages");
+	const t = useTranslations("Generator.ExtraPackages");
 	const { control } = useFormContext();
 	const { field } = useController({
 		name: "extraPackages",
