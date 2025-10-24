@@ -1,0 +1,36 @@
+name: PR Notice (Final Paper)
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  pr_notice:
+    if: ${{ !contains(['dependabot[bot]','dependabot-preview[bot]'], github.actor) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post TCC notice on PR (only once)
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = context.payload.pull_request.number;
+            const marker = '<!-- tcc-pr-notice -->';
+
+            // list existing comments to avoid duplicate notices
+            const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number: prNumber });
+            if (comments.some(c => c.body && c.body.includes(marker))) {
+              core.info('TCC notice already posted — skipping.');
+              return;
+            }
+
+            const username = context.payload.pull_request.user.login;
+            const body = `Hello @${username} 👋\n\nThank you for your pull request. At the moment I am not accepting pull requests because this repository is being used for my final paper. I will start reviewing PRs after I finish my degree, at the end of the first semester of 2026.\n\nIf you'd like, you can open an issue with a suggestion or a bug; I will review issues when possible.\n\n${marker}`;
+
+            await github.rest.issues.createComment({ owner, repo, issue_number: prNumber, body });
