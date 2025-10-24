@@ -78,7 +78,7 @@
 		"@nx/next": "21.6.4",
 		"@nx/node": "21.6.4",
 		"@nx/playwright": "21.6.4",
-		"@nx/web": "21.6.4",
+		"@nx/web": "22.0.1",
 		"@nx/webpack": "21.6.4",
 		"@nx/workspace": "21.6.4",
 		"@playwright/test": "^1.56.0",
