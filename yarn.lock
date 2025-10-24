@@ -3941,7 +3941,7 @@ __metadata:
     "@nestjs/swagger": "npm:^11.2.0"
     "@nestjs/testing": "npm:^11.1.6"
     "@nestjs/throttler": "npm:^6.4.0"
-    "@nx/devkit": "npm:21.6.4"
+    "@nx/devkit": "npm:22.0.1"
     "@nx/jest": "npm:21.6.4"
     "@nx/js": "npm:21.6.4"
     "@nx/nest": "npm:21.6.4"
@@ -4362,6 +4362,23 @@ __metadata:
   peerDependencies:
     nx: ">= 20 <= 22"
   checksum: 10c0/50ffb17f0edf3dcba5e518da396d84ae085c70fc0d6b94f5eb104a5adfea63f057e12511a3f29aeb59f76998dc9e591df8eb7886e24ea1f0cf425bc3bd72fd9e
+  languageName: node
+  linkType: hard
+
+"@nx/devkit@npm:22.0.1":
+  version: 22.0.1
+  resolution: "@nx/devkit@npm:22.0.1"
+  dependencies:
+    "@zkochan/js-yaml": "npm:0.0.7"
+    ejs: "npm:^3.1.7"
+    enquirer: "npm:~2.3.6"
+    minimatch: "npm:9.0.3"
+    semver: "npm:^7.5.3"
+    tslib: "npm:^2.3.0"
+    yargs-parser: "npm:21.1.1"
+  peerDependencies:
+    nx: ">= 21 <= 23 || ^22.0.0-0"
+  checksum: 10c0/7e7cb7c43e58a601e878bb7b2f50468e36314ac73537fc31cd07faf24c41a25c7e80ddf8a7580a59f2f0d8780f5fb146f07b787c8110febd4b2a1a8014a1cfb1
   languageName: node
   linkType: hard
 
