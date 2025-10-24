@@ -24,35 +24,35 @@ updates:
     groups:
       nestjs:
         patterns:
-          - "@nestjs/.*"
+          - "@nestjs/*"
       nx:
         patterns:
-          - "@nx/.*"
+          - "@nx/*"
           - "nx"
       babel:
         patterns:
-          - "@babel/.*"
+          - "@babel/*"
           - "babel-jest"
       testing:
         patterns:
           - "jest"
           - "ts-jest"
-          - "jest-.*"
+          - "jest-*"
       commit:
         patterns:
-          - "@commitlint/.*"
+          - "@commitlint/*"
           - "lint-staged"
       webpack:
         patterns:
           - "webpack"
-          - "webpack-.*"
+          - "webpack-*"
       swc:
         patterns:
-          - "@swc/.*"
+          - "@swc/*"
       typescript:
         patterns:
           - "typescript"
-          - "@types/.*"
+          - "@types/*"
           - "tslib"
           - "ts-node"
 
