@@ -3939,7 +3939,7 @@ __metadata:
     "@nestjs/platform-fastify": "npm:11.1.6"
     "@nestjs/schematics": "npm:^11.0.9"
     "@nestjs/swagger": "npm:^11.2.0"
-    "@nestjs/testing": "npm:^11.1.6"
+    "@nestjs/testing": "npm:^11.1.7"
     "@nestjs/throttler": "npm:^6.4.0"
     "@nx/devkit": "npm:21.6.4"
     "@nx/jest": "npm:21.6.4"
@@ -4195,9 +4195,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/testing@npm:^11.1.6":
-  version: 11.1.6
-  resolution: "@nestjs/testing@npm:11.1.6"
+"@nestjs/testing@npm:^11.1.7":
+  version: 11.1.7
+  resolution: "@nestjs/testing@npm:11.1.7"
   dependencies:
     tslib: "npm:2.8.1"
   peerDependencies:
@@ -4210,7 +4210,7 @@ __metadata:
       optional: true
     "@nestjs/platform-express":
       optional: true
-  checksum: 10c0/55475ccf5a2576f6281bb8423912ef705db254eb63f72e7b9167e73dca291579bbfb57756bc2a234cd8f370baa9ed28adfa855aff602dbf95437f6c02ee55b57
+  checksum: 10c0/9c917700fbc8219b1d5bf3e6ad82c30ca1b4d30e7156168a7f7aca2e898f05709e29c87ef10587ff5b151ab0af37358d5e50f963711823ad3611b68f06eec2b2
   languageName: node
   linkType: hard
 
