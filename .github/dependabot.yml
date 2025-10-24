@@ -25,11 +25,6 @@ updates:
       nestjs:
         patterns:
           - "^@nestjs/.*"
-        # optional: set to true to include all matching packages in one PR
-        # (Dependabot will include multiple package updates in the same PR)
-        group-name: "@nestjs/*"
       nx:
         patterns:
           - "^@nx/.*"
-        # optional: include all matching @nx packages in one grouped PR
-        group-name: "@nx/*"
