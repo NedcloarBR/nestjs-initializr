@@ -1,0 +1,60 @@
+name: Welcome
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  greet:
+    # Skip greeting for Dependabot (and similar automated Dependabot previews)
+    if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet first-time contributors
+        uses: actions/first-interaction@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            Hi @{{author}} 👋
+
+            Thank you for opening your first issue in this repository — we appreciate the report!
+
+            Please read our contributing guide before proceeding: https://github.com/NedcloarBR/nestjs-initializr/blob/master/.github/CONTRIBUTING.md
+
+            When possible, include reproduction steps, environment information (Node/Yarn/OS), and relevant logs or stack traces so we can triage faster.
+
+            Maintainers will take a look soon. Thank you!
+          pr-message: |
+            Hi @{{author}} 👋
+
+            Thanks for your first pull request — welcome and thank you for contributing!
+
+            Before we review, please ensure your branch follows the commit message convention (Conventional Commits) and that tests & linters pass locally:
+            - `yarn install`
+            - `nx test`
+            - `yarn lint`
+
+            See the contributing guide for details: https://github.com/NedcloarBR/nestjs-initializr/blob/master/.github/CONTRIBUTING.md
+
+            A maintainer will review your PR shortly.
+
+      - name: Add triage label to new issues
+        if: github.event_name == 'issues'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: triage
+
+      - name: Add needs-review label to new PRs
+        if: github.event_name == 'pull_request'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: needs-review
