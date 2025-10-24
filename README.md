@@ -1,82 +1,128 @@
-# NestjsInitializr
+<div align="center">
+  <h1>🚀 NestJS Initializr</h1>
+  
+  <p>
+    <strong>A powerful web tool to generate production-ready NestJS projects</strong>
+  </p>
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+  <small>Made with</small>
+  <p>
+    <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
+    <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Fastify-000000?style=for-the-badge&logo=fastify&logoColor=white" alt="Fastify" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" />
+  </p>
+</div>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 📝 About
 
-## Finish your CI setup
+**NestJS Initializr** is a web-based tool that allows you to generate fully configured NestJS projects with best practices and the most popular modules from the community. Inspired by [Spring Initializr](https://start.spring.io/), it provides an intuitive interface to customize and download your project in seconds.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/zQ0o7D6qpi)
+### 🎯 The Problem It Solves
 
+Setting up a NestJS project from scratch with multiple modules, linters, tests, and Docker can take hours. NestJS Initializr automates this entire process, allowing you to:
 
-## Run tasks
+- ✅ Configure your project in minutes, not hours
+- ✅ Choose only the modules you need
+- ✅ Get code following best practices from the start
+- ✅ Avoid common configuration errors
+- ✅ Focus on development, not infrastructure
 
-To run the dev server for your app, use:
+---
 
-```sh
-npx nx dev frontend
-```
+## ✨ Features
 
-To create a production bundle:
+### 🏗️ Project Configuration
 
-```sh
-npx nx build frontend
-```
+- **Customizable metadata**: Name, version, description, author
+- **HTTP adapter choice**: Express or Fastify
+- **Package Manager**: npm, yarn, or pnpm
+- **Node.js version**: Choose from available LTS versions
 
-To see all available targets to run for a project, run:
+### 🧩 NestJS Modules
 
-```sh
-npx nx show project frontend
-```
+Automatically configure the most popular modules:
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+- **Config** - Environment variables management with validation
+- **GraphQL** - GraphQL API with Apollo Server
+- **i18n** - Multi-language internationalization
+- **Swagger** - Automatic API documentation
+- **Scalar API Reference** - Modern alternative documentation
+- **Husky** - Git hooks for quality gates
+- **Necord** - Discord bot with Lavalink, pagination, and localization support
+- **NestJS Toolkit** - Additional utilities and helpers
+- **NestWhats** - WhatsApp integration
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 🛠️ Development Tools
 
-## Add new projects
+- **Linter/Formatter**:
+  - Biome (ultra-fast, recommended)
+  - ESLint + Prettier
+- **Test Runner**:
+  - Jest
+  - Vitest
+- **Docker**: Production-ready Dockerfile and docker-compose
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+### 📦 Extra Packages
 
-Use the plugin's generator to create new projects.
+- Search and add NPM packages directly through the interface
+- Automatic separation between dev and production dependencies
+- View latest package versions
 
-To generate a new application, use:
+### 💾 Additional Features
 
-```sh
-npx nx g @nx/next:app demo
-```
+- **Export/Import configuration**: Save and reuse your configurations
+- **Multilingual interface**: Portuguese and English
+- **Light/Dark theme**: Toggle between themes with persistence
+- **Project history**: Quickly access your recent generations
+- **Instant download**: Complete project as .zip file
 
-To generate a new library, use:
+---
 
-```sh
-npx nx g @nx/react:lib mylib
-```
+## 📄 License
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
+## 👨‍💻 Author
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+**NedcloarBR**
 
-## Install Nx Console
+- GitHub: [@NedcloarBR](https://github.com/NedcloarBR)
+- Twitter: [@BrNedcloar](https://twitter.com/BrNedcloar)
+- Discord: [Community](https://discord.gg/5CHARxbaRk)
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+---
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🙏 Acknowledgments
 
-## Useful links
+- [NestJS](https://nestjs.com/) - Amazing framework
+- [Next.js](https://nextjs.org/) - Modern React framework
+- [shadcn/ui](https://ui.shadcn.com/) - Beautiful UI components
+- [Spring Initializr](https://start.spring.io/) - Project inspiration
+- [Brocoders Boilerplates](https://bcboilerplates.com/) - Project inspiration
 
-Learn more:
+---
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📊 Project Status
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+![GitHub last commit](https://img.shields.io/github/last-commit/NedcloarBR/nestjs-initializr)
+![GitHub issues](https://img.shields.io/github/issues/NedcloarBR/nestjs-initializr)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/NedcloarBR/nestjs-initializr)
+![GitHub](https://img.shields.io/github/license/NedcloarBR/nestjs-initializr)
+
+---
+
+<div align="center">
+  <p>
+    <sub>Made with ❤️ by <a href="https://github.com/NedcloarBR">NedcloarBR</a></sub>
+  </p>
+  
+  <p>
+    <sub>If this project helped you, consider giving it a ⭐</sub>
+  </p>
+</div>
