@@ -3962,7 +3962,7 @@ __metadata:
     "@radix-ui/react-slot": "npm:^1.2.3"
     "@radix-ui/react-switch": "npm:^1.2.6"
     "@radix-ui/react-tooltip": "npm:^1.2.8"
-    "@scalar/nestjs-api-reference": "npm:^1.0.4"
+    "@scalar/nestjs-api-reference": "npm:^1.0.5"
     "@swc-node/register": "npm:~1.11.1"
     "@swc/core": "npm:1.13.5"
     "@swc/helpers": "npm:~0.5.17"
@@ -6206,42 +6206,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@scalar/core@npm:0.3.19":
-  version: 0.3.19
-  resolution: "@scalar/core@npm:0.3.19"
+"@scalar/core@npm:0.3.20":
+  version: 0.3.20
+  resolution: "@scalar/core@npm:0.3.20"
   dependencies:
-    "@scalar/types": "npm:0.3.1"
-  checksum: 10c0/427f7e4d7aecc8fb8eff95f2e1e496e33635514339af4b11e19538a080a77164ae28c3d0c3b55294bdbde2e4e8d64f65bc66532f4fdc70b2aa46f26845cd9ae4
+    "@scalar/types": "npm:0.3.2"
+  checksum: 10c0/d748571de5164a7e379ff15868daadbb61002ba5febc56720a0f3601f15c037902c519baacb54767ee083ebee4399f8570f458bfb18cf23c6e727c2c66d25a3f
   languageName: node
   linkType: hard
 
-"@scalar/nestjs-api-reference@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@scalar/nestjs-api-reference@npm:1.0.4"
+"@scalar/nestjs-api-reference@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@scalar/nestjs-api-reference@npm:1.0.5"
   dependencies:
-    "@scalar/core": "npm:0.3.19"
-  checksum: 10c0/2223b21418b2fe09591398646ffeed5ac514c84521c1e3661803ce2cf7687a9b4cedc0b9bbe54a7b769c4d427c94ac2d550cad9c07c38c1e6384016eca960435
+    "@scalar/core": "npm:0.3.20"
+  checksum: 10c0/8b4166950175e589a889b9b9de5a076828533903acad190ce44ae061df6dff7287445b4cfb0911b3d9090210c4bdd39d1525d4315e5f4e9ed7c79212d1387075
   languageName: node
   linkType: hard
 
-"@scalar/openapi-types@npm:0.4.1":
-  version: 0.4.1
-  resolution: "@scalar/openapi-types@npm:0.4.1"
+"@scalar/openapi-types@npm:0.5.0":
+  version: 0.5.0
+  resolution: "@scalar/openapi-types@npm:0.5.0"
   dependencies:
     zod: "npm:4.1.11"
-  checksum: 10c0/6b9973a33e3a1a8e3f227c3b621f97dad7a23aebbb817f3f27a21d4e3041ffab1f1cae09244c480293936a3835ab228f3df11a343b88c4d7180d1654c8b738a1
+  checksum: 10c0/735cf058557a2d7120a9f3857ea21541e06cec0eafde72f2a6f480a1620364a5e3d8f4f197afc1888fc89810dc99fc93438482cc3c150846884434a5b2d0d061
   languageName: node
   linkType: hard
 
-"@scalar/types@npm:0.3.1":
-  version: 0.3.1
-  resolution: "@scalar/types@npm:0.3.1"
+"@scalar/types@npm:0.3.2":
+  version: 0.3.2
+  resolution: "@scalar/types@npm:0.3.2"
   dependencies:
-    "@scalar/openapi-types": "npm:0.4.1"
+    "@scalar/openapi-types": "npm:0.5.0"
     nanoid: "npm:5.1.5"
-    type-fest: "npm:4.41.0"
+    type-fest: "npm:5.0.0"
     zod: "npm:4.1.11"
-  checksum: 10c0/6d3bfa611bfb84855c927e6ff9bfa29f581bc9f6e98dedb4d1ce18df706aeffc7bcbdeb751b7abefcdeab6c9bddb13582ffcdfd1f00b6454385c14dd1af07ed0
+  checksum: 10c0/e0018774728ed5dcab73d6f1e4a30e8f2120f4548aee5b5a51f090ba76e3131a8ffe0ad482f242f4479cd3d0886885937689073f84cadc9c0f8b877776bcca44
   languageName: node
   linkType: hard
 
@@ -18028,6 +18028,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tagged-tag@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tagged-tag@npm:1.0.0"
+  checksum: 10c0/91d25c9ffb86a91f20522cefb2cbec9b64caa1febe27ad0df52f08993ff60888022d771e868e6416cf2e72dab68449d2139e8709ba009b74c6c7ecd4000048d1
+  languageName: node
+  linkType: hard
+
 "tailwind-merge@npm:^3.3.1":
   version: 3.3.1
   resolution: "tailwind-merge@npm:3.3.1"
@@ -18483,10 +18490,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:4.41.0, type-fest@npm:^4.41.0":
-  version: 4.41.0
-  resolution: "type-fest@npm:4.41.0"
-  checksum: 10c0/f5ca697797ed5e88d33ac8f1fec21921839871f808dc59345c9cf67345bfb958ce41bd821165dbf3ae591cedec2bf6fe8882098dfdd8dc54320b859711a2c1e4
+"type-fest@npm:5.0.0":
+  version: 5.0.0
+  resolution: "type-fest@npm:5.0.0"
+  dependencies:
+    tagged-tag: "npm:^1.0.0"
+  checksum: 10c0/e088f97f556056d654920153cc046c74e9f838f6b498e38cb7aaf7dfb309b9ee64c2864e4a38b027e87060b8ffdc2dc0462bdf9df047ecaee2cca56d1c1beb49
   languageName: node
   linkType: hard
 
@@ -18494,6 +18503,13 @@ __metadata:
   version: 0.21.3
   resolution: "type-fest@npm:0.21.3"
   checksum: 10c0/902bd57bfa30d51d4779b641c2bc403cdf1371fb9c91d3c058b0133694fcfdb817aef07a47f40faf79039eecbaa39ee9d3c532deff244f3a19ce68cea71a61e8
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.41.0":
+  version: 4.41.0
+  resolution: "type-fest@npm:4.41.0"
+  checksum: 10c0/f5ca697797ed5e88d33ac8f1fec21921839871f808dc59345c9cf67345bfb958ce41bd821165dbf3ae591cedec2bf6fe8882098dfdd8dc54320b859711a2c1e4
   languageName: node
   linkType: hard
 
