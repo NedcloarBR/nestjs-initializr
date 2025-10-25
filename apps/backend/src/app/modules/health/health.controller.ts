@@ -1,4 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 // biome-ignore lint/style/useImportType: <>
 import {
 	DiskHealthIndicator,
@@ -7,7 +8,9 @@ import {
 	HttpHealthIndicator,
 	MemoryHealthIndicator
 } from "@nestjs/terminus";
+import { ApiHealthCheck, ApiLivenessCheck } from "./health.swagger";
 
+@ApiTags("Health")
 @Controller("health")
 export class HealthController {
 	public constructor(
@@ -19,6 +22,7 @@ export class HealthController {
 
 	@Get()
 	@HealthCheck()
+	@ApiHealthCheck()
 	public async check() {
 		const result = await this.health.check([
 			() => this.http.pingCheck("nestjs-docs", "https://docs.nestjs.com"),
@@ -35,6 +39,7 @@ export class HealthController {
 	}
 
 	@Get("live")
+	@ApiLivenessCheck()
 	live() {
 		return { status: "ok", timestamp: new Date().toISOString() };
 	}
