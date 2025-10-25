@@ -111,7 +111,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 
 	return (
 		<Card className="group hover:-translate-y-0.5 relative flex h-48 w-full flex-col justify-between overflow-hidden p-3 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
-			<div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+			<div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
 			<div className="relative flex flex-col gap-1.5 overflow-hidden">
 				<CardTitle className="flex items-center justify-center gap-2 text-base transition-colors group-hover:text-primary">
@@ -129,7 +129,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 			<CardFooter className="relative flex items-center justify-center p-0 pt-2">
 				<FormControl>
 					<Tooltip>
-						<TooltipTrigger asChild>
+						<TooltipTrigger className="cursor-help" asChild>
 							<span>
 								<Switch
 									className="cursor-pointer"

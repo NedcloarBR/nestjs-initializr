@@ -225,7 +225,7 @@ export function GeneratorForm() {
 								</Dialog>
 
 								<Tooltip>
-									<TooltipTrigger asChild>
+									<TooltipTrigger className="cursor-help" asChild>
 										<Button
 											type="button"
 											className="cursor-pointer"
@@ -238,7 +238,7 @@ export function GeneratorForm() {
 								</Tooltip>
 
 								<Tooltip>
-									<TooltipTrigger asChild>
+									<TooltipTrigger className="cursor-help" asChild>
 										<Button type="button" onClick={handleReset} className="cursor-pointer">
 											<RefreshCcwIcon />
 										</Button>

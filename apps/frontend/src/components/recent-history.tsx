@@ -43,7 +43,7 @@ export function RecentHistory({ loadData }: Props) {
 	return (
 		<Dialog>
 			<Tooltip>
-				<TooltipTrigger asChild>
+				<TooltipTrigger className="cursor-help" asChild>
 					<DialogTrigger asChild>
 						<Button
 							className="cursor-pointer bg-transparent"
@@ -85,7 +85,7 @@ export function RecentHistory({ loadData }: Props) {
 				)}
 				<DialogFooter>
 					<Tooltip>
-						<TooltipTrigger asChild>
+						<TooltipTrigger className="cursor-help" asChild>
 							<Button
 								className="cursor-pointer bg-transparent"
 								size="sm"

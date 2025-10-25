@@ -30,7 +30,7 @@ export function ExtraField({ name, title, description }: Props) {
 			</FormControl>
 			{title}
 			<Tooltip>
-				<TooltipTrigger>
+				<TooltipTrigger className="cursor-help">
 					<Info className="size-4" />
 				</TooltipTrigger>
 				<TooltipContent>
