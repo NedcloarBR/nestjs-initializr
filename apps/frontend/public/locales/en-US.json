@@ -183,5 +183,21 @@
 		"description": "Recent Projects Generated",
 		"empty": "No recent projects found",
 		"clear": "Clear Recent Projects"
+	},
+
+	"ApiStatus": {
+		"title": "API Status",
+		"ariaLabel": "API status: {status}",
+		"status": "Status:",
+		"error": "Error:",
+		"lastChecked": "Last checked:",
+		"autoRefresh": "Auto-refresh every {seconds}s",
+		"technicalDetails": "View technical details",
+		"statusValues": {
+			"checking": "checking",
+			"ok": "OK",
+			"error": "Error",
+			"unknown": "unknown"
+		}
 	}
 }

@@ -1,7 +1,8 @@
 import { Package } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { SiGithub } from "react-icons/si";
+import { ApiStatus } from "./api-status";
 import { ChangeLanguage } from "./change-language";
 import { ToggleTheme } from "./toggle-theme";
 import { Button } from "./ui";
@@ -17,9 +18,14 @@ export function Header() {
 						<div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
 							<Package className="h-5 w-5 text-primary-foreground" />
 						</div>
-						<div>
-							<h1 className="font-semibold text-foreground text-lg">{t("title")}</h1>
-							<p className="text-muted-foreground text-xs">{t("description")}</p>
+						<div className="flex items-center gap-3">
+							<div>
+								<h1 className="font-semibold text-foreground text-lg">{t("title")}</h1>
+								<p className="text-muted-foreground text-xs">{t("description")}</p>
+							</div>
+							<div className="ml-2">
+								<ApiStatus />
+							</div>
 						</div>
 					</div>
 					<div className="flex items-center gap-2">

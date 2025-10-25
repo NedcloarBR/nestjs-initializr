@@ -33,7 +33,7 @@ async function bootstrap() {
 	app.enableCors({
 		origin: configService.get("BACKEND_CORS_ORIGIN"),
 		credentials: true,
-		methods: ["POST"],
+		methods: ["GET", "POST"],
 		allowedHeaders: ["Content-Type", "Authorization", "X-Request-Id"],
 		exposedHeaders: ["X-Request-Id"],
 		maxAge: 3600
