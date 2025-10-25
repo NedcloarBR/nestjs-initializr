@@ -15,6 +15,7 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"@fastify/helmet": "^13.0.2",
 		"@fastify/static": "^8.3.0",
 		"@hookform/resolvers": "^5.2.2",
 		"@nestjs/axios": "^4.0.1",

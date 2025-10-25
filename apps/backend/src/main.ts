@@ -1,3 +1,4 @@
+import helmet from "@fastify/helmet";
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
@@ -30,7 +31,23 @@ async function bootstrap() {
 	app.useGlobalInterceptors(new RequestIdInterceptor(), new AxiosInterceptor());
 
 	app.enableCors({
-		origin: configService.get("BACKEND_CORS_ORIGIN")
+		origin: configService.get("BACKEND_CORS_ORIGIN"),
+		credentials: true,
+		methods: ["POST"],
+		allowedHeaders: ["Content-Type", "Authorization", "X-Request-Id"],
+		exposedHeaders: ["X-Request-Id"],
+		maxAge: 3600
+	});
+
+	await app.register(helmet, {
+		contentSecurityPolicy: {
+			directives: {
+				defaultSrc: [`'self'`],
+				styleSrc: [`'self'`, `'unsafe-inline'`],
+				imgSrc: [`'self'`, "data:", "validator.swagger.io"],
+				scriptSrc: [`'self'`, `https: 'unsafe-inline'`]
+			}
+		}
 	});
 
 	await setupSwagger(app, globalPrefix, port);
