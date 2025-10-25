@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: <>
 export default {
 	displayName: "frontend",
 	preset: "../../jest.preset.js",

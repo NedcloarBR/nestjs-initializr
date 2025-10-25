@@ -1,6 +1,6 @@
 import fs from "node:fs";
-import type { Template } from "@/types";
 import { Injectable } from "@nestjs/common";
+import type { Template } from "@/types";
 import { BaseGenerator } from "./base.generator";
 
 @Injectable()
@@ -42,10 +42,11 @@ export class ModuleService extends BaseGenerator {
 		let moduleToUpdateContent = this.readFile(moduleToUpdatePathResolved);
 
 		const importsSectionRegex = /(imports:\s*\[)([\s\S]*?)(\])/;
-		const importFromModulesRegex = /import\s+\{\s*([^\}]+)\s*\}\s+from\s+['"]@\/modules['"]/;
+		const importFromModulesRegex = /import\s+\{\s*([^}]+)\s*\}\s+from\s+['"]@\/modules['"]/;
 
 		const importsMatch = moduleToUpdateContent.match(importsSectionRegex);
 		if (importsMatch && !importsMatch[2].includes(importArray)) {
+			// biome-ignore lint/correctness/noUnusedFunctionParameters: <>
 			moduleToUpdateContent = moduleToUpdateContent.replace(importsSectionRegex, (match, before, middle, after) => {
 				return `${before}${middle.trim() ? `${middle.trim()},\n    ${importArray}` : `\n    ${importArray}`}${after}`;
 			});
@@ -99,6 +100,6 @@ export class ModuleService extends BaseGenerator {
 		this.writeFile(constantFile, newConstantContent);
 	}
 
-	// biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+	// biome-ignore lint/suspicious/noEmptyBlockStatements: <>
 	public inject() {}
 }

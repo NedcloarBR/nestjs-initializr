@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class RequestIdInterceptor implements NestInterceptor {
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: <>
 	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
 		const request = context.switchToHttp().getRequest<FastifyRequest>();
 		const reply = context.switchToHttp().getResponse<FastifyReply>();

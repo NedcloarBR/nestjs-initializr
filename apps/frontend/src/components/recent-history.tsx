@@ -1,5 +1,8 @@
 "use client";
 
+import { ArrowBigRightIcon, HistoryIcon, Trash2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import {
 	Button,
 	Dialog,
@@ -16,9 +19,6 @@ import {
 } from "@/components/ui";
 import type { ConfigStructure } from "@/types/config";
 import { clearRecentHistory as clearHistory, getRecentHistory } from "@/utils/history";
-import { ArrowBigRightIcon, HistoryIcon, Trash2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 
 interface Props {
 	loadData: (data: ConfigStructure) => void;
@@ -64,7 +64,7 @@ export function RecentHistory({ loadData }: Props) {
 				{hasRecentHistory ? (
 					<ScrollArea className="max-h-[400px]">
 						{recentHistory.map((item, index) => (
-							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+							// biome-ignore lint/suspicious/noArrayIndexKey: <>
 							<div key={index} className="mb-2 flex rounded-md border p-2">
 								<div>
 									<p className="font-semibold text-lg">{item.packageJson?.name}</p>

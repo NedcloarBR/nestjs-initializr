@@ -1,7 +1,7 @@
 import { GeneratorForm } from "@/components/generator-form.old";
 import { Header } from "@/components/header";
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: <>
 export default function Index() {
 	return (
 		<>

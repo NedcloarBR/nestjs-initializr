@@ -3,9 +3,9 @@ import { Injectable } from "@nestjs/common";
 import { NPM_DEPENDENCIES } from "../../../constants/packages";
 import { SwaggerTemplateReplaceKeys, SwaggerTemplates } from "../templates/swagger.templates";
 import { BaseGenerator } from "./base.generator";
-// biome-ignore lint/style/useImportType: <explanation>
+// biome-ignore lint/style/useImportType: <>
 import { FileUpdaterService } from "./file-updater.service";
-// biome-ignore lint/style/useImportType: <explanation>
+// biome-ignore lint/style/useImportType: <>
 import { PackageJsonService } from "./package-json.service";
 
 @Injectable()
@@ -34,8 +34,8 @@ export class SwaggerService extends BaseGenerator {
 			this.createFile(id, swagger.lib);
 			libIndex = this.getPath(id, "src/lib/index.ts");
 		}
-		let libContent = this.readFile(libIndex);
-		libContent += `\n${swagger.lib.content}`;
+		let _libContent = this.readFile(libIndex);
+		_libContent += `\n${swagger.lib.content}`;
 		this.packageJsonGenerator.addPackage(
 			id,
 			NPM_DEPENDENCIES["@nestjs/swagger"].name,

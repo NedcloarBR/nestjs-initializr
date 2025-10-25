@@ -30,9 +30,9 @@ export class PackageJsonService extends BaseGenerator {
 		if (packageJson.dependencies[name] || packageJson.devDependencies[name]) return;
 
 		!dev
-			? // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+			? // biome-ignore lint/suspicious/noAssignInExpressions: <>
 				(packageJson.dependencies[name] = version)
-			: // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+			: // biome-ignore lint/suspicious/noAssignInExpressions: <>
 				(packageJson.devDependencies[name] = version);
 
 		this.writeFile(file, JSON.stringify(packageJson, null, 2));

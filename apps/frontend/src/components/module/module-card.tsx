@@ -1,11 +1,11 @@
-import {
-	type ModuleName,
-	dockerRequiredModules,
-	linterFormatterRequiredModules,
-	moduleDependencies
-} from "@/constants/modules";
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
+import {
+	dockerRequiredModules,
+	linterFormatterRequiredModules,
+	type ModuleName,
+	moduleDependencies
+} from "@/constants/modules";
 import {
 	Card,
 	CardDescription,
@@ -105,7 +105,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 			missingMessages.push(t("dependsOn", { ModuleNames }));
 		}
 
-		// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+		// biome-ignore lint/suspicious/noArrayIndexKey: <>
 		return missingMessages.length > 0 ? missingMessages.map((msg, i) => <div key={i}>{msg}</div>) : null;
 	}
 

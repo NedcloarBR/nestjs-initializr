@@ -1,13 +1,13 @@
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import type { ModuleNames } from "@/types";
 import { Injectable, Logger } from "@nestjs/common";
 import archiver from "archiver";
+import type { ModuleNames } from "@/types";
 import { commonPackages, expressPackages, fastifyPackages } from "../../constants/packages";
-// biome-ignore lint/style/useImportType: <explanation>
+// biome-ignore lint/style/useImportType: <>
 import { MetadataDTO } from "./dtos/metadata.dto";
-// biome-ignore lint/style/useImportType: <explanation>
+// biome-ignore lint/style/useImportType: <>
 import {
 	BaseGenerator,
 	DockerService,
@@ -38,7 +38,7 @@ export class GeneratorService extends BaseGenerator {
 		super();
 	}
 
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <>
 	public async generate(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
 		const packageJson = await this.packageJsonGenerator.generate(metadata.packageJson, id);
 		const rootDirFiles = [packageJson];
@@ -158,7 +158,7 @@ export class GeneratorService extends BaseGenerator {
 		return configFile;
 	}
 
-	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <>
 	private async generateModules(
 		id: string,
 		rawModules: MetadataDTO["modules"],

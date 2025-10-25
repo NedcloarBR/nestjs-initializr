@@ -1,17 +1,15 @@
 import "@/styles/global.css";
 import "flag-icons/css/flag-icons.css";
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
 import { Toaster } from "@/components/ui";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { materialIcons, sourceSans } from "@/fonts";
 import { routing } from "@/lib/i18n/routing";
 import { ThemeProvider } from "@/providers/theme-provider";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
 
-export async function generateMetadata(props: {
-	params: Promise<{ locale: string }>;
-}) {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
 	const params = await props.params;
 	const { locale } = params;
 
@@ -23,11 +21,8 @@ export async function generateMetadata(props: {
 	};
 }
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
-export default async function LocaleLayout(props: {
-	children: React.ReactNode;
-	params: Promise<{ locale: string }>;
-}) {
+// biome-ignore lint/style/noDefaultExport: <>
+export default async function LocaleLayout(props: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
 	const params = await props.params;
 
 	const { locale } = params;

@@ -15,7 +15,7 @@ const baseURL = process.env["BASE_URL"] || "http://localhost:3000";
  * See https://playwright.dev/docs/test-configuration.
  */
 
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: <>
 export default defineConfig({
 	...nxE2EPreset(__filename, { testDir: "./src" }),
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

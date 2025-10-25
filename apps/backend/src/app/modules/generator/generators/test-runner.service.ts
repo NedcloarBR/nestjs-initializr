@@ -6,7 +6,7 @@ import { jestScripts } from "../templates/test/jest/scripts.template";
 import { VitestConfigTemplate } from "../templates/test/vitest/config.template";
 import { vitestScripts } from "../templates/test/vitest/scripts.template";
 import { BaseGenerator } from "./base.generator";
-// biome-ignore lint/style/useImportType: <explanation>
+// biome-ignore lint/style/useImportType: <>
 import { PackageJsonService } from "./package-json.service";
 
 @Injectable()

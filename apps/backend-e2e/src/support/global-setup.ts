@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noVar: <explanation>
+// biome-ignore lint/suspicious/noVar: <>
 var __TEARDOWN_MESSAGE__: string;
 
 module.exports = async () => {

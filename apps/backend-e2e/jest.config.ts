@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: <>
 export default {
 	displayName: "backend-e2e",
 	preset: "../../jest.preset.js",

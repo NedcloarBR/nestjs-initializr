@@ -1,12 +1,9 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
 	"extends": ["@nedcloarbr/biome-config/base", "@nedcloarbr/biome-config/ignore"],
-	"files": {
-		"ignore": [".nx"]
-	},
 	"overrides": [
 		{
-			"include": ["apps/backend/"],
+			"includes": ["**/apps/backend/**"],
 			"javascript": {
 				"parser": {
 					"unsafeParameterDecoratorsEnabled": true
@@ -14,11 +11,14 @@
 			}
 		},
 		{
-			"include": ["apps/frontend"],
+			"includes": ["**/apps/frontend/**"],
 			"javascript": {
 				"jsxRuntime": "transparent"
 			},
 			"css": {
+				"parser": {
+					"tailwindDirectives": true
+				},
 				"formatter": {
 					"enabled": true,
 					"indentWidth": 2,
@@ -31,7 +31,7 @@
 			"linter": {
 				"rules": {
 					"a11y": {
-						"all": true
+						"recommended": true
 					},
 					"nursery": {
 						"useSortedClasses": "error"

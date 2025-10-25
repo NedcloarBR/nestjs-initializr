@@ -8,5 +8,5 @@ const config = {
 		"@tailwindcss/postcss": {}
 	}
 };
-// biome-ignore lint/style/noDefaultExport: <explanation>
+// biome-ignore lint/style/noDefaultExport: <>
 export default config;
