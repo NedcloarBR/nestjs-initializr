@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   pr_notice:
-    if: ${{ !contains(['dependabot[bot]','dependabot-preview[bot]'], github.actor) }}
+    if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Post TCC notice on PR (only once)
