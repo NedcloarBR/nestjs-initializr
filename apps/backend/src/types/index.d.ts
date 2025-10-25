@@ -39,3 +39,9 @@ export type ModuleNames =
 	| "scalar-api-reference";
 
 export type ExtraNames = "compression" | "cors" | "helmet" | "validation";
+
+export enum NodeEnv {
+	development = "development",
+	production = "production",
+	test = "test"
+}

@@ -1,4 +1,5 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
+import type { NodeEnv } from "@/types";
 
 export class ConfigDTO {
 	@IsString()
@@ -19,4 +20,8 @@ export class ConfigDTO {
 		message: "BACKEND_GLOBAL_PREFIX must be a string"
 	})
 	public readonly BACKEND_GLOBAL_PREFIX: string;
+
+	@IsString()
+	@IsOptional()
+	public readonly NODE_ENV?: NodeEnv;
 }

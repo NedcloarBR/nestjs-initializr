@@ -5,6 +5,7 @@ import { AppModule } from "./app/app.module";
 import { AxiosInterceptor } from "./app/common/interceptors/axios.interceptor";
 import { RequestIdInterceptor } from "./app/common/interceptors/request-id.interceptor";
 import { Services } from "./app/constants/services";
+import { HttpExceptionFilter } from "./app/filters/http-exception.filter";
 import type { ConfigService } from "./app/modules/config";
 import { setupSwagger } from "./lib";
 
@@ -23,6 +24,8 @@ async function bootstrap() {
 			transform: true
 		})
 	);
+
+	app.useGlobalFilters(new HttpExceptionFilter(configService));
 
 	app.useGlobalInterceptors(new RequestIdInterceptor(), new AxiosInterceptor());
 
