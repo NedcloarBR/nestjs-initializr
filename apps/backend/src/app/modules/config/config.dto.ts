@@ -1,5 +1,5 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
-import type { NodeEnv } from "@/types";
+import type { NodeEnv } from "@/app/constants/environment";
 
 export class ConfigDTO {
 	@IsString()

@@ -1,8 +1,8 @@
 import { type ArgumentsHost, Catch, type ExceptionFilter, HttpException, HttpStatus, Logger } from "@nestjs/common";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { NodeEnv } from "@/types";
+import { NodeEnv } from "@/app/constants/environment";
 // biome-ignore lint/style/useImportType: Cannot use import type in classes used in dependency injection
-import { ConfigService } from "../modules/config";
+import { ConfigService } from "../../modules/config";
 
 interface ErrorResponse {
 	statusCode: number;
