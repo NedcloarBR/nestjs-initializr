@@ -3995,7 +3995,7 @@ __metadata:
     lint-staged: "npm:^16.2.4"
     lucide-react: "npm:^0.545.0"
     next: "npm:15.5.4"
-    next-intl: "npm:^4.3.12"
+    next-intl: "npm:^4.4.0"
     next-themes: "npm:^0.4.6"
     nx: "npm:21.6.4"
     postcss: "npm:8.5.6"
@@ -14213,21 +14213,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-intl@npm:^4.3.12":
-  version: 4.3.12
-  resolution: "next-intl@npm:4.3.12"
+"next-intl@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "next-intl@npm:4.4.0"
   dependencies:
     "@formatjs/intl-localematcher": "npm:^0.5.4"
     negotiator: "npm:^1.0.0"
-    use-intl: "npm:^4.3.12"
+    use-intl: "npm:^4.4.0"
   peerDependencies:
-    next: ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
+    next: ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0 || ^19.0.0
     typescript: ^5.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/deb67a0dc6cdced503cf7f6b7625d2b6afb50d07310537cae230520461a8facbab80ee995dcdd9f619ac83b39a7ce3df624fa655357f6ed9bac30ea0d22ad285
+  checksum: 10c0/a45f8bb48ad84034512c22ebaa191338f09cc51823aa735f6a80c9a6a2975a9517f56a56871e519c246e2d2ac5ce194bd02020338188dd6d8e7d21848cedfd4b
   languageName: node
   linkType: hard
 
@@ -18805,16 +18805,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-intl@npm:^4.3.12":
-  version: 4.3.12
-  resolution: "use-intl@npm:4.3.12"
+"use-intl@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "use-intl@npm:4.4.0"
   dependencies:
     "@formatjs/fast-memoize": "npm:^2.2.0"
     "@schummar/icu-type-parser": "npm:1.21.5"
     intl-messageformat: "npm:^10.5.14"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0 || ^19.0.0
-  checksum: 10c0/9a1af6848d5ea3187686dc19494663dd3183dcdd622608c09bcf3d9fefd1afe2e9800273363bafc52e590049687bb9198f6694c700d424e00123d33ede8e511d
+  checksum: 10c0/368b4f68ba58c0085d3e0915002e270940d55d3bca280372bcf766e57f8ecfe314427178aa9f2e610934ab916fe0f58f5d55e67656490ca2f7793ee9631b4565
   languageName: node
   linkType: hard
 
