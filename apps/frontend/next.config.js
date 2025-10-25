@@ -8,11 +8,6 @@ const withNextIntl = createNextIntlPlugin("./src/lib/i18n/request.ts");
  **/
 const nextConfig = {
 	output: "standalone",
-	nx: {
-		// Set this to true if you would like to use SVGR
-		// See: https://github.com/gregberge/svgr
-		svgr: false
-	},
 	eslint: {
 		ignoreDuringBuilds: true
 	},
