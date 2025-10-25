@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-// biome-ignore lint/style/useImportType:
+// biome-ignore lint/style/useImportType: <>
 import { MetadataDTO } from "../dtos/metadata.dto";
 import { extrasMetadata } from "../templates/extra";
 import { BaseGenerator } from "./base.generator";
-// biome-ignore lint/style/useImportType:
+// biome-ignore lint/style/useImportType: <>
 import { FileUpdaterService } from "./file-updater.service";
-// biome-ignore lint/style/useImportType:
+// biome-ignore lint/style/useImportType: <>
 import { PackageJsonService } from "./package-json.service";
 
 @Injectable()

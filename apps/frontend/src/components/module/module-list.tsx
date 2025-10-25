@@ -1,7 +1,7 @@
-import { modules } from "@/constants";
-import { ModuleCategory } from "@/types/module";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { modules } from "@/constants";
+import { ModuleCategory } from "@/types/module";
 import { Module } from ".";
 
 interface Props {
@@ -90,6 +90,7 @@ export function ModulesList({ category, term }: Props) {
 
 	return (
 		<div className="flex flex-wrap justify-start gap-4">
+			{/** biome-ignore lint/suspicious/useIterableCallbackReturn: <> */}
 			{filteredModules.map((item) => {
 				switch (item.type) {
 					case "module":

@@ -1,16 +1,16 @@
 "use client";
 
-import { generate, loadConfig } from "@/actions";
-import { extraFields, nodeVersions, packageManagers } from "@/constants";
-import { generatorFormSchema } from "@/forms/generator-form-schema";
-import { useExtraPackages } from "@/hooks/use-extra-packages";
-import type { ModuleCategory } from "@/types/module";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { PackagePlus, RefreshCcw, Rocket, Save, Settings2, Sparkles, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
+import { generate, loadConfig } from "@/actions";
+import { extraFields, nodeVersions, packageManagers } from "@/constants";
+import { generatorFormSchema } from "@/forms/generator-form-schema";
+import { useExtraPackages } from "@/hooks/use-extra-packages";
+import type { ModuleCategory } from "@/types/module";
 import { ExtraField } from "./extra-field";
 import { ExtraPackage } from "./extra-package";
 import { Module } from "./module";
@@ -217,6 +217,7 @@ export function GeneratorForm() {
 																		field.value === manager ? "border-primary bg-primary/5" : "border-border"
 																	}`}>
 																	<RadioGroupItem className="sr-only" value={manager} id={manager} />
+																	{/** biome-ignore lint/performance/noImgElement: <> */}
 																	<img
 																		src={`/icons/packageManagers/${manager}.svg`}
 																		alt={`${manager} icon`}

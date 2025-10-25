@@ -65,7 +65,12 @@ export function SwaggerTemplates(
             `
 								: ""
 						}
-            ${withScalarApiReference ? "logger.verbose(`API Reference is available at: http://localhost:${port}/${globalPrefix}/docs/reference`);" : ""}
+            ${
+							withScalarApiReference
+								? // biome-ignore lint/suspicious/noTemplateCurlyInString: <>
+									"logger.verbose(`API Reference is available at: http://localhost:${port}/${globalPrefix}/docs/reference`);"
+								: ""
+						}
             logger.verbose(\`Swagger is available at: http://localhost:\${port}/\${globalPrefix}/docs\`);
             logger.verbose(\`JSON is available at: http://localhost:\${port}/\${globalPrefix}/docs/json\`);
             logger.verbose(\`YAML is available at: http://localhost:\${port}/\${globalPrefix}/docs/yaml\`);

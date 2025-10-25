@@ -8,6 +8,13 @@
 				"parser": {
 					"unsafeParameterDecoratorsEnabled": true
 				}
+			},
+			"linter": {
+				"rules": {
+					"correctness": {
+						"useHookAtTopLevel": "off"
+					}
+				}
 			}
 		},
 		{

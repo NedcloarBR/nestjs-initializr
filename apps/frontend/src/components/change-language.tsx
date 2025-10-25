@@ -1,7 +1,7 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import type { ReactElement } from "react";
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui";
 
@@ -27,6 +27,7 @@ export function ChangeLanguage() {
 		}
 	];
 
+	// biome-ignore lint/suspicious/useIterableCallbackReturn: <>
 	const currentLang = Languages.map((lang) => {
 		if (locale === lang.code) return <span key={`key_${lang.code}`} className={`fi fi-${lang.flag} size-6`} />;
 	});
