@@ -3912,10 +3912,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nedcloarbr/biome-config@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "@nedcloarbr/biome-config@npm:1.9.2"
-  checksum: 10c0/239ee53f42b1b40af9ab2ccbd9041056807775b35b01c961f58ff4b3b4729e6c07086eb570caadf767b8657ef11259d55c5542e76c9fb3721edaad2a4482dafb
+"@nedcloarbr/biome-config@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@nedcloarbr/biome-config@npm:2.0.2"
+  checksum: 10c0/3c72420dd4b40cc5053d0cecea3658333463571eefeb0901b780fa9c073c940548b4485a8bfda097b6d0ca90cb25f7974993046c10d86109244a476663a72e99
   languageName: node
   linkType: hard
 
@@ -3930,7 +3930,7 @@ __metadata:
     "@commitlint/config-angular": "npm:^20.0.0"
     "@fastify/static": "npm:^8.3.0"
     "@hookform/resolvers": "npm:^5.2.2"
-    "@nedcloarbr/biome-config": "npm:^1.9.2"
+    "@nedcloarbr/biome-config": "npm:^2.0.2"
     "@nestjs/axios": "npm:^4.0.1"
     "@nestjs/cache-manager": "npm:^3.0.1"
     "@nestjs/common": "npm:^11.1.7"
