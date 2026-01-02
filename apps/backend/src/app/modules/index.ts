@@ -1,2 +1,3 @@
 export { ConfigModule } from "./config/config.module";
-export { GeneratorModule } from "./generator/generator.module";
+export { GeneratorModuleOld } from "./generator-old/generator.module";
+export { PluginGeneratorModule } from "./generator/generator.module";

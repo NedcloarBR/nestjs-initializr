@@ -82,7 +82,13 @@ Automatically configure the most popular modules:
 
 ---
 
-## 📄 License
+## � Documentation
+
+- [Creating Plugins](docs/creating-plugins.md) - Learn how to create custom generator plugins
+
+---
+
+## �📄 License
 
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 

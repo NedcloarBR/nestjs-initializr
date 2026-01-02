@@ -36,6 +36,7 @@ export type ModuleNames =
 	| "necord-pagination"
 	| "nestwhats"
 	| "swagger"
-	| "scalar-api-reference";
+	| "scalar-api-reference"
+	| "toolkit";
 
 export type ExtraNames = "compression" | "cors" | "helmet" | "validation";

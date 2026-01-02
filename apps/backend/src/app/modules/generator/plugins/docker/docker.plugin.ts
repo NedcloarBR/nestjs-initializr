@@ -1,0 +1,37 @@
+import { Plugin } from "@/app/common";
+import { BasePlugin } from "../../core/base-plugin";
+import {
+	createDockerComposeTemplate,
+	createDockerfileTemplate,
+	createDockerIgnoreTemplate
+} from "./templates";
+
+/**
+ * Docker Plugin - Generates Docker configuration files
+ *
+ * This plugin creates:
+ * - Dockerfile (with proper package manager commands)
+ * - docker-compose.yml
+ * - .dockerignore
+ */
+@Plugin({
+	name: "docker",
+	displayName: "Docker",
+	description: "Docker configuration with Dockerfile, docker-compose.yml, and .dockerignore",
+	priority: 100
+})
+export class DockerPlugin extends BasePlugin {
+	protected onGenerate(): void {
+		// Generate Dockerfile with package manager specific commands
+		const dockerfile = createDockerfileTemplate(this.nodeVersion, this.packageManager);
+		this.createFile(dockerfile.name, dockerfile.path, dockerfile.content);
+
+		// Generate docker-compose.yml
+		const dockerCompose = createDockerComposeTemplate(this.projectName);
+		this.createFile(dockerCompose.name, dockerCompose.path, dockerCompose.content);
+
+		// Generate .dockerignore
+		const dockerIgnore = createDockerIgnoreTemplate();
+		this.createFile(dockerIgnore.name, dockerIgnore.path, dockerIgnore.content);
+	}
+}

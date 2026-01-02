@@ -1,0 +1,210 @@
+import fs from "node:fs";
+import path from "node:path";
+import { Injectable, Logger } from "@nestjs/common";
+import archiver from "archiver";
+import { commonPackages, expressPackages, fastifyPackages } from "@/app/constants/packages";
+import type { MetadataDTO } from "./dtos/metadata.dto";
+import { createContext, type GeneratedFile, type PackageDependency, type Script } from "@/app/common";
+import { PluginExecutor } from "./core";
+
+/**
+ * Main generator service using the plugin system
+ *
+ * Plugins are auto-registered via @Plugin decorator
+ * The plugins to execute are determined by metadata.modules from the frontend
+ */
+@Injectable()
+export class PluginGeneratorService {
+	private readonly logger = new Logger(PluginGeneratorService.name);
+
+	public constructor(private readonly executor: PluginExecutor) {}
+
+	/**
+	 * Generate a project based on user's metadata
+	 *
+	 * @param metadata - Contains user selections from frontend (modules, extras, etc.)
+	 * @param id - Unique generation ID
+	 */
+	public async generate(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
+		const ctx = createContext(id, metadata);
+
+		// Execute only the plugins selected by the user (metadata.modules)
+		const selectedModules = metadata.modules ?? [];
+		this.logger.log(`Generating project with modules: ${selectedModules.join(", ") || "none"}`);
+
+		const result = await this.executor.execute(ctx, selectedModules);
+
+		if (!result.success) {
+			this.logger.error("Generation errors:", result.errors);
+			throw new Error(`Generation failed: ${result.errors.join(", ")}`);
+		}
+
+		// Write files to disk
+		const basePath = this.getPath(id);
+		await this.writeFilesToDisk(basePath, result.files);
+
+		// Generate package.json using existing constants
+		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
+
+		// Create zip file
+		const zipStream = await this.createZipFile(basePath, result.files);
+
+		// Schedule cleanup
+		this.scheduleCleanup(id);
+
+		return zipStream;
+	}
+
+	private async writeFilesToDisk(basePath: string, files: GeneratedFile[]): Promise<void> {
+		// Ensure base directory exists
+		fs.mkdirSync(basePath, { recursive: true });
+
+		for (const file of files) {
+			const dirPath = path.join(basePath, file.path);
+			const filePath = path.join(dirPath, file.name);
+
+			fs.mkdirSync(dirPath, { recursive: true });
+			fs.writeFileSync(filePath, file.content, "utf-8");
+		}
+	}
+
+	private async generatePackageJson(
+		basePath: string,
+		metadata: MetadataDTO,
+		packages: PackageDependency[],
+		scripts: Script[]
+	): Promise<void> {
+		const packageJson: Record<string, unknown> = {
+			name: metadata.packageJson.name,
+			version: "1.0.0",
+			description: metadata.packageJson.description ?? "",
+			scripts: {} as Record<string, string>,
+			dependencies: {} as Record<string, string>,
+			devDependencies: {} as Record<string, string>,
+			engines: {
+				node: `>=${metadata.packageJson.nodeVersion}`
+			}
+		};
+
+		// Add common packages from existing constants
+		for (const pkg of commonPackages) {
+			const target = pkg.dev ? "devDependencies" : "dependencies";
+			(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
+		}
+
+		// Add platform-specific packages from existing constants
+		const platformPackages = metadata.mainType === "fastify" ? fastifyPackages : expressPackages;
+		for (const pkg of platformPackages) {
+			const target = pkg.dev ? "devDependencies" : "dependencies";
+			(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
+		}
+
+		// Add collected packages from plugins
+		for (const pkg of packages) {
+			const target = pkg.dev ? "devDependencies" : "dependencies";
+			(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
+		}
+
+		// Add extra packages from metadata
+		if (metadata.extraPackages) {
+			for (const pkg of metadata.extraPackages) {
+				const target = pkg.dev ? "devDependencies" : "dependencies";
+				(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
+			}
+		}
+
+		// Add collected scripts
+		for (const script of scripts) {
+			(packageJson.scripts as Record<string, string>)[script.name] = script.command;
+		}
+
+		// Sort dependencies
+		packageJson.dependencies = this.sortObject(packageJson.dependencies as Record<string, string>);
+		packageJson.devDependencies = this.sortObject(packageJson.devDependencies as Record<string, string>);
+
+		const filePath = path.join(basePath, "package.json");
+		fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 2), "utf-8");
+	}
+
+	private async createZipFile(basePath: string, files: GeneratedFile[]): Promise<fs.ReadStream> {
+		const zipPath = path.join(basePath, "project.zip");
+		const output = fs.createWriteStream(zipPath);
+		const archive = archiver("zip", { zlib: { level: 9 } });
+
+		archive.pipe(output);
+
+		// Add src directory
+		const srcPath = path.join(basePath, "src");
+		if (fs.existsSync(srcPath)) {
+			archive.directory(srcPath, "src");
+		}
+
+		// Add root files
+		for (const file of files) {
+			if (file.path === "") {
+				const filePath = path.join(basePath, file.name);
+				if (fs.existsSync(filePath)) {
+					archive.file(filePath, { name: file.name });
+				}
+			}
+		}
+
+		// Add package.json
+		archive.file(path.join(basePath, "package.json"), { name: "package.json" });
+
+		await new Promise<void>((resolve, reject) => {
+			output.on("close", resolve);
+			output.on("error", reject);
+			archive.finalize();
+		});
+
+		return fs.createReadStream(zipPath);
+	}
+
+	private getPath(id: string, filePath?: string): string {
+		return path.join(__dirname, "__generated__", id, filePath ?? "");
+	}
+
+	/**
+	 * Generate a configuration file that can be used to recreate the project
+	 *
+	 * @param metadata - Contains user selections from frontend
+	 * @param id - Unique generation ID
+	 */
+	public async generateConfigFile(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
+		const basePath = this.getPath(id);
+		fs.mkdirSync(basePath, { recursive: true });
+
+		const configPath = path.join(basePath, "nestjs-initializer.json");
+		fs.writeFileSync(configPath, JSON.stringify(metadata, null, 2), "utf-8");
+
+		this.scheduleCleanup(id);
+
+		return fs.createReadStream(configPath);
+	}
+
+	private scheduleCleanup(id: string): void {
+		setTimeout(() => {
+			const dirPath = this.getPath(id);
+			fs.rm(dirPath, { recursive: true }, (err) => {
+				if (err) {
+					this.logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
+				} else {
+					this.logger.log("Directory deleted successfully", `Delete:${id}`);
+				}
+			});
+		}, 10_000);
+	}
+
+	private sortObject(obj: Record<string, string>): Record<string, string> {
+		return Object.keys(obj)
+			.sort((a, b) => a.localeCompare(b))
+			.reduce(
+				(acc, key) => {
+					acc[key] = obj[key];
+					return acc;
+				},
+				{} as Record<string, string>
+			);
+	}
+}

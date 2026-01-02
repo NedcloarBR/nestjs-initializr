@@ -3,12 +3,11 @@ import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
 import { AppModule } from "./app/app.module";
-import { HttpExceptionFilter } from "./app/common/filters/http-exception.filter";
-import { AxiosInterceptor } from "./app/common/interceptors/axios.interceptor";
-import { RequestIdInterceptor } from "./app/common/interceptors/request-id.interceptor";
 import { Services } from "./app/constants/services";
 import type { ConfigService } from "./app/modules/config";
 import { setupSwagger } from "./lib";
+import { HttpExceptionFilter } from "./app/common/filters";
+import { AxiosInterceptor, RequestIdInterceptor } from "./app/common/interceptors";
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
