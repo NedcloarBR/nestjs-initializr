@@ -148,7 +148,9 @@ export class PluginExecutor {
 			this.logger.log(
 				`✨ Generation complete in ${totalDuration}ms → ${totalFiles} files, ${totalPackages} packages, ${totalScripts} scripts`
 			);
-		} else {
+		}
+
+		if (errors.length > 0) {
 			this.logger.error(`❌ Generation failed with ${errors.length} error(s) after ${totalDuration}ms`);
 		}
 

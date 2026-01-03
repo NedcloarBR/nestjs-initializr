@@ -25,7 +25,8 @@ export class LinterFormatterPlugin extends BasePlugin {
 		if (this.linterFormatter === "biome") {
 			this.setupBiome();
 		}
-    if (this.linterFormatter === "eslint-prettier") {
+
+		if (this.linterFormatter === "eslint-prettier") {
 			this.setupEslintPrettier();
 		}
 	}

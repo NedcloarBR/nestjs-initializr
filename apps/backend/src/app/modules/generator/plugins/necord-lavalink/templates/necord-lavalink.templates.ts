@@ -248,7 +248,7 @@ export const pluginsGitkeepTemplate = {
 	content: ""
 };
 
-export function lavalinkModuleUpdates(withConfigModule: boolean) {
+export function lavalinkModuleUpdates(_withConfigModule: boolean) {
 	return {
 		importLavalink: {
 			replacer: 'import { NecordModule } from "necord";',

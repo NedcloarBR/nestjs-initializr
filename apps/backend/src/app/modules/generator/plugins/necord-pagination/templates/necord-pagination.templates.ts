@@ -32,7 +32,7 @@ export class NecordPagination implements OnModuleInit {
 `.trim()
 };
 
-export function necordPaginationModuleUpdates(withConfigModule: boolean) {
+export function necordPaginationModuleUpdates(_withConfigModule: boolean) {
 	return {
 		importNecordPagination: {
 			replacer: 'import { NecordModule } from "necord";',

@@ -1,4 +1,5 @@
 import { Plugin } from "@/app/common";
+import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
 import {
 	configIndexTemplate,
@@ -24,9 +25,13 @@ import {
 	name: "config",
 	displayName: "Config Module",
 	description: "Configuration module with @nestjs/config, environment validation, and typed config service",
-	priority: 900 // High priority - other modules may depend on config
+	priority: 900
 })
 export class ConfigPlugin extends BasePlugin {
+	shouldActivate(ctx: GeneratorContext): boolean {
+		return ctx.metadata.modules?.includes("config") ?? false;
+	}
+
 	protected onGenerate(): void {
 		for (const template of configTemplates) {
 			this.createFile(template.name, template.path, template.content);

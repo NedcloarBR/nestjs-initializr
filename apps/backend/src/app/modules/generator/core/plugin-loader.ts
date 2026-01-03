@@ -55,11 +55,12 @@ export function loadPluginsSync(): void {
 		if (failedPlugins.length === 0) {
 			logger.log(`✅ Loaded ${newPlugins.length} plugin(s) in ${duration}ms`);
 			logger.log(`📋 ${pluginNames}`);
-		} else {
-			logger.warn(
-				`⚠️  Loaded ${newPlugins.length} plugin(s), ${failedPlugins.length} failed in ${duration}ms`
-			);
+			return;
 		}
+
+		logger.warn(
+			`⚠️  Loaded ${newPlugins.length} plugin(s), ${failedPlugins.length} failed in ${duration}ms`
+		);
 	} catch (error) {
 		logger.error("❌ Failed to discover plugins:", error);
 	}

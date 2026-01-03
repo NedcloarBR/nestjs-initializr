@@ -51,11 +51,7 @@ export class ExtraPlugin extends BasePlugin {
 
 		this.replaceInFile("src", "main.ts", templates.mainUpdate.replacer, templates.mainUpdate.content);
 
-		if (this.isFastify) {
-			this.addPkg("@fastify/helmet");
-		} else {
-			this.addPkg("helmet");
-		}
+		this.addPkg(this.isFastify ? "@fastify/helmet" : "helmet");
 	}
 
 	private setupCompression(): void {
@@ -65,11 +61,7 @@ export class ExtraPlugin extends BasePlugin {
 
 		this.replaceInFile("src", "main.ts", templates.mainUpdate.replacer, templates.mainUpdate.content);
 
-		if (this.isFastify) {
-			this.addPkg("@fastify/compress");
-		} else {
-			this.addPkg("compression");
-		}
+		this.addPkg(this.isFastify ? "@fastify/compress" : "compression");
 	}
 
 	private setupValidation(): void {

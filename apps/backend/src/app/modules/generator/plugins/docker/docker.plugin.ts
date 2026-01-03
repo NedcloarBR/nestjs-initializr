@@ -1,4 +1,5 @@
 import { Plugin } from "@/app/common";
+import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
 import {
 	createDockerComposeTemplate,
@@ -21,6 +22,10 @@ import {
 	priority: 100
 })
 export class DockerPlugin extends BasePlugin {
+	shouldActivate(ctx: GeneratorContext): boolean {
+		return ctx.metadata.docker;
+	}
+
 	protected onGenerate(): void {
 		const dockerfile = createDockerfileTemplate(this.nodeVersion, this.packageManager);
 		this.createFile(dockerfile.name, dockerfile.path, dockerfile.content);

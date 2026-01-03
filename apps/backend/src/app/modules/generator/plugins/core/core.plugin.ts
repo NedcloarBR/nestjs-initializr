@@ -1,4 +1,5 @@
 import { Plugin } from "@/app/common";
+import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
 import { appTemplates, configFilesTemplates, mainTemplate, readmeTemplate } from "./templates";
 
@@ -15,13 +16,10 @@ import { appTemplates, configFilesTemplates, mainTemplate, readmeTemplate } from
 	name: "core",
 	displayName: "Core",
 	description: "Base NestJS project structure",
-	priority: 1000 // Highest priority - runs first
+	priority: 1000
 })
 export class CorePlugin extends BasePlugin {
-	/**
-	 * Always active - this is the base project
-	 */
-	public shouldActivate(): boolean {
+	shouldActivate(_ctx: GeneratorContext): boolean {
 		return true;
 	}
 

@@ -173,9 +173,10 @@ export class PluginGeneratorService {
 			fs.rm(dirPath, { recursive: true }, (err) => {
 				if (err) {
 					this.logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
-				} else {
-					this.logger.log("Directory deleted successfully", `Delete:${id}`);
+					return;
 				}
+
+				this.logger.log("Directory deleted successfully", `Delete:${id}`);
 			});
 		}, 10_000);
 	}
