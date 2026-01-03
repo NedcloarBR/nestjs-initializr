@@ -2,10 +2,6 @@
  * Necord Core templates - Discord bot framework for NestJS
  */
 
-// ============================================
-// Module Template
-// ============================================
-
 export function necordModuleTemplate(withConfigModule: boolean) {
 	return {
 		name: "necord.module.ts",
@@ -47,10 +43,6 @@ export class NecordWrapperModule {}
 	};
 }
 
-// ============================================
-// Service Template
-// ============================================
-
 export const necordServiceTemplate = {
 	name: "necord.service.ts",
 	path: "src/modules/necord",
@@ -75,9 +67,6 @@ export class NecordService {
 `.trim()
 };
 
-// ============================================
-// Command Template
-// ============================================
 
 export const necordCommandTemplate = {
 	name: "necord.command.ts",
@@ -98,10 +87,6 @@ export class NecordCommand {
 }
 `.trim()
 };
-
-// ============================================
-// Config Template (when config module is enabled)
-// ============================================
 
 export const necordConfigTemplate = {
 	name: "necord.config.ts",
@@ -134,10 +119,6 @@ export class NecordConfig {
 `.trim()
 };
 
-// ============================================
-// Env DTO Template (when config module is enabled)
-// ============================================
-
 export const necordEnvDtoTemplate = {
 	name: "discord-env.dto.ts",
 	path: "src/modules/necord/dtos",
@@ -167,17 +148,12 @@ export default registerAs("discord_env", () => {
 `.trim()
 };
 
-// ============================================
-// File Updates
-// ============================================
-
 export const necordFileUpdates = {
 	dotenv: {
 		content: "DISCORD_TOKEN=\nDISCORD_DEVELOPMENT_GUILD_ID="
 	}
 };
 
-// Config module integration updates
 export const necordConfigIntegration = {
 	indexDTs: {
 		replacer: "GLOBAL_PREFIX: string;",

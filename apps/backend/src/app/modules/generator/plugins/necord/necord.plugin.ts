@@ -37,27 +37,21 @@ export class NecordPlugin extends BasePlugin {
 	}
 
 	protected onGenerate(): void {
-		// Create necord module
 		const moduleTemplate = necordModuleTemplate(this.withConfig);
 		this.createFile(moduleTemplate.name, moduleTemplate.path, moduleTemplate.content);
 
-		// Create service and command
 		this.createFile(necordServiceTemplate.name, necordServiceTemplate.path, necordServiceTemplate.content);
 		this.createFile(necordCommandTemplate.name, necordCommandTemplate.path, necordCommandTemplate.content);
 
-		// Update .env with Discord tokens
 		this.appendToFile("", ".env", `\n${necordFileUpdates.dotenv.content}`);
 
-		// Config module integration
 		if (this.withConfig) {
 			this.setupConfigIntegration();
 		}
 
-		// Add dependencies
 		this.addPkg("necord");
 		this.addPkg("discord.js");
 
-		// Set constants for other plugins
 		this.setConstants({
 			token: null,
 			import: "NecordWrapperModule",
@@ -69,11 +63,9 @@ export class NecordPlugin extends BasePlugin {
 	}
 
 	private setupConfigIntegration(): void {
-		// Create config-related files
 		this.createFile(necordConfigTemplate.name, necordConfigTemplate.path, necordConfigTemplate.content);
 		this.createFile(necordEnvDtoTemplate.name, necordEnvDtoTemplate.path, necordEnvDtoTemplate.content);
 
-		// Update index.d.ts with Discord env types
 		this.replaceInFile(
 			"src/types",
 			"index.d.ts",
@@ -81,7 +73,6 @@ export class NecordPlugin extends BasePlugin {
 			necordConfigIntegration.indexDTs.content
 		);
 
-		// Update config module imports
 		this.replaceInFile(
 			"src/modules/config",
 			"config.module.ts",
@@ -95,7 +86,6 @@ export class NecordPlugin extends BasePlugin {
 			necordConfigIntegration.configModuleLoad.content
 		);
 
-		// Update config service types
 		this.replaceInFile(
 			"src/modules/config",
 			"config.service.ts",

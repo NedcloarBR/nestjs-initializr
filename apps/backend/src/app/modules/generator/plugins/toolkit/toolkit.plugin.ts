@@ -22,10 +22,8 @@ export class ToolkitPlugin extends BasePlugin {
 	}
 
 	protected onGenerate(): void {
-		// Add toolkit dependency
 		this.addPkg("@nedcloarbr/nestjs-toolkit");
 
-		// Add import to main.ts
 		this.replaceInFile(
 			"src",
 			"main.ts",
@@ -33,7 +31,6 @@ export class ToolkitPlugin extends BasePlugin {
 			`import { AppModule } from "./app.module";\n${ToolkitImportTemplate}`
 		);
 
-		// Add registerHelpers call before globalPrefix
 		const globalPrefixLine = this.withConfig
 			? 'const globalPrefix = configService.get("GLOBAL_PREFIX");'
 			: 'const globalPrefix = "api";';

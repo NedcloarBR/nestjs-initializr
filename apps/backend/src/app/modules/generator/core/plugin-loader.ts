@@ -14,8 +14,6 @@ export function loadPluginsSync(): void {
 	logger.log("🔍 Discovering plugins...");
 
 	try {
-		// Use webpack's require.context for automatic module discovery
-		// This works at build-time, so webpack includes all matching files in the bundle
 		const pluginContext = require.context("../plugins", true, /\.plugin\.(ts|js)$/);
 
 		const pluginKeys = pluginContext.keys();
@@ -26,7 +24,6 @@ export function loadPluginsSync(): void {
 
 		for (const key of pluginKeys) {
 			try {
-				// Import the plugin module - this triggers the @Plugin decorator
 				pluginContext(key);
 			} catch (error) {
 				const pluginName = key.replace(/^\.\//, "").replace(/\/.*$/, "");
@@ -35,11 +32,9 @@ export function loadPluginsSync(): void {
 			}
 		}
 
-		// Get loaded plugin names from registry
 		const loadedPlugins = pluginRegistry.getAll();
 		const newPlugins = loadedPlugins.slice(initialCount);
 
-		// Log each loaded plugin with its display name
 		for (const PluginClass of newPlugins) {
 			const meta = getPluginMetadata(PluginClass);
 			if (meta) {

@@ -27,8 +27,6 @@ export class ExtraPlugin extends BasePlugin {
 	protected onGenerate(): void {
 		const extras = this.ctx.metadata.extras ?? [];
 
-		// Process each extra in order to ensure proper replacements
-		// Order matters: imports first, then main updates
 		if (extras.includes("helmet")) {
 			this.setupHelmet();
 		}
@@ -49,13 +47,10 @@ export class ExtraPlugin extends BasePlugin {
 	private setupHelmet(): void {
 		const templates = helmetTemplates(this.mainType, this.withConfig);
 
-		// Add import statement
 		this.replaceInFile("src", "main.ts", templates.import.replacer, templates.import.content);
 
-		// Add helmet setup after port declaration
 		this.replaceInFile("src", "main.ts", templates.mainUpdate.replacer, templates.mainUpdate.content);
 
-		// Add package dependency
 		if (this.isFastify) {
 			this.addPkg("@fastify/helmet");
 		} else {
@@ -66,13 +61,10 @@ export class ExtraPlugin extends BasePlugin {
 	private setupCompression(): void {
 		const templates = compressionTemplates(this.mainType, this.withConfig);
 
-		// Add import statement
 		this.replaceInFile("src", "main.ts", templates.import.replacer, templates.import.content);
 
-		// Add compression setup after port declaration
 		this.replaceInFile("src", "main.ts", templates.mainUpdate.replacer, templates.mainUpdate.content);
 
-		// Add package dependency
 		if (this.isFastify) {
 			this.addPkg("@fastify/compress");
 		} else {
@@ -83,13 +75,10 @@ export class ExtraPlugin extends BasePlugin {
 	private setupValidation(): void {
 		const templates = validationTemplates(this.withConfig);
 
-		// Add ValidationPipe to imports
 		this.replaceInFile("src", "main.ts", templates.import.replacer, templates.import.content);
 
-		// Add validation pipe setup after port declaration
 		this.replaceInFile("src", "main.ts", templates.mainUpdate.replacer, templates.mainUpdate.content);
 
-		// Add package dependencies
 		this.addPkg("class-validator");
 		this.addPkg("class-transformer");
 	}
@@ -97,9 +86,6 @@ export class ExtraPlugin extends BasePlugin {
 	private setupCors(): void {
 		const templates = corsTemplates(this.withConfig);
 
-		// Add CORS setup after port declaration
 		this.replaceInFile("src", "main.ts", templates.mainUpdate.replacer, templates.mainUpdate.content);
-
-		// CORS doesn't need additional packages - it's built into @nestjs/common
 	}
 }

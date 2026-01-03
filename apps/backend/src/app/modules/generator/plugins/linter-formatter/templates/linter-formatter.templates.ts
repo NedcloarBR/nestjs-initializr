@@ -2,10 +2,6 @@
  * Linter/Formatter templates - Generates configuration for Biome or ESLint+Prettier
  */
 
-// ============================================
-// Biome Template
-// ============================================
-
 export const biomeTemplate = {
 	config: {
 		name: "biome.json",
@@ -23,10 +19,6 @@ export const biomeTemplate = {
 		{ name: "check", command: "biome check --write ./" }
 	]
 };
-
-// ============================================
-// ESLint + Prettier Template
-// ============================================
 
 export const eslintPrettierTemplate = {
 	prettierrc: {

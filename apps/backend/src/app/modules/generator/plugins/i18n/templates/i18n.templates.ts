@@ -2,10 +2,6 @@
  * i18n templates - Generates nestjs-i18n module with translation support
  */
 
-// ============================================
-// Module Template
-// ============================================
-
 export function i18nModuleTemplate(withConfigModule: boolean) {
 	return {
 		name: "i18n.module.ts",
@@ -47,10 +43,6 @@ export class I18nWrapperModule {}
 	};
 }
 
-// ============================================
-// Config Template (when config module is enabled)
-// ============================================
-
 export const i18nConfigTemplate = {
 	name: "i18n.config.ts",
 	path: "src/modules/i18n",
@@ -81,10 +73,6 @@ export class I18nConfig implements I18nOptionsFactory {
 `.trim()
 };
 
-// ============================================
-// Env DTO Template (when config module is enabled)
-// ============================================
-
 export const i18nEnvDtoTemplate = {
 	name: "i18n-env.dto.ts",
 	path: "src/modules/i18n/dtos",
@@ -109,10 +97,6 @@ export default registerAs("i18n_env", () => {
 `.trim()
 };
 
-// ============================================
-// Translation Template
-// ============================================
-
 export const translationTemplate = {
 	name: "service.json",
 	path: "src/modules/i18n/locales/en-US",
@@ -122,10 +106,6 @@ export const translationTemplate = {
 }
 `.trim()
 };
-
-// ============================================
-// File Updates
-// ============================================
 
 export const i18nFileUpdates = {
 	nestCliJson: {

@@ -82,7 +82,6 @@ export function Plugin(options: PluginOptions): ClassDecorator {
 	return (target: object) => {
 		Reflect.defineMetadata(PLUGIN_METADATA, options, target);
 
-		// Auto-register plugin in the global registry
 		pluginRegistry.register(options.name, target as PluginConstructor);
 	};
 }

@@ -2,10 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { Injectable, Logger } from "@nestjs/common";
 import archiver from "archiver";
-import { commonPackages, expressPackages, fastifyPackages } from "@/app/constants/packages";
-import type { MetadataDTO } from "./dtos/metadata.dto";
 import { createContext, type GeneratedFile, type PackageDependency, type Script } from "@/app/common";
+import { commonPackages, expressPackages, fastifyPackages } from "@/app/constants/packages";
 import { PluginExecutor } from "./core";
+import type { MetadataDTO } from "./dtos/metadata.dto";
 
 /**
  * Main generator service using the plugin system
@@ -28,7 +28,6 @@ export class PluginGeneratorService {
 	public async generate(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
 		const ctx = createContext(id, metadata);
 
-		// Execute only the plugins selected by the user (metadata.modules)
 		const selectedModules = metadata.modules ?? [];
 		this.logger.log(`Generating project with modules: ${selectedModules.join(", ") || "none"}`);
 
@@ -39,24 +38,19 @@ export class PluginGeneratorService {
 			throw new Error(`Generation failed: ${result.errors.join(", ")}`);
 		}
 
-		// Write files to disk
 		const basePath = this.getPath(id);
 		await this.writeFilesToDisk(basePath, result.files);
 
-		// Generate package.json using existing constants
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
 
-		// Create zip file
 		const zipStream = await this.createZipFile(basePath, result.files);
 
-		// Schedule cleanup
 		this.scheduleCleanup(id);
 
 		return zipStream;
 	}
 
 	private async writeFilesToDisk(basePath: string, files: GeneratedFile[]): Promise<void> {
-		// Ensure base directory exists
 		fs.mkdirSync(basePath, { recursive: true });
 
 		for (const file of files) {
@@ -86,26 +80,22 @@ export class PluginGeneratorService {
 			}
 		};
 
-		// Add common packages from existing constants
 		for (const pkg of commonPackages) {
 			const target = pkg.dev ? "devDependencies" : "dependencies";
 			(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
 		}
 
-		// Add platform-specific packages from existing constants
 		const platformPackages = metadata.mainType === "fastify" ? fastifyPackages : expressPackages;
 		for (const pkg of platformPackages) {
 			const target = pkg.dev ? "devDependencies" : "dependencies";
 			(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
 		}
 
-		// Add collected packages from plugins
 		for (const pkg of packages) {
 			const target = pkg.dev ? "devDependencies" : "dependencies";
 			(packageJson[target] as Record<string, string>)[pkg.name] = pkg.version;
 		}
 
-		// Add extra packages from metadata
 		if (metadata.extraPackages) {
 			for (const pkg of metadata.extraPackages) {
 				const target = pkg.dev ? "devDependencies" : "dependencies";
@@ -113,12 +103,9 @@ export class PluginGeneratorService {
 			}
 		}
 
-		// Add collected scripts
 		for (const script of scripts) {
 			(packageJson.scripts as Record<string, string>)[script.name] = script.command;
 		}
-
-		// Sort dependencies
 		packageJson.dependencies = this.sortObject(packageJson.dependencies as Record<string, string>);
 		packageJson.devDependencies = this.sortObject(packageJson.devDependencies as Record<string, string>);
 
@@ -133,13 +120,11 @@ export class PluginGeneratorService {
 
 		archive.pipe(output);
 
-		// Add src directory
 		const srcPath = path.join(basePath, "src");
 		if (fs.existsSync(srcPath)) {
 			archive.directory(srcPath, "src");
 		}
 
-		// Add root files
 		for (const file of files) {
 			if (file.path === "") {
 				const filePath = path.join(basePath, file.name);
@@ -149,7 +134,6 @@ export class PluginGeneratorService {
 			}
 		}
 
-		// Add package.json
 		archive.file(path.join(basePath, "package.json"), { name: "package.json" });
 
 		await new Promise<void>((resolve, reject) => {

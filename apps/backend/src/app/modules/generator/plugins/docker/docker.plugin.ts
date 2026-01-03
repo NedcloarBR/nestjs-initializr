@@ -22,15 +22,12 @@ import {
 })
 export class DockerPlugin extends BasePlugin {
 	protected onGenerate(): void {
-		// Generate Dockerfile with package manager specific commands
 		const dockerfile = createDockerfileTemplate(this.nodeVersion, this.packageManager);
 		this.createFile(dockerfile.name, dockerfile.path, dockerfile.content);
 
-		// Generate docker-compose.yml
 		const dockerCompose = createDockerComposeTemplate(this.projectName);
 		this.createFile(dockerCompose.name, dockerCompose.path, dockerCompose.content);
 
-		// Generate .dockerignore
 		const dockerIgnore = createDockerIgnoreTemplate();
 		this.createFile(dockerIgnore.name, dockerIgnore.path, dockerIgnore.content);
 	}

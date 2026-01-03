@@ -38,17 +38,13 @@ export class I18nPlugin extends BasePlugin {
 	}
 
 	protected onGenerate(): void {
-		// Create i18n module
 		const moduleTemplate = i18nModuleTemplate(this.withConfig);
 		this.createFile(moduleTemplate.name, moduleTemplate.path, moduleTemplate.content);
 
-		// Create translation file
 		this.createFile(translationTemplate.name, translationTemplate.path, translationTemplate.content);
 
-		// Update nest-cli.json for i18n assets
 		this.replaceInFile("", "nest-cli.json", i18nFileUpdates.nestCliJson.replacer, i18nFileUpdates.nestCliJson.content);
 
-		// Update app.service.ts to use I18nService
 		this.replaceInFile(
 			"src",
 			"app.service.ts",
@@ -68,15 +64,12 @@ export class I18nPlugin extends BasePlugin {
 			i18nFileUpdates.appServiceMethod.content
 		);
 
-		// Config module integration
 		if (this.withConfig) {
 			this.setupConfigIntegration();
 		}
 
-		// Add dependency
 		this.addPkg("nestjs-i18n");
 
-		// Set constants for other plugins
 		this.setConstants({
 			token: null,
 			import: "I18nWrapperModule",
@@ -88,14 +81,11 @@ export class I18nPlugin extends BasePlugin {
 	}
 
 	private setupConfigIntegration(): void {
-		// Create config-related files
 		this.createFile(i18nConfigTemplate.name, i18nConfigTemplate.path, i18nConfigTemplate.content);
 		this.createFile(i18nEnvDtoTemplate.name, i18nEnvDtoTemplate.path, i18nEnvDtoTemplate.content);
 
-		// Update .env with i18n fallback language
 		this.appendToFile("", ".env", `\n${i18nConfigIntegration.dotenv.content}`);
 
-		// Update index.d.ts with i18n env type
 		this.replaceInFile(
 			"src/types",
 			"index.d.ts",
@@ -103,7 +93,6 @@ export class I18nPlugin extends BasePlugin {
 			i18nConfigIntegration.indexDTs.content
 		);
 
-		// Update config module imports
 		this.replaceInFile(
 			"src/modules/config",
 			"config.module.ts",
@@ -117,7 +106,6 @@ export class I18nPlugin extends BasePlugin {
 			i18nConfigIntegration.configModuleLoad.content
 		);
 
-		// Update config service types
 		this.replaceInFile(
 			"src/modules/config",
 			"config.service.ts",

@@ -4,13 +4,8 @@
  * These are updates to main.ts based on the selected extras
  */
 
-// ============================================
-// CORS Templates
-// ============================================
-
 export function corsTemplates(withConfigModule: boolean) {
 	return {
-		// CORS doesn't need imports, just app.enableCors()
 		mainUpdate: {
 			replacer: withConfigModule ? 'configService.get("PORT")' : "3000",
 			content: withConfigModule
@@ -25,10 +20,6 @@ export function corsTemplates(withConfigModule: boolean) {
 		}
 	};
 }
-
-// ============================================
-// Helmet Templates
-// ============================================
 
 export function helmetTemplates(mainType: "fastify" | "express", withConfigModule: boolean) {
 	const importStatement =
@@ -53,10 +44,6 @@ ${importStatement}`
 	};
 }
 
-// ============================================
-// Compression Templates
-// ============================================
-
 export function compressionTemplates(mainType: "fastify" | "express", withConfigModule: boolean) {
 	const importStatement =
 		mainType === "fastify" ? 'import compression from "@fastify/compress";' : 'import compression from "compression";';
@@ -79,10 +66,6 @@ ${importStatement}`
 		}
 	};
 }
-
-// ============================================
-// Validation Templates
-// ============================================
 
 export function validationTemplates(withConfigModule: boolean) {
 	return {

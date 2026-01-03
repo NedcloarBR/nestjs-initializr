@@ -2,10 +2,6 @@
  * Necord Localization templates - i18n for Discord bots
  */
 
-// ============================================
-// JSON Locale Loader Template
-// ============================================
-
 export const jsonLocaleLoaderTemplate = {
 	name: "JSONLocale.loader.ts",
 	path: "src/modules/necord",
@@ -58,10 +54,6 @@ export class JSONLocaleLoader {
 `.trim()
 };
 
-// ============================================
-// Ping Translation Template
-// ============================================
-
 export const pingTranslationTemplate = {
 	name: "ping.json",
 	path: "src/common/localization/necord/en-US/commands",
@@ -72,10 +64,6 @@ export const pingTranslationTemplate = {
 }
 `.trim()
 };
-
-// ============================================
-// File Updates
-// ============================================
 
 export function necordLocalizationModuleUpdates(withConfigModule: boolean) {
 	return {

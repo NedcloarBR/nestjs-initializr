@@ -1,12 +1,12 @@
-import { NPM_DEPENDENCIES } from "@/app/constants/packages";
-import { resolveAxiosObservable } from "@/app/utils/resolve-axios-observable";
-import type { NPMResponse } from "@/types/npm";
 // biome-ignore lint/style/useImportType: <>
 import { HttpService } from "@nestjs/axios";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: <>
 import { Cache } from "cache-manager";
+import { NPM_DEPENDENCIES } from "@/app/constants/packages";
+import { resolveAxiosObservable } from "@/app/utils/resolve-axios-observable";
+import type { NPMResponse } from "@/types/npm";
 
 @Injectable()
 export class NpmService {
@@ -15,7 +15,6 @@ export class NpmService {
 		private readonly httpService: HttpService
 	) {}
 
-	// Exclude packages that are already included in NPM_DEPENDENCIES or are not relevant and clone of others
 	private blacklistPackages = [
 		...Array.from(Object.values(NPM_DEPENDENCIES)).map((pkg) => pkg.name),
 		"nest",

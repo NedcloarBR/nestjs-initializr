@@ -1,4 +1,3 @@
-import type { ExtraNames, ModuleNames, ModuleTemplate, Template } from "@/types";
 import type {
 	FileUpdate,
 	GeneratedFile,
@@ -10,6 +9,7 @@ import type {
 	Script
 } from "@/app/common/interfaces";
 import { DEV_NPM_DEPENDENCIES, NPM_DEPENDENCIES } from "@/app/constants/packages";
+import type { ExtraNames, ModuleNames, ModuleTemplate, Template } from "@/types";
 
 /**
  * Abstract base class for generator plugins
@@ -20,7 +20,6 @@ import { DEV_NPM_DEPENDENCIES, NPM_DEPENDENCIES } from "@/app/constants/packages
 export abstract class BasePlugin implements IGeneratorPlugin {
 	protected ctx!: GeneratorContext;
 
-	// Collected items during generation
 	private _files: GeneratedFile[] = [];
 	private _packages: PackageDependency[] = [];
 	private _scripts: Script[] = [];
@@ -60,10 +59,6 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 		this._fileUpdates = [];
 		this._constants = undefined;
 	}
-
-	// ============================================
-	// File Operations
-	// ============================================
 
 	/**
 	 * Add a file to be generated
@@ -105,10 +100,6 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 		this.updateFile(filePath, fileName, "replace", content, search);
 	}
 
-	// ============================================
-	// Package Operations
-	// ============================================
-
 	/**
 	 * Add a package dependency
 	 */
@@ -147,14 +138,10 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 			this._packages.push({
 				name: pkg.name,
 				version: pkg.version,
-				dev: pkg.dev || false
+				dev: pkg.dev
 			});
 		}
 	}
-
-	// ============================================
-	// Script Operations
-	// ============================================
 
 	/**
 	 * Add an npm script
@@ -163,20 +150,12 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 		this._scripts.push({ name, command });
 	}
 
-	// ============================================
-	// Constants Operations
-	// ============================================
-
 	/**
 	 * Set module constants for integration
 	 */
 	protected setConstants(constants: PluginConstants): void {
 		this._constants = constants;
 	}
-
-	// ============================================
-	// Context Helpers - Using existing DTOs
-	// ============================================
 
 	/**
 	 * Check if a module is enabled
@@ -269,10 +248,6 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 		return this.ctx.metadata.docker ?? false;
 	}
 
-	// ============================================
-	// State Management (for inter-plugin communication)
-	// ============================================
-
 	/**
 	 * Set a value in the shared state
 	 */
@@ -294,10 +269,6 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 		return this.ctx.state.has(key);
 	}
 
-	// ============================================
-	// ModuleTemplate Integration
-	// ============================================
-
 	/**
 	 * Resolve a Template (static or dynamic) to a StaticTemplate
 	 */
@@ -313,13 +284,11 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 	 * This integrates with the existing template system
 	 */
 	protected generateFromModuleTemplate(moduleTemplate: ModuleTemplate): void {
-		// Create new files from templates
 		for (const t of moduleTemplate.templates) {
 			const resolved = this.resolveTemplate(t);
 			this.createFile(resolved.name, resolved.path, resolved.content);
 		}
 
-		// Handle files to update
 		if (moduleTemplate.filesToUpdate) {
 			for (const update of moduleTemplate.filesToUpdate) {
 				for (const t of update.templates) {
@@ -328,26 +297,22 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 			}
 		}
 
-		// Handle main template updates
 		if (moduleTemplate.mainTemplates) {
 			for (const t of moduleTemplate.mainTemplates) {
 				this.replaceInFile("src", "main.ts", t.replacer, t.content);
 			}
 		}
 
-		// Add dependencies
 		if (moduleTemplate.packages) {
 			this.addDependencies(moduleTemplate.packages);
 		}
 
-		// Add scripts
 		if (moduleTemplate.scripts) {
 			for (const script of moduleTemplate.scripts) {
 				this.addScript(script.name, script.command);
 			}
 		}
 
-		// Set constants if available
 		if (moduleTemplate.constants) {
 			this.setConstants(moduleTemplate.constants);
 		}

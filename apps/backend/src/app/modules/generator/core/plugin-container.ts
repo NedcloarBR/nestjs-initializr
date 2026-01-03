@@ -30,7 +30,6 @@ export class PluginContainer {
 			throw new Error(`Plugin "${metadata.name}" is already registered`);
 		}
 
-		// Resolve dependencies and create instance
 		const instance = this.createInstance(PluginClass);
 
 		this.plugins.set(metadata.name, { instance, metadata });
@@ -41,7 +40,6 @@ export class PluginContainer {
 	 * Register multiple plugin classes
 	 */
 	public registerAll(plugins: PluginConstructor[]): void {
-		// First pass: register all without instantiation to know what's available
 		const metadataMap = new Map<string, PluginConstructor>();
 
 		for (const PluginClass of plugins) {
@@ -52,10 +50,8 @@ export class PluginContainer {
 			metadataMap.set(metadata.name, PluginClass);
 		}
 
-		// Sort by dependencies (topological sort)
 		const sorted = this.sortByDependencies(plugins, metadataMap);
 
-		// Register in order
 		for (const PluginClass of sorted) {
 			this.register(PluginClass);
 		}
@@ -164,7 +160,6 @@ export class PluginContainer {
 			return new PluginClass();
 		}
 
-		// Build constructor args array
 		const args: unknown[] = [];
 		const sortedIndices = Array.from(injections.keys()).sort((a, b) => a - b);
 
@@ -201,7 +196,6 @@ export class PluginContainer {
 
 			visited.add(metadata.name);
 
-			// Visit dependencies first
 			for (const depName of metadata.dependencies || []) {
 				const depClass = metadataMap.get(depName);
 				if (depClass) {
@@ -212,7 +206,6 @@ export class PluginContainer {
 			result.push(PluginClass);
 		};
 
-		// Sort by priority first, then visit
 		const sorted = [...plugins].sort((a, b) => {
 			const metaA = getPluginMetadata(a);
 			const metaB = getPluginMetadata(b);

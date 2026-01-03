@@ -32,14 +32,12 @@ export class NecordPaginationPlugin extends BasePlugin {
 	protected onGenerate(): void {
 		const moduleUpdates = necordPaginationModuleUpdates(this.withConfig);
 
-		// Create pagination service
 		this.createFile(
 			paginationServiceTemplate.name,
 			paginationServiceTemplate.path,
 			paginationServiceTemplate.content
 		);
 
-		// Update necord module
 		this.replaceInFile(
 			"src/modules/necord",
 			"necord.module.ts",
@@ -59,7 +57,6 @@ export class NecordPaginationPlugin extends BasePlugin {
 			moduleUpdates.providers.content
 		);
 
-		// Update necord command
 		this.replaceInFile(
 			"src/modules/necord",
 			"necord.command.ts",
@@ -79,7 +76,6 @@ export class NecordPaginationPlugin extends BasePlugin {
 			necordPaginationCommandUpdates.addCommand.content
 		);
 
-		// Add dependency
 		this.addPkg("@necord/pagination");
 	}
 }

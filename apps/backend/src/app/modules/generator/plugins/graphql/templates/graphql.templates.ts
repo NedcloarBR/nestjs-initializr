@@ -2,10 +2,6 @@
  * GraphQL templates - Generates GraphQL module with Apollo Server
  */
 
-// ============================================
-// Resolver Template
-// ============================================
-
 export const graphqlResolverTemplate = {
 	name: "app.resolver.ts",
 	path: "src",
@@ -24,10 +20,6 @@ export class AppResolver {
 }
 `.trim()
 };
-
-// ============================================
-// App Module Updates
-// ============================================
 
 export const graphqlAppModuleUpdates = {
 	imports: {
@@ -51,10 +43,6 @@ import { AppResolver } from "./app.resolver";`
     }),`
 	}
 };
-
-// ============================================
-// Config Module Integration (when config is enabled)
-// ============================================
 
 export const graphqlWithConfigUpdates = {
 	imports: {

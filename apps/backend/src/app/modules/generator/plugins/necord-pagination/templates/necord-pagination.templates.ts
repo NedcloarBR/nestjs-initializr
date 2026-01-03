@@ -2,10 +2,6 @@
  * Necord Pagination templates - Paginated embeds for Discord bots
  */
 
-// ============================================
-// Pagination Service Template
-// ============================================
-
 export const paginationServiceTemplate = {
 	name: "necord.pagination.ts",
 	path: "src/modules/necord",
@@ -35,10 +31,6 @@ export class NecordPagination implements OnModuleInit {
 }
 `.trim()
 };
-
-// ============================================
-// File Updates
-// ============================================
 
 export function necordPaginationModuleUpdates(withConfigModule: boolean) {
 	return {

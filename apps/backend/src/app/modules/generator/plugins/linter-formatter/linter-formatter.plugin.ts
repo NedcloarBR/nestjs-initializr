@@ -31,21 +31,17 @@ export class LinterFormatterPlugin extends BasePlugin {
 	}
 
 	private setupBiome(): void {
-		// Create biome.json
 		this.createFile(biomeTemplate.config.name, biomeTemplate.config.path, biomeTemplate.config.content);
 
-		// Add packages
 		this.addDevPkg("@biomejs/biome");
 		this.addDevPkg("@nedcloarbr/biome-config");
 
-		// Add scripts
 		for (const script of biomeTemplate.scripts) {
 			this.addScript(script.name, script.command);
 		}
 	}
 
 	private setupEslintPrettier(): void {
-		// Create config files
 		this.createFile(
 			eslintPrettierTemplate.prettierrc.name,
 			eslintPrettierTemplate.prettierrc.path,
@@ -57,7 +53,6 @@ export class LinterFormatterPlugin extends BasePlugin {
 			eslintPrettierTemplate.eslintConfig.content
 		);
 
-		// Add packages
 		this.addDevPkg("@eslint/eslintrc");
 		this.addDevPkg("@eslint/js");
 		this.addDevPkg("eslint");
@@ -66,7 +61,6 @@ export class LinterFormatterPlugin extends BasePlugin {
 		this.addDevPkg("prettier");
 		this.addDevPkg("typescript-eslint");
 
-		// Add scripts
 		for (const script of eslintPrettierTemplate.scripts) {
 			this.addScript(script.name, script.command);
 		}

@@ -2,10 +2,6 @@
  * NestWhats templates - WhatsApp bot framework for NestJS
  */
 
-// ============================================
-// Module Template
-// ============================================
-
 export const nestwhatsModuleTemplate = {
 	name: "nestwhats.module.ts",
 	path: "src/modules/nestwhats",
@@ -25,10 +21,6 @@ import { NestWhatsService } from "./nestwhats.service";
 export class NestWhatsWrapperModule {}
 `.trim()
 };
-
-// ============================================
-// Service Template
-// ============================================
 
 export const nestwhatsServiceTemplate = {
 	name: "nestwhats.service.ts",

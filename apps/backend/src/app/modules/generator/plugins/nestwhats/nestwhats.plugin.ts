@@ -22,17 +22,13 @@ export class NestWhatsPlugin extends BasePlugin {
 	}
 
 	protected onGenerate(): void {
-		// Create nestwhats module
 		this.createFile(nestwhatsModuleTemplate.name, nestwhatsModuleTemplate.path, nestwhatsModuleTemplate.content);
 
-		// Create nestwhats service
 		this.createFile(nestwhatsServiceTemplate.name, nestwhatsServiceTemplate.path, nestwhatsServiceTemplate.content);
 
-		// Add dependencies
 		this.addPkg("nestwhats");
 		this.addPkg("whatsapp-web.js");
 
-		// Set constants for other plugins
 		this.setConstants({
 			token: null,
 			import: "NestWhatsWrapperModule",

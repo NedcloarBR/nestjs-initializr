@@ -24,10 +24,8 @@ export class GraphQLPlugin extends BasePlugin {
 	}
 
 	protected onGenerate(): void {
-		// Create resolver file
 		this.createFile(graphqlResolverTemplate.name, graphqlResolverTemplate.path, graphqlResolverTemplate.content);
 
-		// Update app.module.ts with GraphQL imports
 		this.replaceInFile(
 			"src",
 			"app.module.ts",
@@ -35,7 +33,6 @@ export class GraphQLPlugin extends BasePlugin {
 			graphqlAppModuleUpdates.imports.content
 		);
 
-		// Add AppResolver to providers
 		this.replaceInFile(
 			"src",
 			"app.module.ts",
@@ -43,7 +40,6 @@ export class GraphQLPlugin extends BasePlugin {
 			graphqlAppModuleUpdates.providers.content
 		);
 
-		// Add GraphQLModule to imports array
 		this.replaceInFile(
 			"src",
 			"app.module.ts",
@@ -51,18 +47,15 @@ export class GraphQLPlugin extends BasePlugin {
 			graphqlAppModuleUpdates.importsArray.content
 		);
 
-		// Add dependencies
 		this.addPkg("@nestjs/graphql");
 		this.addPkg("@nestjs/apollo");
 		this.addPkg("@apollo/server");
 		this.addPkg("graphql");
 
-		// Add Fastify integration if using Fastify
 		if (this.isFastify) {
 			this.addPkg("@as-integrations/fastify");
 		}
 
-		// Set constants for other plugins
 		this.setConstants({
 			token: null,
 			import: null,

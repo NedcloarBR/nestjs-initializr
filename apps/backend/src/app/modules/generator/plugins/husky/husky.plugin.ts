@@ -27,21 +27,17 @@ export class HuskyPlugin extends BasePlugin {
 		const hooks = huskyHooksTemplates(this.packageManager);
 		const configs = huskyConfigTemplates(this.linterFormatter);
 
-		// Create husky hooks
 		this.createFile(hooks.preCommit.name, hooks.preCommit.path, hooks.preCommit.content);
 		this.createFile(hooks.commitMsg.name, hooks.commitMsg.path, hooks.commitMsg.content);
 
-		// Create config files
 		this.createFile(configs.commitlint.name, configs.commitlint.path, configs.commitlint.content);
 		this.createFile(configs.lintStaged.name, configs.lintStaged.path, configs.lintStaged.content);
 
-		// Add dev dependencies
 		this.addDevPkg("husky");
 		this.addDevPkg("lint-staged");
 		this.addDevPkg("@commitlint/cli");
 		this.addDevPkg("@commitlint/config-angular");
 
-		// Add prepare script
 		this.addScript("prepare", "husky");
 	}
 }

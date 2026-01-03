@@ -2,10 +2,6 @@
  * Husky templates - Generates Git hooks configuration with lint-staged and commitlint
  */
 
-// ============================================
-// Hook Templates
-// ============================================
-
 export function huskyHooksTemplates(packageManager: "npm" | "yarn" | "pnpm") {
 	const runner = packageManager === "npm" ? "npx" : packageManager;
 
@@ -22,10 +18,6 @@ export function huskyHooksTemplates(packageManager: "npm" | "yarn" | "pnpm") {
 		}
 	};
 }
-
-// ============================================
-// Config Templates
-// ============================================
 
 export function huskyConfigTemplates(linterFormatter: "biome" | "eslint-prettier" | undefined) {
 	return {

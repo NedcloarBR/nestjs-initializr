@@ -4,7 +4,6 @@ import { loadPluginsSync, PluginContainer, PluginExecutor } from "./core";
 import { GeneratorController } from "./generator.controller";
 import { PluginGeneratorService } from "./plugin-generator.service";
 
-// Auto-discover and load all plugins from the plugins directory
 loadPluginsSync();
 
 /**
@@ -26,14 +25,11 @@ export class PluginGeneratorModule implements OnModuleInit {
 	public async onModuleInit(): Promise<void> {
 		const startTime = Date.now();
 
-		// Register all auto-registered plugins from the global registry
 		const plugins = pluginRegistry.getAll();
 		this.container.registerAll(plugins);
 
-		// Initialize all plugins
 		await this.container.initAll();
 
-		// Validate plugin dependencies
 		const errors = this.container.validateDependencies();
 		if (errors.length > 0) {
 			this.logger.error(`❌ Plugin validation errors: ${errors.join(", ")}`);

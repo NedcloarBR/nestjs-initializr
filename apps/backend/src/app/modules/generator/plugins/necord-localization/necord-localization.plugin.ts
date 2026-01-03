@@ -34,15 +34,12 @@ export class NecordLocalizationPlugin extends BasePlugin {
 	protected onGenerate(): void {
 		const moduleUpdates = necordLocalizationModuleUpdates(this.withConfig);
 
-		// Create JSON locale loader (only with config)
 		if (this.withConfig) {
 			this.createFile(jsonLocaleLoaderTemplate.name, jsonLocaleLoaderTemplate.path, jsonLocaleLoaderTemplate.content);
 		}
 
-		// Create translation file
 		this.createFile(pingTranslationTemplate.name, pingTranslationTemplate.path, pingTranslationTemplate.content);
 
-		// Update necord module
 		this.replaceInFile(
 			"src/modules/necord",
 			"necord.module.ts",
@@ -50,7 +47,6 @@ export class NecordLocalizationPlugin extends BasePlugin {
 			moduleUpdates.moduleImport.content
 		);
 
-		// Update necord command with localization
 		this.replaceInFile(
 			"src/modules/necord",
 			"necord.command.ts",
@@ -76,7 +72,6 @@ export class NecordLocalizationPlugin extends BasePlugin {
 			necordLocalizationCommandUpdates.reply.content
 		);
 
-		// Add dependency
 		this.addPkg("@necord/localization");
 	}
 }

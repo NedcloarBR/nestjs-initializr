@@ -1,6 +1,3 @@
-// Type declarations for webpack's require.context
-// This is used for auto-loading plugins at build time
-
 interface RequireContext {
 	keys(): string[];
 	(id: string): unknown;

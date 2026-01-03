@@ -1,8 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
-import type { GeneratorContext } from "@/app/common/interfaces";
 import type {
 	FileUpdate,
 	GeneratedFile,
+	GeneratorContext,
 	IGeneratorPlugin,
 	PackageDependency,
 	PluginResult,
@@ -39,30 +39,22 @@ export class PluginExecutor {
 		this.logger.log(`🚀 Starting generation for project "${ctx.metadata.packageJson.name}"`);
 		this.logger.debug(`Selected modules: ${moduleNames.join(", ") || "none"}`);
 
-		// Get all registered plugins
 		const allPlugins = this.container.getAll();
 		this.logger.debug(`Total registered plugins: ${allPlugins.length}`);
 
-		// Filter plugins:
-		// 1. Always include plugins where shouldActivate() returns true (like "core")
-		// 2. Include plugins that match the selected module names
 		const activePlugins = allPlugins.filter((plugin) => {
 			const meta = this.container.getMetadataForInstance(plugin);
 			if (!meta) return false;
 
-			// Check if plugin should always be active
 			const alwaysActive = plugin.shouldActivate?.(ctx) === true;
 			if (alwaysActive) return true;
 
-			// Check if plugin is in selected modules
 			const isSelected = moduleNames.includes(meta.name);
 			if (!isSelected) return false;
 
-			// If selected, check shouldActivate (undefined means active)
 			return !plugin.shouldActivate || plugin.shouldActivate(ctx) !== false;
 		});
 
-		// Validate dependencies
 		const depErrors = this.validateActiveDependencies(activePlugins, moduleNames);
 		if (depErrors.length > 0) {
 			this.logger.error(`❌ Dependency validation failed: ${depErrors.join(", ")}`);
@@ -72,7 +64,6 @@ export class PluginExecutor {
 		const pluginNames = activePlugins.map((p) => this.getPluginDisplayName(p));
 		this.logger.log(`📦 Active plugins (${activePlugins.length}): ${pluginNames.join(", ")}`);
 
-		// Execute beforeGenerate hooks
 		this.logger.debug("⏳ Running beforeGenerate hooks...");
 		for (const plugin of activePlugins) {
 			try {
@@ -88,7 +79,6 @@ export class PluginExecutor {
 			return this.emptyResult(errors);
 		}
 
-		// Execute main generate method
 		this.logger.debug("⚙️  Running generate methods...");
 		for (const plugin of activePlugins) {
 			try {
@@ -101,20 +91,17 @@ export class PluginExecutor {
 				const stats = this.getResultStats(result);
 				this.logger.log(`  ✅ ${name} (${pluginDuration}ms) → ${stats}`);
 
-				// Add files to context
 				for (const file of result.files) {
 					const key = `${file.path}/${file.name}`;
 					ctx.files.set(key, file);
 				}
 
-				// Add packages to context
 				for (const pkg of result.packages) {
 					if (!ctx.packages.some((p) => p.name === pkg.name)) {
 						ctx.packages.push(pkg);
 					}
 				}
 
-				// Add scripts to context
 				for (const script of result.scripts) {
 					if (!ctx.scripts.some((s) => s.name === script.name)) {
 						ctx.scripts.push(script);
@@ -131,7 +118,6 @@ export class PluginExecutor {
 			return this.emptyResult(errors);
 		}
 
-		// Process file updates
 		this.logger.debug("📝 Processing file updates...");
 		for (const result of allResults) {
 			try {
@@ -142,7 +128,6 @@ export class PluginExecutor {
 			}
 		}
 
-		// Execute afterGenerate hooks
 		this.logger.debug("⏳ Running afterGenerate hooks...");
 		for (const plugin of activePlugins) {
 			try {
@@ -185,7 +170,7 @@ export class PluginExecutor {
 			if (!metadata) continue;
 
 			for (const dep of metadata.dependencies || []) {
-				if (!activeNames.has(dep) && !moduleNames.includes(dep)) {
+				if (!(activeNames.has(dep) || moduleNames.includes(dep))) {
 					errors.push(`Plugin "${metadata.name}" requires "${dep}" to be enabled`);
 				}
 			}

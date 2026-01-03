@@ -2,10 +2,6 @@
  * Necord Lavalink templates - Music player integration for Discord bots
  */
 
-// ============================================
-// Listeners Template
-// ============================================
-
 export const lavalinkListenersTemplate = {
 	name: "lavalink-listeners.service.ts",
 	path: "src/modules/necord",
@@ -30,10 +26,6 @@ export class LavalinkListenersService {
 }
 `.trim()
 };
-
-// ============================================
-// Play Command Template
-// ============================================
 
 export const playCommandTemplate = {
 	name: "play.command.ts",
@@ -89,10 +81,6 @@ export class PlayCommand {
 `.trim()
 };
 
-// ============================================
-// Query DTO Template
-// ============================================
-
 export const queryDtoTemplate = {
 	name: "query.dto.ts",
 	path: "src/modules/necord/commands/play",
@@ -118,10 +106,6 @@ export class QueryDto {
 }
 `.trim()
 };
-
-// ============================================
-// Source Autocomplete Template
-// ============================================
 
 export const sourceAutocompleteTemplate = {
 	name: "source.autocomplete.ts",
@@ -151,10 +135,6 @@ export class SourceAutocompleteInterceptor extends AutocompleteInterceptor {
 }
 `.trim()
 };
-
-// ============================================
-// Docker Files
-// ============================================
 
 export const lavalinkDockerfileTemplate = {
 	name: "Dockerfile",
@@ -267,10 +247,6 @@ export const pluginsGitkeepTemplate = {
 	path: "lavalink/plugins",
 	content: ""
 };
-
-// ============================================
-// Module Updates
-// ============================================
 
 export function lavalinkModuleUpdates(withConfigModule: boolean) {
 	return {
