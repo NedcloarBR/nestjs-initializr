@@ -120,29 +120,6 @@ export class PluginContainer {
 	}
 
 	/**
-	 * Validate dependencies between plugins
-	 */
-	public validateDependencies(): string[] {
-		const errors: string[] = [];
-
-		for (const [name, { metadata }] of this.plugins) {
-			for (const dep of metadata.dependencies || []) {
-				if (!this.plugins.has(dep)) {
-					errors.push(`Plugin "${name}" requires "${dep}" which is not registered`);
-				}
-			}
-
-			for (const conflict of metadata.conflicts || []) {
-				if (this.plugins.has(conflict)) {
-					errors.push(`Plugin "${name}" conflicts with "${conflict}"`);
-				}
-			}
-		}
-
-		return errors;
-	}
-
-	/**
 	 * Clear all registered plugins
 	 */
 	public clear(): void {

@@ -30,11 +30,6 @@ export class PluginGeneratorModule implements OnModuleInit {
 
 		await this.container.initAll();
 
-		const errors = this.container.validateDependencies();
-		if (errors.length > 0) {
-			this.logger.error(`❌ Plugin validation errors: ${errors.join(", ")}`);
-		}
-
 		const duration = Date.now() - startTime;
 		const pluginList = this.getPluginsSummary();
 

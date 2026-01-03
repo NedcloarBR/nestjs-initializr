@@ -55,9 +55,9 @@ export class PluginExecutor {
 			return !plugin.shouldActivate || plugin.shouldActivate(ctx) !== false;
 		});
 
-		const depErrors = this.validateActiveDependencies(activePlugins, moduleNames);
+		const depErrors = this.validateActivePlugins(activePlugins, moduleNames);
 		if (depErrors.length > 0) {
-			this.logger.error(`❌ Dependency validation failed: ${depErrors.join(", ")}`);
+			this.logger.error(`❌ Plugin validation failed: ${depErrors.join(", ")}`);
 			return this.emptyResult(depErrors);
 		}
 
@@ -163,7 +163,7 @@ export class PluginExecutor {
 		};
 	}
 
-	private validateActiveDependencies(activePlugins: IGeneratorPlugin[], moduleNames: string[]): string[] {
+	private validateActivePlugins(activePlugins: IGeneratorPlugin[], moduleNames: string[]): string[] {
 		const errors: string[] = [];
 		const activeNames = new Set(activePlugins.map((p) => this.getPluginName(p)));
 
@@ -174,6 +174,12 @@ export class PluginExecutor {
 			for (const dep of metadata.dependencies || []) {
 				if (!(activeNames.has(dep) || moduleNames.includes(dep))) {
 					errors.push(`Plugin "${metadata.name}" requires "${dep}" to be enabled`);
+				}
+			}
+
+			for (const conflict of metadata.conflicts || []) {
+				if (activeNames.has(conflict) || moduleNames.includes(conflict)) {
+					errors.push(`Plugin "${metadata.name}" conflicts with "${conflict}"`);
 				}
 			}
 		}
