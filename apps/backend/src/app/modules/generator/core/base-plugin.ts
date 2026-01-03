@@ -27,9 +27,49 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 	private _constants?: PluginConstants;
 
 	/**
+	 * Called when the plugin is initialized
+	 * Override this to add setup logic
+	 */
+	public onModuleInit?(): Promise<void> | void;
+
+	/**
+	 * Check if this plugin should be enabled based on context
+	 * Override this to control activation
+	 * Return true to always activate, false to never activate
+	 */
+	public shouldActivate?(_ctx: GeneratorContext): boolean;
+
+	/**
+	 * Called before the plugin generates files
+	 * Override this for validation or preparation
+	 */
+	protected onBeforeGenerate?(): Promise<void> | void;
+
+	/**
+	 * Called after all plugins have generated
+	 * Override this for cleanup or final modifications
+	 */
+	protected onAfterGenerate?(): Promise<void> | void;
+
+	/**
 	 * Implement this method to define your generation logic
 	 */
 	protected abstract onGenerate(): Promise<void> | void;
+
+	/**
+	 * Hook called before generation - delegates to onBeforeGenerate
+	 */
+	public async beforeGenerate(ctx: GeneratorContext): Promise<void> {
+		this.ctx = ctx;
+		await this.onBeforeGenerate?.();
+	}
+
+	/**
+	 * Hook called after generation - delegates to onAfterGenerate
+	 */
+	public async afterGenerate(_ctx: GeneratorContext): Promise<void> {
+		await this.onAfterGenerate?.();
+	}
 
 	/**
 	 * Main generate method - sets up context and delegates to onGenerate
