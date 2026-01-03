@@ -82,9 +82,13 @@ Automatically configure the most popular modules:
 
 ---
 
-## � Documentation
+## 📚 Documentation
 
+- [Project Roadmap](docs/roadmap.md) - Overall project roadmap and milestones
 - [Creating Plugins](docs/creating-plugins.md) - Learn how to create custom generator plugins
+- [Plugin Roadmap](docs/plugins-roadmap.md) - Planned plugins and future features
+- [Frontend Roadmap](docs/frontend-roadmap.md) - Planned UI/UX improvements
+- [Backend Roadmap](docs/backend-roadmap.md) - Planned backend improvements
 
 ---
 
