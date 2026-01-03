@@ -1,3 +1,4 @@
+import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { Injectable, Logger } from "@nestjs/common";
@@ -42,6 +43,8 @@ export class PluginGeneratorService {
 		await this.writeFilesToDisk(basePath, result.files);
 
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
+
+		await this.lintAndFormat(id);
 
 		const zipStream = await this.createZipFile(basePath, result.files);
 
@@ -191,5 +194,40 @@ export class PluginGeneratorService {
 				},
 				{} as Record<string, string>
 			);
+	}
+
+	private async lintAndFormat(id: string): Promise<void> {
+		const dirPath = this.getPath(id);
+		const configPath = path.join(__dirname, "assets");
+
+		const runBiomeCommand = (args: string[]): Promise<void> => {
+			return new Promise((resolve, reject) => {
+				const process = spawn("biome", [...args, "--config-path", configPath, dirPath]);
+
+				process.stdout?.on("data", (data) => {
+					this.logger.log(`[biome ${args[0]} stdout]: ${data.toString().trim()}`);
+				});
+
+				process.stderr?.on("data", (data) => {
+					this.logger.error(`[biome ${args[0]} stderr]: ${data.toString().trim()}`);
+				});
+
+				process.on("error", (err) => {
+					reject(new Error(`Biome execute error ${args[0]}: ${err.message}`));
+				});
+
+				process.on("close", (code) => {
+					if (code === 0) {
+						resolve();
+						return;
+					}
+
+					reject(new Error(`Biome ${args[0]} exit code: ${code}`));
+				});
+			});
+		};
+
+		await runBiomeCommand(["lint", "--write"]);
+		await runBiomeCommand(["format", "--write"]);
 	}
 }
