@@ -34,6 +34,11 @@ export interface GeneratorContext {
 	readonly scripts: Script[];
 
 	/**
+	 * Root folders to include in the zip (e.g., "prisma", "scripts")
+	 */
+	readonly rootFolders: string[];
+
+	/**
 	 * Shared state for inter-plugin communication
 	 */
 	readonly state: Map<string, unknown>;
@@ -49,6 +54,7 @@ export function createContext(id: string, metadata: MetadataDTO): GeneratorConte
 		files: new Map(),
 		packages: [],
 		scripts: [],
+		rootFolders: [],
 		state: new Map()
 	};
 }

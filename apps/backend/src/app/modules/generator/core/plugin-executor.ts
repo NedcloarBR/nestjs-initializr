@@ -14,6 +14,7 @@ export interface ExecutionResult {
 	files: GeneratedFile[];
 	packages: PackageDependency[];
 	scripts: Script[];
+	rootFolders: string[];
 	success: boolean;
 	errors: string[];
 }
@@ -107,6 +108,12 @@ export class PluginExecutor {
 						ctx.scripts.push(script);
 					}
 				}
+
+				for (const folder of result.rootFolders ?? []) {
+					if (!ctx.rootFolders.includes(folder)) {
+						ctx.rootFolders.push(folder);
+					}
+				}
 			} catch (error) {
 				const name = this.getPluginName(plugin);
 				this.logger.error(`  ❌ [${name}] generate failed: ${error}`);
@@ -158,6 +165,7 @@ export class PluginExecutor {
 			files: Array.from(ctx.files.values()),
 			packages: ctx.packages,
 			scripts: ctx.scripts,
+			rootFolders: ctx.rootFolders,
 			success: errors.length === 0,
 			errors
 		};
@@ -247,6 +255,7 @@ export class PluginExecutor {
 			files: [],
 			packages: [],
 			scripts: [],
+			rootFolders: [],
 			success: false,
 			errors
 		};

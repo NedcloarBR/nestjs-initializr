@@ -1,12 +1,14 @@
-import type { generatorFormSchema } from "@/forms/generator-form-schema";
-import type { ConfigStructure } from "@/types/config";
-import { addRecentHistory } from "@/utils/history";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
 import type { z } from "zod";
+import type { generatorFormSchema } from "@/forms/generator-form-schema";
+import type { ConfigStructure } from "@/types/config";
+import { addRecentHistory } from "@/utils/history";
 
 export async function generate(values: z.infer<ReturnType<typeof generatorFormSchema>>, mode: "config" | "project") {
 	try {
+		const hasPrisma = values.modules?.includes("prisma-standalone");
+
 		const rawBody = {
 			mainType: values.mainType,
 			packageJson: {
@@ -20,7 +22,10 @@ export async function generate(values: z.infer<ReturnType<typeof generatorFormSc
 			linterFormatter: values.linterFormatter,
 			docker: values.docker,
 			testRunner: values.testRunner,
-			extraPackages: values.extraPackages.map((pkg) => ({ name: pkg.name, version: pkg.version, dev: pkg.dev }))
+			extraPackages: values.extraPackages.map((pkg) => ({ name: pkg.name, version: pkg.version, dev: pkg.dev })),
+			database: hasPrisma
+				? [{ module: "prisma" as const, prismaType: values.database?.prismaType ?? "postgres" }]
+				: undefined
 		} as ConfigStructure;
 
 		const baseUrl = process.env.BACKEND_URL || "";

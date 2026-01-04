@@ -12,7 +12,7 @@
 		"format": "biome format --write ./",
 		"lint": "biome lint ./",
 		"check": "biome check --write ./",
-		"prepare": "husky"
+		"postinstall": "husky"
 	},
 	"dependencies": {
 		"@fastify/helmet": "^13.0.2",

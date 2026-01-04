@@ -46,7 +46,7 @@ export class PluginGeneratorService {
 
 		await this.lintAndFormat(id);
 
-		const zipStream = await this.createZipFile(basePath, result.files);
+		const zipStream = await this.createZipFile(basePath, result.files, result.rootFolders);
 
 		this.scheduleCleanup(id);
 
@@ -116,7 +116,7 @@ export class PluginGeneratorService {
 		fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 2), "utf-8");
 	}
 
-	private async createZipFile(basePath: string, files: GeneratedFile[]): Promise<fs.ReadStream> {
+	private async createZipFile(basePath: string, files: GeneratedFile[], rootFolders: string[]): Promise<fs.ReadStream> {
 		const zipPath = path.join(basePath, "project.zip");
 		const output = fs.createWriteStream(zipPath);
 		const archive = archiver("zip", { zlib: { level: 9 } });
@@ -126,6 +126,13 @@ export class PluginGeneratorService {
 		const srcPath = path.join(basePath, "src");
 		if (fs.existsSync(srcPath)) {
 			archive.directory(srcPath, "src");
+		}
+
+		for (const folder of rootFolders) {
+			const folderPath = path.join(basePath, folder);
+			if (fs.existsSync(folderPath)) {
+				archive.directory(folderPath, folder);
+			}
 		}
 
 		for (const file of files) {

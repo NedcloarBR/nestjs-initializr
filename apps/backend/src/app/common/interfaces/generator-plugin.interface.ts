@@ -9,6 +9,7 @@ export interface PluginResult {
 	scripts: Script[];
 	fileUpdates: FileUpdate[];
 	constants?: PluginConstants;
+	rootFolders?: string[];
 }
 
 export interface GeneratedFile {

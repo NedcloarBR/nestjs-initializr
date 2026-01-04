@@ -1,4 +1,4 @@
-import { ModuleCategory, type ModuleType } from "@/types/module";
+ import { ModuleCategory, type ModuleType } from "@/types/module";
 
 const rawModules = [
 	{
@@ -88,6 +88,13 @@ const rawModules = [
 		descriptionKey: "Modules.nestjs-toolkit.description",
 		iconType: "svg",
 		category: ModuleCategory.UTILITY
+	},
+	{
+		title: "Prisma Standalone",
+		name: "prisma-standalone",
+		descriptionKey: "Modules.prisma-standalone.description",
+		iconType: "svg",
+		category: ModuleCategory.DATABASE
 	}
 ] as const;
 
@@ -108,6 +115,6 @@ export const moduleDependencies: Record<string, ModuleName[]> = {
 	"scalar-api-reference": ["swagger"]
 };
 
-export const dockerRequiredModules: ModuleName[] = ["necord-lavalink"];
+export const dockerRequiredModules: ModuleName[] = ["necord-lavalink", "prisma-standalone"];
 
 export const linterFormatterRequiredModules: ModuleName[] = ["husky"];

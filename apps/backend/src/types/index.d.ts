@@ -1,3 +1,5 @@
+import { DEV_NPM_DEPENDENCIES, NPM_DEPENDENCIES } from "@/app/constants/packages";
+
 type StaticTemplate = {
 	name: string;
 	path: string;
@@ -37,6 +39,11 @@ export type ModuleNames =
 	| "nestwhats"
 	| "swagger"
 	| "scalar-api-reference"
-	| "toolkit";
+	| "toolkit"
+  | "nestjs-prisma"
+  | "prisma-standalone";
 
 export type ExtraNames = "compression" | "cors" | "helmet" | "validation";
+
+export type NPM_PACKAGE_KEYS = keyof typeof NPM_DEPENDENCIES;
+export type DEV_NPM_PACKAGE_KEYS = keyof typeof DEV_NPM_DEPENDENCIES;

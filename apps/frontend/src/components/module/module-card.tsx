@@ -121,7 +121,7 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 					{title}
 				</CardTitle>
 				<Separator className="transition-colors group-hover:bg-primary/20" />
-				<ScrollArea className="h-20 pr-2">
+				<ScrollArea className="h-20 overflow-hidden pr-2">
 					<CardDescription className="text-xs leading-relaxed">{description}</CardDescription>
 				</ScrollArea>
 			</div>

@@ -2,7 +2,7 @@ export interface ConfigStructure {
 	packageJson: {
 		name: string;
 		description: string;
-		nodeVersion: "20" | "21" | "22" | "23";
+		nodeVersion: "20" | "21" | "22" | "23" | "24";
 	};
 	mainType: "fastify" | "express";
 	packageManager: "npm" | "yarn" | "pnpm";
@@ -12,4 +12,5 @@ export interface ConfigStructure {
 	docker: boolean;
 	testRunner: "jest" | "vitest";
 	extraPackages: { name: string; version: string; dev: boolean }[];
+	database?: { module: "prisma"; prismaType: "postgres" | "mysql" | "sqlite" | "mongodb" | "sqlserver" }[];
 }

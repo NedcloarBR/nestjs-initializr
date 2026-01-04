@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsBoolean, IsIn, IsNotEmptyObject, IsOptional, IsString, ValidateNested } from "class-validator";
 import type { ExtraNames, ModuleNames } from "@/types";
+import { DatabaseDTO } from "./database.dto";
 import { ExtraPackagesDTO } from "./extra-packages.dto";
 import { PackageJsonMetadataDTO } from "./package-json-metadata.dto";
 
@@ -54,4 +55,10 @@ export class MetadataDTO {
 	@Type(() => ExtraPackagesDTO)
 	@ApiProperty({ description: "The extra packages to include", type: [ExtraPackagesDTO] })
 	public readonly extraPackages?: ExtraPackagesDTO[];
+
+	@IsOptional()
+	@ValidateNested()
+	@Type(() => DatabaseDTO)
+	@ApiProperty({ description: "The database configurations to include", type: [DatabaseDTO] })
+	public readonly database?: DatabaseDTO[];
 }

@@ -1,3 +1,4 @@
+import { DatabaseConfigModal } from "./database-config-modal";
 import { DockerCard } from "./docker-card";
 import { LinterFormatterCard } from "./linter-formatter-card";
 import { ModuleCard } from "./module-card";
@@ -13,5 +14,6 @@ export const Module = {
 	TermFilter: ModuleTermFilter,
 	Docker: DockerCard,
 	LinterFormatter: LinterFormatterCard,
-	TestRunner: TestRunnerCard
+	TestRunner: TestRunnerCard,
+	DatabaseConfig: DatabaseConfigModal
 };

@@ -10,6 +10,7 @@ import { generate, loadConfig } from "@/actions";
 import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useExtraPackages } from "@/hooks/use-extra-packages";
+import type { ConfigStructure } from "@/types/config";
 import type { ModuleCategory } from "@/types/module";
 import { ExtraField } from "./extra-field";
 import { ExtraPackage } from "./extra-package";
@@ -40,6 +41,25 @@ import {
 	TooltipTrigger
 } from "./ui";
 
+function configToFormData(data: ConfigStructure) {
+	return {
+		mainType: data.mainType,
+		projectName: data.packageJson.name,
+		projectDescription: data.packageJson.description,
+		nodeVersion: data.packageJson.nodeVersion,
+		packageManager: data.packageManager,
+		modules: data.modules,
+		extras: data.extras,
+		linterFormatter: data.linterFormatter,
+		docker: data.docker,
+		testRunner: data.testRunner,
+		extraPackages: data.extraPackages,
+		database: {
+			prismaType: "postgres" as const
+		}
+	};
+}
+
 export function GeneratorForm() {
 	const t = useTranslations("Generator");
 	const formSchema = generatorFormSchema(t);
@@ -54,7 +74,8 @@ export function GeneratorForm() {
 		linterFormatter: null,
 		docker: false,
 		testRunner: null,
-		extraPackages: []
+		extraPackages: [],
+		database: { prismaType: "postgres" }
 	};
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: standardSchemaResolver(formSchema),
@@ -66,13 +87,27 @@ export function GeneratorForm() {
 	const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
 	const [isOpenExtraPackageModal, setIsOpenExtraPackageModal] = useState(false);
+	const [isOpenDatabaseConfigModal, setIsOpenDatabaseConfigModal] = useState(false);
+	const [previousModules, setPreviousModules] = useState<string[]>(defaultValues.modules);
 	const { packages, fetchPackages, loading: packagesLoading } = useExtraPackages();
+
+	const modules = form.watch("modules");
 
 	useEffect(() => {
 		if (isOpenExtraPackageModal && packages.length === 0) {
 			fetchPackages();
 		}
 	}, [isOpenExtraPackageModal, packages.length, fetchPackages]);
+
+	useEffect(() => {
+		const prismaJustAdded = modules?.includes("prisma-standalone") && !previousModules?.includes("prisma-standalone");
+
+		if (prismaJustAdded) {
+			setIsOpenDatabaseConfigModal(true);
+		}
+
+		setPreviousModules(modules ?? []);
+	}, [modules, previousModules]);
 
 	function clearFilters() {
 		setSelectedCategory(null);
@@ -81,7 +116,7 @@ export function GeneratorForm() {
 
 	function handleConfig(event: ChangeEvent<HTMLInputElement>) {
 		loadConfig(event, t, (data) => {
-			form.reset(data);
+			form.reset(configToFormData(data));
 		});
 	}
 
@@ -287,7 +322,7 @@ export function GeneratorForm() {
 												<TooltipContent>{t("ActionsTooltip.resetConfig")}</TooltipContent>
 											</Tooltip>
 
-											<RecentHistory loadData={form.reset} />
+											<RecentHistory loadData={(data) => form.reset(configToFormData(data))} />
 										</div>
 									</div>
 								</div>
@@ -368,6 +403,11 @@ export function GeneratorForm() {
 						isOpen={isOpenExtraPackageModal}
 						onOpenChange={() => setIsOpenExtraPackageModal((prev) => !prev)}
 						fetchPackages={fetchPackages}
+					/>
+
+					<Module.DatabaseConfig
+						isOpen={isOpenDatabaseConfigModal}
+						onOpenChange={setIsOpenDatabaseConfigModal}
 					/>
 
 					{/* Submit */}

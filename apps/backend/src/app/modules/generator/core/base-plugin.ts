@@ -25,6 +25,7 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 	private _scripts: Script[] = [];
 	private _fileUpdates: FileUpdate[] = [];
 	private _constants?: PluginConstants;
+	private _rootFolders: string[] = [];
 
 	/**
 	 * Called when the plugin is initialized
@@ -85,7 +86,8 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 			packages: this._packages,
 			scripts: this._scripts,
 			fileUpdates: this._fileUpdates,
-			constants: this._constants
+			constants: this._constants,
+			rootFolders: this._rootFolders
 		};
 	}
 
@@ -98,6 +100,7 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 		this._scripts = [];
 		this._fileUpdates = [];
 		this._constants = undefined;
+		this._rootFolders = [];
 	}
 
 	/**
@@ -188,6 +191,16 @@ export abstract class BasePlugin implements IGeneratorPlugin {
 	 */
 	protected addScript(name: string, command: string): void {
 		this._scripts.push({ name, command });
+	}
+
+	/**
+	 * Register a root folder to be included in the zip
+	 * Use this for folders that should be at the project root (e.g., "prisma", "scripts")
+	 */
+	protected addRootFolder(folderName: string): void {
+		if (!this._rootFolders.includes(folderName)) {
+			this._rootFolders.push(folderName);
+		}
 	}
 
 	/**

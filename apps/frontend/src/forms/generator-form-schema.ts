@@ -31,5 +31,11 @@ export const generatorFormSchema = (t: (arg: string) => string) =>
 				})
 			)
 			.optional()
-			.default([])
+			.default([]),
+		database: z
+			.object({
+				prismaType: z.enum(["postgres"]).optional().default("postgres")
+			})
+			.optional()
+			.default({ prismaType: "postgres" })
 	});
