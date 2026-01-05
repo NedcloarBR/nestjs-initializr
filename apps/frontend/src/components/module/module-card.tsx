@@ -4,6 +4,7 @@ import {
 	dockerRequiredModules,
 	linterFormatterRequiredModules,
 	type ModuleName,
+	moduleConflicts,
 	moduleDependencies
 } from "@/constants/modules";
 import {
@@ -27,9 +28,10 @@ interface Props {
 	description: string;
 	iconType: "svg" | "png";
 	dependsOn?: string | string[];
+	conflicts?: string | string[];
 }
 
-export function ModuleCard({ title, name, description, dependsOn, iconType }: Props) {
+export function ModuleCard({ title, name, description, dependsOn, conflicts, iconType }: Props) {
 	const t = useTranslations("Generator.Modules");
 	const { control } = useFormContext();
 	const { field } = useController({
@@ -57,7 +59,12 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 			: !field.value?.includes(dependsOn)
 		: false;
 
-	const isDisabled = isDisabledModules || dockerIsMissing || anotherLinterFormatterEnabled;
+	const conflictingModules =
+		moduleConflicts[name] || (conflicts ? (Array.isArray(conflicts) ? conflicts : [conflicts]) : []);
+	const hasActiveConflict = conflictingModules.some((mod) => field.value?.includes(mod));
+
+	const isDisabled =
+		isDisabledModules || dockerIsMissing || anotherLinterFormatterEnabled || (hasActiveConflict && !isSelected);
 
 	function findDependents(moduleName: ModuleName, currentModules: string[]): string[] {
 		const dependents: Set<string> = new Set();
@@ -97,6 +104,11 @@ export function ModuleCard({ title, name, description, dependsOn, iconType }: Pr
 
 		if (dockerIsMissing) missingMessages.push(t("dockerMissing"));
 		if (anotherLinterFormatterEnabled) missingMessages.push(t("anotherLinterFormatterEnabled"));
+
+		if (hasActiveConflict) {
+			const conflicts = conflictingModules.filter((mod) => field.value?.includes(mod));
+			missingMessages.push(`Conflicts with: ${conflicts.join(", ")}`);
+		}
 
 		const hasDepends = Boolean(dependsOn && (Array.isArray(dependsOn) ? dependsOn.length : true));
 

@@ -90,11 +90,20 @@ const rawModules = [
 		category: ModuleCategory.UTILITY
 	},
 	{
+		title: "nestjs-prisma",
+		name: "nestjs-prisma",
+		descriptionKey: "Modules.nestjs-prisma.description",
+		iconType: "svg",
+		category: ModuleCategory.DATABASE,
+		conflicts: ["prisma-standalone"]
+	},
+	{
 		title: "Prisma Standalone",
 		name: "prisma-standalone",
 		descriptionKey: "Modules.prisma-standalone.description",
 		iconType: "svg",
-		category: ModuleCategory.DATABASE
+		category: ModuleCategory.DATABASE,
+		conflicts: ["nestjs-prisma"]
 	}
 ] as const;
 
@@ -115,6 +124,13 @@ export const moduleDependencies: Record<string, ModuleName[]> = {
 	"scalar-api-reference": ["swagger"]
 };
 
-export const dockerRequiredModules: ModuleName[] = ["necord-lavalink", "prisma-standalone"];
+export const dockerRequiredModules: ModuleName[] = ["necord-lavalink", "prisma-standalone", "nestjs-prisma"];
+
+export const moduleConflicts: Record<string, ModuleName[]> = {
+	"nestjs-prisma": ["prisma-standalone"],
+	"prisma-standalone": ["nestjs-prisma"]
+};
 
 export const linterFormatterRequiredModules: ModuleName[] = ["husky"];
+
+export const databaseModules: ModuleName[] = ["prisma-standalone", "nestjs-prisma"];

@@ -102,6 +102,7 @@ export function ModulesList({ category, term }: Props) {
 								description={item.data.description}
 								iconType={item.data.iconType}
 								dependsOn={item.data.dependsOn}
+								conflicts={item.data.conflicts}
 							/>
 						);
 					case "linter":

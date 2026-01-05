@@ -6,6 +6,7 @@ export type ModuleType = {
 	descriptionKey: string;
 	iconType: "svg" | "png";
 	dependsOn?: ModuleName | ModuleName[];
+	conflicts?: ModuleName | ModuleName[];
 	category: ModuleCategory;
 };
 

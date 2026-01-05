@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { generate, loadConfig } from "@/actions";
 import { extraFields, nodeVersions, packageManagers } from "@/constants";
+import { databaseModules } from "@/constants/modules";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useExtraPackages } from "@/hooks/use-extra-packages";
 import type { ConfigStructure } from "@/types/config";
@@ -100,9 +101,11 @@ export function GeneratorForm() {
 	}, [isOpenExtraPackageModal, packages.length, fetchPackages]);
 
 	useEffect(() => {
-		const prismaJustAdded = modules?.includes("prisma-standalone") && !previousModules?.includes("prisma-standalone");
+		const databaseModuleAdded =
+			modules?.some((mod) => databaseModules.includes(mod as typeof databaseModules[number])) &&
+			!previousModules?.some((mod) => databaseModules.includes(mod as typeof databaseModules[number]));
 
-		if (prismaJustAdded) {
+		if (databaseModuleAdded) {
 			setIsOpenDatabaseConfigModal(true);
 		}
 
@@ -405,10 +408,7 @@ export function GeneratorForm() {
 						fetchPackages={fetchPackages}
 					/>
 
-					<Module.DatabaseConfig
-						isOpen={isOpenDatabaseConfigModal}
-						onOpenChange={setIsOpenDatabaseConfigModal}
-					/>
+					<Module.DatabaseConfig isOpen={isOpenDatabaseConfigModal} onOpenChange={setIsOpenDatabaseConfigModal} />
 
 					{/* Submit */}
 					<div className="rounded-xl border border-border bg-card p-6 shadow-sm">

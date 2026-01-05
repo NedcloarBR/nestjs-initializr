@@ -3,6 +3,7 @@
 import { Database } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
+import { databaseModules } from "@/constants/modules";
 import {
 	Dialog,
 	DialogContent,
@@ -33,9 +34,9 @@ export function DatabaseConfigModal({ isOpen, onOpenChange }: Props) {
 	const { control } = useFormContext();
 	const { field: modulesField } = useController({ name: "modules", control });
 
-	const hasPrisma = modulesField.value?.includes("prisma-standalone");
+	const hasDatabaseModules = modulesField.value?.some((mod: string) => databaseModules.includes(mod as typeof databaseModules[number]));
 
-	if (!hasPrisma) return null;
+	if (!hasDatabaseModules) return null;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -49,7 +50,7 @@ export function DatabaseConfigModal({ isOpen, onOpenChange }: Props) {
 				</DialogHeader>
 
 				<div className="space-y-4 py-4">
-					{hasPrisma && (
+					{hasDatabaseModules && (
 						<FormField
 							control={control}
 							name="database.prismaType"

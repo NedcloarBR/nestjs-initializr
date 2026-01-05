@@ -88,6 +88,9 @@
 			"nestjs-toolkit": {
 				"description": "NestJS Toolkit é uma ferramenta CLI abrangente projetada para simplificar seu fluxo de trabalho de desenvolvimento NestJS. Construído com nest-commander e NestJS, fornece utilitários essenciais para gerenciar configurações, gerar chaves seguras e organizar sua estrutura de projeto de forma eficiente."
 			},
+			"nestjs-prisma": {
+				"description": "Integração NestJS Prisma utilizando a biblioteca nestjs-prisma. Fornece um ORM poderoso e intuitivo para NestJS com recursos integrados como soft delete, timestamps e capacidades aprimoradas de consulta. Quando habilitado, um popup de configuração aparecerá antes da geração para selecionar o tipo de banco de dados."
+			},
 			"prisma-standalone": {
 				"description": "Prisma é um ORM de próxima geração que fornece um cliente de banco de dados type-safe gerado automaticamente a partir do seu schema, migrações poderosas e uma linguagem intuitiva de modelagem de dados. Este módulo segue o padrão proposto pela documentação oficial do NestJS (https://docs.nestjs.com/recipes/prisma), incluindo PrismaService e PrismaModule prontos para uso. Quando habilitado, um popup de configuração aparecerá antes da geração para selecionar o tipo de banco de dados."
 			}
