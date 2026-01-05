@@ -98,9 +98,7 @@
 		"DatabaseConfig": {
 			"title": "Configuração de Banco de Dados",
 			"description": "Configure as opções do banco de dados antes de gerar o projeto.",
-			"prisma": {
-				"selectDatabase": "Selecione o Tipo de Banco de Dados do Prisma"
-			}
+			"selectDatabase": "Selecione o Tipo de Banco de Dados do {orm}"
 		},
 		"Extra": {
 			"trigger": "Opções extras",

@@ -97,9 +97,7 @@
 		"DatabaseConfig": {
 			"title": "Database Configuration",
 			"description": "Configure your database settings before generating the project.",
-			"prisma": {
-				"selectDatabase": "Select Prisma Database Type"
-			}
+			"selectDatabase": "Select {orm} Database Type"
 		},
 		"Extra": {
 			"trigger": "Extra options",

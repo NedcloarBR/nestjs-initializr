@@ -2,8 +2,9 @@
 
 import { Database } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
-import { databaseModules } from "@/constants/modules";
+import { getActiveOrmConfigs, type OrmConfig } from "@/constants/database";
 import {
 	Dialog,
 	DialogContent,
@@ -17,16 +18,61 @@ import {
 	Icon,
 	Label,
 	RadioGroup,
-	RadioGroupItem
+	RadioGroupItem,
+	Separator
 } from "../ui";
-
-export type PrismaDbType = "postgres";
-
-const prismaDbOptions: { value: PrismaDbType; label: string }[] = [{ value: "postgres", label: "PostgreSQL" }];
 
 interface Props {
 	isOpen: boolean;
 	onOpenChange: (isOpen: boolean) => void;
+}
+
+interface OrmSectionProps {
+	config: OrmConfig;
+	// biome-ignore lint/suspicious/noExplicitAny: <>
+	control: any
+	t: ReturnType<typeof useTranslations>;
+}
+
+function OrmDatabaseSection({ config, control, t }: OrmSectionProps) {
+	return (
+		<FormField
+			control={control}
+			name={`database.${config.fieldName}`}
+			render={({ field }) => (
+				<FormItem>
+					<FormLabel className="font-medium text-sm">
+						{t("selectDatabase", { orm: config.displayName })}
+					</FormLabel>
+					<FormControl>
+						<RadioGroup
+							value={field.value || config.databases[0]?.value}
+							onValueChange={field.onChange}
+							className="grid grid-cols-1 gap-2"
+						>
+							{config.databases.map((option) => (
+								<Label
+									key={option.value}
+									htmlFor={`${config.name}-db-${option.value}`}
+									className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-all hover:bg-accent ${
+										field.value === option.value ? "border-primary bg-primary/5 text-primary" : "border-border"
+									}`}
+								>
+									<RadioGroupItem
+										className="sr-only"
+										value={option.value}
+										id={`${config.name}-db-${option.value}`}
+									/>
+									<Icon name={option.icon} iconType="svg" subfolder="database" className="size-5" />
+									<span className="font-medium text-sm">{option.label}</span>
+								</Label>
+							))}
+						</RadioGroup>
+					</FormControl>
+				</FormItem>
+			)}
+		/>
+	);
 }
 
 export function DatabaseConfigModal({ isOpen, onOpenChange }: Props) {
@@ -34,9 +80,11 @@ export function DatabaseConfigModal({ isOpen, onOpenChange }: Props) {
 	const { control } = useFormContext();
 	const { field: modulesField } = useController({ name: "modules", control });
 
-	const hasDatabaseModules = modulesField.value?.some((mod: string) => databaseModules.includes(mod as typeof databaseModules[number]));
+	const activeOrmConfigs = useMemo(() => {
+		return getActiveOrmConfigs(modulesField.value || []);
+	}, [modulesField.value]);
 
-	if (!hasDatabaseModules) return null;
+	if (activeOrmConfigs.length === 0) return null;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -50,38 +98,15 @@ export function DatabaseConfigModal({ isOpen, onOpenChange }: Props) {
 				</DialogHeader>
 
 				<div className="space-y-4 py-4">
-					{hasDatabaseModules && (
-						<FormField
-							control={control}
-							name="database.prismaType"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className="font-medium text-sm">{t("prisma.selectDatabase")}</FormLabel>
-									<FormControl>
-										<RadioGroup
-											value={field.value || "postgres"}
-											onValueChange={field.onChange}
-											className="grid grid-cols-1 gap-2">
-											{prismaDbOptions.map((option) => (
-												<Label
-													key={option.value}
-													htmlFor={`prisma-db-${option.value}`}
-													className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-all hover:bg-accent ${
-														field.value === option.value ? "border-primary bg-primary/5 text-primary" : "border-border"
-													}`}>
-													<RadioGroupItem className="sr-only" value={option.value} id={`prisma-db-${option.value}`} />
-													<Icon name={option.value} iconType="svg" subfolder="database" className="size-5" />
-													<span className="font-medium text-sm">{option.label}</span>
-												</Label>
-											))}
-										</RadioGroup>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-					)}
+					{activeOrmConfigs.map((config, index) => (
+						<div key={config.name}>
+							{index > 0 && <Separator className="my-4" />}
+							<OrmDatabaseSection config={config} control={control} t={t} />
+						</div>
+					))}
 				</div>
 			</DialogContent>
 		</Dialog>
 	);
 }
+
