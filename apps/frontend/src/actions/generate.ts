@@ -28,21 +28,21 @@ export async function generate(values: z.infer<ReturnType<typeof generatorFormSc
 				: undefined
 		} as ConfigStructure;
 
-		const baseUrl = process.env.BACKEND_URL || "";
-		const url = new URL("/api/generator", baseUrl);
-		let filename = "project.zip";
-		if (mode === "config") {
-			url.pathname += "/config";
-			filename = "nestjs-initializr.json";
-		}
+		let url = "/api/generator";
+    let filename = "project.zip";
 
-		const response = await fetch(url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(rawBody)
-		});
+    if (mode === "config") {
+      url += "/config";
+      filename = "nestjs-initializr.json";
+    }
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(rawBody)
+    });
 
 		if (!response.ok) {
 			throw new Error(`Error generating the ${mode} file`);

@@ -12,9 +12,14 @@ const nextConfig = {
 		ignoreDuringBuilds: true
 	},
 	trailingSlash: false,
-	env: {
-		BACKEND_URL: process.env.FRONTEND_BACKEND_URL
-	}
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.BACKEND_INTERNAL_URL}/api/:path*`
+      }
+    ];
+  }
 };
 
 const plugins = [

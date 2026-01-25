@@ -74,9 +74,8 @@ export function ApiStatus({ pollIntervalMs = 15000 }: { pollIntervalMs?: number 
 		}
 
 		async function fetchOnce() {
-			const base = process.env.BACKEND_URL;
 			try {
-				const res = await fetch(`${base}/api/health`, { signal: controller.signal, cache: "no-store" });
+				const res = await fetch("/api/health", { signal: controller.signal, cache: "no-store" });
 				await handleResponse(res);
 			} catch (err) {
 				await handleError(err);

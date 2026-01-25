@@ -1,17 +1,13 @@
-import type { NPMPackage } from "@/types/npm";
 import { useCallback, useState } from "react";
+import type { NPMPackage } from "@/types/npm";
 
 export function useExtraPackages() {
 	const [packages, setPackages] = useState<NPMPackage[]>([]);
 	const [loading, setLoading] = useState(false);
 
 	const fetchPackages = useCallback(async (packageName?: string) => {
-		const baseUrl = process.env.BACKEND_URL!;
-
-		const url = new URL("/api/npm", baseUrl);
-		if (packageName) {
-			url.searchParams.append("name", packageName);
-		}
+		const query = packageName ? "?name=" + encodeURIComponent(packageName) : "";
+		const url = "/api/npm" + query;
 
 		try {
 			setLoading(true);

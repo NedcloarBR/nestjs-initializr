@@ -3,7 +3,7 @@ import type { NodeEnv } from "@/app/constants/environment";
 
 export class ConfigDTO {
 	@IsString()
-	public readonly BACKEND_CORS_ORIGIN: string;
+	public readonly CORS_ORIGIN: string;
 
 	@IsNumber(
 		{
@@ -11,15 +11,15 @@ export class ConfigDTO {
 			allowNaN: false
 		},
 		{
-			message: "BACKEND_PORT must be a number"
+			message: "PORT must be a number"
 		}
 	)
-	public readonly BACKEND_PORT: number;
+	public readonly PORT: number;
 
 	@IsString({
-		message: "BACKEND_GLOBAL_PREFIX must be a string"
+		message: "GLOBAL_PREFIX must be a string"
 	})
-	public readonly BACKEND_GLOBAL_PREFIX: string;
+	public readonly GLOBAL_PREFIX: string;
 
 	@IsString()
 	@IsOptional()

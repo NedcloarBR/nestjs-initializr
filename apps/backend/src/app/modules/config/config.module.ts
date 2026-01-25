@@ -1,3 +1,4 @@
+import path from "node:path";
 import { Global, Module, type Provider } from "@nestjs/common";
 import { ConfigModule as NestConfigModule } from "@nestjs/config";
 import { Services } from "../../constants/services";
@@ -11,7 +12,7 @@ const providers: Provider[] = [{ provide: Services.Config, useClass: ConfigServi
 	imports: [
 		NestConfigModule.forRoot({
 			isGlobal: false,
-			envFilePath: [`.env.${process.env.NODE_ENV}`],
+			envFilePath: [path.join(process.cwd(), `.env.${process.env.NODE_ENV}`)],
 			validate: configValidator
 		})
 	],

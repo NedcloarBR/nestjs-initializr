@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
+    container_name: nestjs-initializr.backend
+    environment:
+      PORT: 9901
+      GLOBAL_PREFIX: api
+      CORS_ORIGIN: http://frontend:3000
+    ports:
+      - "3001:3000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile
+      args:
+        - NEXT_PUBLIC_BACKEND_URL=http://backend:3001
+    container_name: nestjs-initializr.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

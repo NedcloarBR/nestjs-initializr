@@ -3,18 +3,18 @@ import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
 import { AppModule } from "./app/app.module";
+import { HttpExceptionFilter } from "./app/common/filters";
+import { AxiosInterceptor, RequestIdInterceptor } from "./app/common/interceptors";
 import { Services } from "./app/constants/services";
 import type { ConfigService } from "./app/modules/config";
 import { setupSwagger } from "./lib";
-import { HttpExceptionFilter } from "./app/common/filters";
-import { AxiosInterceptor, RequestIdInterceptor } from "./app/common/interceptors";
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 	const configService = app.get<ConfigService>(Services.Config);
-	const globalPrefix = configService.get("BACKEND_GLOBAL_PREFIX");
+	const globalPrefix = configService.get("GLOBAL_PREFIX");
 	app.setGlobalPrefix(globalPrefix);
-	const port = configService.get("BACKEND_PORT");
+	const port = configService.get("PORT");
 
 	app.useGlobalPipes(
 		new ValidationPipe({
@@ -30,7 +30,7 @@ async function bootstrap() {
 	app.useGlobalInterceptors(new RequestIdInterceptor(), new AxiosInterceptor());
 
 	app.enableCors({
-		origin: configService.get("BACKEND_CORS_ORIGIN"),
+		origin: configService.get("CORS_ORIGIN"),
 		credentials: true,
 		methods: ["GET", "POST"],
 		allowedHeaders: ["Content-Type", "Authorization", "X-Request-Id"],
