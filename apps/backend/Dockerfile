@@ -35,6 +35,6 @@ ENV NODE_ENV=production
 COPY --from=deps-prod /app/node_modules ./node_modules
 COPY --from=builder /app/apps/backend/dist ./
 
-EXPOSE 3000
+EXPOSE 9901
 
 CMD ["node", "main.js"]

@@ -9,14 +9,14 @@ services:
       GLOBAL_PREFIX: api
       CORS_ORIGIN: http://frontend:3000
     ports:
-      - "3001:3000"
+      - "3001:9901"
 
   frontend:
     build:
       context: .
       dockerfile: ./apps/frontend/Dockerfile
       args:
-        - NEXT_PUBLIC_BACKEND_URL=http://backend:3001
+        - BACKEND_INTERNAL_URL=http://backend:9901
     container_name: nestjs-initializr.frontend
     ports:
       - "3000:3000"
