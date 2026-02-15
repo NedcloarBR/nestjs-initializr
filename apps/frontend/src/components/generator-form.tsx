@@ -1,18 +1,20 @@
 "use client";
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { PackagePlus, RefreshCcw, Rocket, Save, Settings2, Sparkles, Upload } from "lucide-react";
+import { Bug, PackagePlus, RefreshCcw, Rocket, Save, Settings2, Sparkles, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { generate, loadConfig } from "@/actions";
+import { getDebugSession } from "@/actions/debug";
 import { extraFields, nodeVersions, packageManagers } from "@/constants";
 import { databaseModules } from "@/constants/modules";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useExtraPackages } from "@/hooks/use-extra-packages";
 import type { ConfigStructure } from "@/types/config";
 import type { ModuleCategory } from "@/types/module";
+import { DebugModal } from "./debug/debug-modal";
 import { ExtraField } from "./extra-field";
 import { ExtraPackage } from "./extra-package";
 import { Module } from "./module";
@@ -62,6 +64,8 @@ function configToFormData(data: ConfigStructure) {
 }
 
 export function GeneratorForm() {
+  const debugEnabled = process.env.NEXT_PUBLIC_DEBUG_ENABLED === "true";
+
 	const t = useTranslations("Generator");
 	const formSchema = generatorFormSchema(t);
 	const defaultValues: z.infer<typeof formSchema> = {
@@ -91,7 +95,9 @@ export function GeneratorForm() {
 	const [isOpenDatabaseConfigModal, setIsOpenDatabaseConfigModal] = useState(false);
 	const [previousModules, setPreviousModules] = useState<string[]>(defaultValues.modules);
 	const { packages, fetchPackages, loading: packagesLoading } = useExtraPackages();
-
+	const [debugId, setDebugId] = useState<string | null>(null);
+	const [debugIsOpen, setDebugIsOpen] = useState(false);
+  const [dataToDebug, setDataToDebug] = useState<z.infer<typeof generatorFormSchema>>(defaultValues);
 	const modules = form.watch("modules");
 
 	useEffect(() => {
@@ -102,8 +108,8 @@ export function GeneratorForm() {
 
 	useEffect(() => {
 		const databaseModuleAdded =
-			modules?.some((mod) => databaseModules.includes(mod as typeof databaseModules[number])) &&
-			!previousModules?.some((mod) => databaseModules.includes(mod as typeof databaseModules[number]));
+			modules?.some((mod) => databaseModules.includes(mod as (typeof databaseModules)[number])) &&
+			!previousModules?.some((mod) => databaseModules.includes(mod as (typeof databaseModules)[number]));
 
 		if (databaseModuleAdded) {
 			setIsOpenDatabaseConfigModal(true);
@@ -129,6 +135,16 @@ export function GeneratorForm() {
 		if (fileInput) {
 			fileInput.value = "";
 		}
+	}
+
+	async function getDebugId(values: z.infer<ReturnType<typeof generatorFormSchema>>) {
+    setDataToDebug(values);
+		const debugId = await getDebugSession();
+
+		if (!debugId) return;
+
+		setDebugId(debugId);
+		setDebugIsOpen(true);
 	}
 
 	return (
@@ -408,6 +424,8 @@ export function GeneratorForm() {
 						fetchPackages={fetchPackages}
 					/>
 
+					<DebugModal debugId={debugId ?? ""} isOpen={debugIsOpen} onOpenChange={() => setDebugIsOpen((prev) => !prev)} dataToDebug={dataToDebug} />
+
 					<Module.DatabaseConfig isOpen={isOpenDatabaseConfigModal} onOpenChange={setIsOpenDatabaseConfigModal} />
 
 					{/* Submit */}
@@ -435,6 +453,16 @@ export function GeneratorForm() {
 									{t("Submit.config")}
 								</Button>
 							</div>
+							{debugEnabled && (
+                <Button
+								onClick={form.handleSubmit((values) => getDebugId(values))}
+								variant="outline"
+								className="cursor-pointer"
+								size="lg">
+								<Bug className="mr-2 h-5 w-5" />
+								Debug
+							</Button>
+              )}
 						</div>
 					</div>
 				</form>

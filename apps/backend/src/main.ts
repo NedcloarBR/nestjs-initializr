@@ -3,11 +3,12 @@ import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, type NestFastifyApplication } from "@nestjs/platform-fastify";
 import { AppModule } from "./app/app.module";
+import { SocketInstrumentAdapter } from "./app/common/adapters/socket-instrument.adapter";
 import { HttpExceptionFilter } from "./app/common/filters";
 import { AxiosInterceptor, RequestIdInterceptor } from "./app/common/interceptors";
 import { Services } from "./app/constants/services";
 import type { ConfigService } from "./app/modules/config";
-import { setupSwagger } from "./lib";
+import { NodeHandler, setupSwagger } from "./lib";
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
@@ -24,6 +25,8 @@ async function bootstrap() {
 			transform: true
 		})
 	);
+
+	app.useWebSocketAdapter(new SocketInstrumentAdapter(app));
 
 	app.useGlobalFilters(new HttpExceptionFilter(configService));
 
@@ -53,8 +56,12 @@ async function bootstrap() {
 
 	await setupSwagger(app, globalPrefix, port);
 
+	NodeHandler(app);
+
 	await app.listen(port, "0.0.0.0");
-	Logger.log(`Application is running on: http://localhost:${port}/${globalPrefix}`, "Bootstrap");
+  const appUrl = await app.getUrl();
+
+	Logger.log(`Application is running on: ${appUrl}/${globalPrefix}`, "Bootstrap");
 }
 
 void bootstrap();

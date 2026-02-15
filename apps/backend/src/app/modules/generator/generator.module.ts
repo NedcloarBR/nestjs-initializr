@@ -12,6 +12,7 @@ loadPluginsSync();
  * Plugins are automatically discovered from the `plugins/` directory
  * Any file matching `*.plugin.ts` will be loaded and registered via @Plugin decorator
  */
+
 @Module({
 	controllers: [GeneratorController],
 	providers: [PluginGeneratorService, PluginContainer, PluginExecutor],
@@ -47,4 +48,3 @@ export class PluginGeneratorModule implements OnModuleInit {
 			.join(", ");
 	}
 }
-

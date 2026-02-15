@@ -3,9 +3,9 @@ import { ApiTags } from "@nestjs/swagger";
 import type { FastifyReply, FastifyRequest } from "fastify";
 // biome-ignore lint/style/useImportType: Cannot useImportType in body dtos
 import { MetadataDTO } from "./dtos/metadata.dto";
+import { ApiGenerateConfig, ApiGenerateProject } from "./generator.swagger";
 // biome-ignore lint/style/useImportType: Cannot useImportType in dependency injection
 import { PluginGeneratorService } from "./plugin-generator.service";
-import { ApiGenerateConfig, ApiGenerateProject } from "./generator.swagger";
 
 @ApiTags("Generator")
 @Controller("generator")

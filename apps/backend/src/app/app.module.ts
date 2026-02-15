@@ -1,9 +1,8 @@
 import { Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
-import { ConfigModule, PluginGeneratorModule } from "./modules";
-import { HealthModule } from "./modules/health/health.module";
-import { NpmModule } from "./modules/npm/npm.module";
+import { ConfigModule, HealthModule, NpmModule, PluginGeneratorModule } from "./modules";
+
 
 @Module({
 	imports: [
@@ -16,9 +15,11 @@ import { NpmModule } from "./modules/npm/npm.module";
 				}
 			]
 		}),
+		// DebugModule, //! Disabled due problems to debug ConfigModule Plugin
 		PluginGeneratorModule,
 		NpmModule,
-		HealthModule
+		HealthModule,
+    // StaticModule, //! Disabled due problems to debug ConfigModule Plugin in DebugModule
 	],
 	providers: [
 		{

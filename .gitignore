@@ -24,6 +24,7 @@ install-state.gz
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/helpers.code-snippets
 
 # misc
 /.sass-cache

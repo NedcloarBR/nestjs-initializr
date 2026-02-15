@@ -1,0 +1,9 @@
+{
+  "Disable BiomeJS useImportType for Dependency Injection": {
+    "prefix": "biomeNoImportType",
+    "body": [
+      "// biome-ignore lint/style/useImportType: Cannot use 'import type' in Dependency Injection"
+    ],
+    "description": "Disable BiomeJS useImportType for Dependency Injection"
+  }
+}

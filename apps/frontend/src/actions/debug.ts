@@ -1,14 +1,27 @@
-import { saveAs } from "file-saver";
 import { toast } from "sonner";
 import type { z } from "zod";
 import type { generatorFormSchema } from "@/forms/generator-form-schema";
 import type { ConfigStructure } from "@/types/config";
 import { addRecentHistory } from "@/utils/history";
 
-export async function generate(values: z.infer<ReturnType<typeof generatorFormSchema>>, mode: "config" | "project") {
+export async function getDebugSession() {
+  try {
+    const response = await fetch("/api/debugger/session", { method: "POST" });
+    if (!response.ok) {
+      throw new Error("Failed to create debug session");
+    }
+    const data = await response.json();
+    return data.sessionId as string;
+  } catch (error) {
+    console.error("Error creating debug session:", error);
+    toast.error("Error while creating debug session.");
+    return null;
+  }
+}
+
+export async function startDebug(values: z.infer<ReturnType<typeof generatorFormSchema>>, debugId: string) {
 	try {
 		const hasPrisma = values.modules?.includes("prisma-standalone");
-
 		const rawBody = {
 			mainType: values.mainType,
 			packageJson: {
@@ -28,40 +41,21 @@ export async function generate(values: z.infer<ReturnType<typeof generatorFormSc
 				: undefined
 		} as ConfigStructure;
 
-		let url = "/api/generator";
-		let filename = "project.zip";
-
-		if (mode === "config") {
-			url += "/config";
-			filename = "nestjs-initializr.json";
-		}
-
-		const response = await fetch(url, {
+		const response = await fetch("/api/debugger/start", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json"
-			},
+        "Content-Type": "application/json", "x-debug-session-id": debugId },
 			body: JSON.stringify(rawBody)
 		});
 
 		if (!response.ok) {
-			throw new Error(`Error generating the ${mode} file`);
+			throw new Error("Error starting debug session");
 		}
-
-		const contentDisposition = response.headers.get("Content-Disposition");
-		const fileName = contentDisposition?.split("filename=")[1] || filename;
-
-		const blob = await response.blob();
-
-		saveAs(blob, fileName);
 
 		addRecentHistory(rawBody);
 	} catch (error) {
 		console.error(error);
-		let message = "An unexpected error occurred.";
-		if ((error as Error).message === "Failed to fetch") {
-			message = "Error connecting to the server.";
-		}
-		toast.error(message);
+		toast.error("Erro ao iniciar debug.");
+		return null;
 	}
 }

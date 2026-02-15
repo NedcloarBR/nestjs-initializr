@@ -26,7 +26,7 @@ export class PluginGeneratorService {
 	 * @param metadata - Contains user selections from frontend (modules, extras, etc.)
 	 * @param id - Unique generation ID
 	 */
-	public async generate(metadata: MetadataDTO, id: string): Promise<fs.ReadStream> {
+	public async generate(metadata: MetadataDTO, id: string, debugCleanup = false): Promise<fs.ReadStream | string> {
 		const ctx = createContext(id, metadata);
 
 		const selectedModules = metadata.modules ?? [];
@@ -44,11 +44,13 @@ export class PluginGeneratorService {
 
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
 
-		await this.lintAndFormat(id);
+    if (!debugCleanup) await this.lintAndFormat(id);
 
-		const zipStream = await this.createZipFile(basePath, result.files, result.rootFolders);
+		this.scheduleCleanup(id, debugCleanup);
 
-		this.scheduleCleanup(id);
+    if (debugCleanup) return basePath;
+
+		const zipStream = await this.createZipFile(basePath, result.files, result.rootFolders, metadata.packageManager);
 
 		return zipStream;
 	}
@@ -65,6 +67,19 @@ export class PluginGeneratorService {
 		}
 	}
 
+  private getLockfileName(packageManager: string): string | null {
+    switch (packageManager) {
+      case "npm":
+        return "package-lock.json";
+      case "yarn":
+        return "yarn.lock";
+      case "pnpm":
+        return "pnpm-lock.yaml";
+      default:
+        return null;
+    }
+  }
+
 	private async generatePackageJson(
 		basePath: string,
 		metadata: MetadataDTO,
@@ -75,6 +90,8 @@ export class PluginGeneratorService {
 			name: metadata.packageJson.name,
 			version: "1.0.0",
 			description: metadata.packageJson.description ?? "",
+      private: true,
+      packageManager: this.resolvePackageManager(metadata.packageManager),
 			scripts: {} as Record<string, string>,
 			dependencies: {} as Record<string, string>,
 			devDependencies: {} as Record<string, string>,
@@ -112,11 +129,14 @@ export class PluginGeneratorService {
 		packageJson.dependencies = this.sortObject(packageJson.dependencies as Record<string, string>);
 		packageJson.devDependencies = this.sortObject(packageJson.devDependencies as Record<string, string>);
 
+    const lockfileName = this.getLockfileName(metadata.packageManager);
+    fs.writeFileSync(path.join(basePath, lockfileName), "", "utf-8");
+
 		const filePath = path.join(basePath, "package.json");
 		fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 2), "utf-8");
 	}
 
-	private async createZipFile(basePath: string, files: GeneratedFile[], rootFolders: string[]): Promise<fs.ReadStream> {
+	private async createZipFile(basePath: string, files: GeneratedFile[], rootFolders: string[], packageManager: string): Promise<fs.ReadStream> {
 		const zipPath = path.join(basePath, "project.zip");
 		const output = fs.createWriteStream(zipPath);
 		const archive = archiver("zip", { zlib: { level: 9 } });
@@ -144,7 +164,15 @@ export class PluginGeneratorService {
 			}
 		}
 
-		archive.file(path.join(basePath, "package.json"), { name: "package.json" });
+		const lockfileName = this.getLockfileName(packageManager);
+
+    if (lockfileName) {
+      const lockfilePath = path.join(basePath, lockfileName);
+
+      if (fs.existsSync(lockfilePath)) {
+        archive.file(lockfilePath, { name: lockfileName });
+      }
+    }
 
 		await new Promise<void>((resolve, reject) => {
 			output.on("close", resolve);
@@ -177,18 +205,21 @@ export class PluginGeneratorService {
 		return fs.createReadStream(configPath);
 	}
 
-	private scheduleCleanup(id: string): void {
-		setTimeout(() => {
-			const dirPath = this.getPath(id);
-			fs.rm(dirPath, { recursive: true }, (err) => {
-				if (err) {
-					this.logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
-					return;
-				}
+	private scheduleCleanup(id: string, debugCleanup = false): void {
+		setTimeout(
+			() => {
+				const dirPath = this.getPath(id);
+				fs.rm(dirPath, { recursive: true }, (err) => {
+					if (err) {
+						this.logger.error(`Error deleting directory: ${err}`, `Delete:${id}`);
+						return;
+					}
 
-				this.logger.log("Directory deleted successfully", `Delete:${id}`);
-			});
-		}, 10_000);
+					this.logger.log("Directory deleted successfully", `Delete:${id}`);
+				});
+			},
+			debugCleanup ? 60_000 : 10_000
+		);
 	}
 
 	private sortObject(obj: Record<string, string>): Record<string, string> {
@@ -237,4 +268,14 @@ export class PluginGeneratorService {
 		await runBiomeCommand(["lint", "--write"]);
 		await runBiomeCommand(["format", "--write"]);
 	}
+
+  private resolvePackageManager(packageManager: string): string | undefined {
+    const versions: Record<string, string> = {
+      pnpm: "pnpm@10.29.1",
+      yarn: "yarn@4.9.2",
+      npm: "npm@10.9.2"
+    };
+
+    return versions[packageManager];
+  }
 }

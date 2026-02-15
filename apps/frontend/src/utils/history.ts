@@ -21,13 +21,10 @@ export function addRecentHistory(newItem: ConfigStructure) {
 	const existing = getRecentHistory();
 
 	const newHash = hashObject(newItem);
-	console.log("New Hash:", newHash); // Debugging line
 
 	const alreadyExists = existing.some((item) => hashObject(item) === newHash);
-	console.log("Already Exists:", alreadyExists); // Debugging line
 
 	if (!alreadyExists) {
-		console.log("Adding new item to history"); // Debugging line
 		const updated = [...existing, newItem];
 
 		if (updated.length > MAX_HISTORY) updated.shift();
