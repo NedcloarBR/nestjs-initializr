@@ -25,10 +25,12 @@ export class ConfigDTO {
 	public readonly SOCKET_ADMIN_ENABLED: boolean;
 
 	@IsString()
+	@IsOptional()
 	@ValidateIf((data: ConfigDTO) => data.SOCKET_ADMIN_ENABLED)
 	public readonly SOCKET_ADMIN_USERNAME: string;
 
 	@IsString()
+	@IsOptional()
 	@ValidateIf((data: ConfigDTO) => data.SOCKET_ADMIN_ENABLED)
 	public readonly SOCKET_ADMIN_PASSWORD: string;
 

@@ -8,6 +8,7 @@ services:
       PORT: 9901
       GLOBAL_PREFIX: api
       CORS_ORIGIN: http://frontend:3000
+      SOCKET_ADMIN_ENABLED: false
     ports:
       - "3001:9901"
 
