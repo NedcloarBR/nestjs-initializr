@@ -1,11 +1,7 @@
 import { Plugin } from "@/app/common";
 import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
-import {
-	createDockerComposeTemplate,
-	createDockerfileTemplate,
-	createDockerIgnoreTemplate
-} from "./templates";
+import { createDockerComposeTemplate, createDockerfileTemplate, createDockerIgnoreTemplate } from "./templates";
 
 /**
  * Docker Plugin - Generates Docker configuration files

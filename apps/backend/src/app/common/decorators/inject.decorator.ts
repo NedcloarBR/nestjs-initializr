@@ -17,7 +17,7 @@ export const INJECT_METADATA = Symbol("INJECT_METADATA");
  * ```
  */
 export function InjectPlugin(pluginName: string): ParameterDecorator {
-	return (target: object, propertyKey: string | symbol | undefined, parameterIndex: number) => {
+	return (target: object, _propertyKey: string | symbol | undefined, parameterIndex: number) => {
 		const existingInjections: Map<number, string> =
 			Reflect.getMetadata(INJECT_METADATA, target) || new Map<number, string>();
 

@@ -5,18 +5,18 @@ import type { ConfigStructure } from "@/types/config";
 import { addRecentHistory } from "@/utils/history";
 
 export async function getDebugSession() {
-  try {
-    const response = await fetch("/api/debugger/session", { method: "POST" });
-    if (!response.ok) {
-      throw new Error("Failed to create debug session");
-    }
-    const data = await response.json();
-    return data.sessionId as string;
-  } catch (error) {
-    console.error("Error creating debug session:", error);
-    toast.error("Error while creating debug session.");
-    return null;
-  }
+	try {
+		const response = await fetch("/api/debugger/session", { method: "POST" });
+		if (!response.ok) {
+			throw new Error("Failed to create debug session");
+		}
+		const data = await response.json();
+		return data.sessionId as string;
+	} catch (error) {
+		console.error("Error creating debug session:", error);
+		toast.error("Error while creating debug session.");
+		return null;
+	}
 }
 
 export async function startDebug(values: z.infer<ReturnType<typeof generatorFormSchema>>, debugId: string) {
@@ -44,7 +44,9 @@ export async function startDebug(values: z.infer<ReturnType<typeof generatorForm
 		const response = await fetch("/api/debugger/start", {
 			method: "POST",
 			headers: {
-        "Content-Type": "application/json", "x-debug-session-id": debugId },
+				"Content-Type": "application/json",
+				"x-debug-session-id": debugId
+			},
 			body: JSON.stringify(rawBody)
 		});
 

@@ -20,7 +20,7 @@ export class DebugService {
 	private readonly runningProcesses = new Map<string, Set<ChildProcessWithoutNullStreams>>();
 
 	public async debugAndStreamProject(metadata: MetadataDTO, id: string, sessionId: string): Promise<void> {
-    const startedAt = Date.now();
+		const startedAt = Date.now();
 		if (this.runningSessions.has(sessionId)) {
 			this.debugGateway.sendLog(sessionId, "[info] Session already running.");
 			return;
@@ -32,7 +32,7 @@ export class DebugService {
 		this.debugGateway.sendLog(sessionId, "[info] Starting debug session...");
 
 		try {
-			const generatedPath = await this.generatorService.generate(metadata, id, true) as string;
+			const generatedPath = (await this.generatorService.generate(metadata, id, true)) as string;
 
 			const pm = metadata.packageManager as PackageManager;
 			const commands = PACKAGE_MANAGER_COMMANDS[pm];
@@ -45,7 +45,7 @@ export class DebugService {
 			} else {
 				this.debugGateway.sendLog(sessionId, "[info] Dependencies already installed.");
 			}
-      this.debugGateway.sendLog(sessionId, `[debug] Total setup time: ${Date.now() - startedAt}ms`);
+			this.debugGateway.sendLog(sessionId, `[debug] Total setup time: ${Date.now() - startedAt}ms`);
 			this.startProject(commands.start, generatedPath, sessionId);
 		} catch (error) {
 			this.runningSessions.delete(sessionId);
@@ -59,14 +59,14 @@ export class DebugService {
 		const proc = spawn(command.cmd, command.args, {
 			cwd,
 			stdio: ["ignore", "pipe", "pipe"],
-      detached: true,
+			detached: true,
 			env: this.getEnv()
 		});
 
-    proc.on("error", (err) => {
-      this.debugGateway.sendLog(sessionId, `[fatal] Error while debugging: ${err.message}`);
-      this.runningSessions.delete(sessionId);
-    });
+		proc.on("error", (err) => {
+			this.debugGateway.sendLog(sessionId, `[fatal] Error while debugging: ${err.message}`);
+			this.runningSessions.delete(sessionId);
+		});
 
 		this.debugGateway.sendLog(sessionId, `[debug] spawn returned in ${Date.now() - spawnStartedAt}ms`);
 
@@ -76,14 +76,17 @@ export class DebugService {
 		const timeout = setTimeout(() => {
 			this.debugGateway.sendLog(sessionId, "[info] Maximum debug time reached. Terminating process.");
 			if (!proc.killed) {
-        process.kill(-proc.pid!, "SIGKILL")
-      }
+				process.kill(-proc.pid!, "SIGKILL");
+			}
 		}, 20_000);
 
 		proc.on("close", (code, signal) => {
 			clearTimeout(timeout);
 			this.runningSessions.delete(sessionId);
-			this.debugGateway.sendLog(sessionId, `[info] Debug session finished. Process exited with ${signal ? `signal ${signal}` : `code ${code}`}`);
+			this.debugGateway.sendLog(
+				sessionId,
+				`[info] Debug session finished. Process exited with ${signal ? `signal ${signal}` : `code ${code}`}`
+			);
 		});
 	}
 
@@ -95,10 +98,10 @@ export class DebugService {
 				env: this.getEnv()
 			});
 
-      proc.on("error", (err) => {
-        this.debugGateway.sendLog(sessionId, `[fatal] Error while debugging: ${err.message}`);
-        this.runningSessions.delete(sessionId);
-      });
+			proc.on("error", (err) => {
+				this.debugGateway.sendLog(sessionId, `[fatal] Error while debugging: ${err.message}`);
+				this.runningSessions.delete(sessionId);
+			});
 
 			this.registerProcess(sessionId, proc);
 			this.streamProcess(proc, sessionId);
@@ -109,58 +112,55 @@ export class DebugService {
 		});
 	}
 
-	private streamProcess(
-    proc: ChildProcessWithoutNullStreams,
-    sessionId: string
-  ): void {
-    let stdoutBuffer = "";
-    let stderrBuffer = "";
+	private streamProcess(proc: ChildProcessWithoutNullStreams, sessionId: string): void {
+		let stdoutBuffer = "";
+		let stderrBuffer = "";
 
-    const flushStdout = () => {
-      if (stdoutBuffer.trim().length > 0) {
-        this.debugGateway.sendLog(sessionId, stdoutBuffer);
-        stdoutBuffer = "";
-      }
-    };
+		const flushStdout = () => {
+			if (stdoutBuffer.trim().length > 0) {
+				this.debugGateway.sendLog(sessionId, stdoutBuffer);
+				stdoutBuffer = "";
+			}
+		};
 
-    const flushStderr = () => {
-      if (stderrBuffer.trim().length > 0) {
-        this.debugGateway.sendLog(sessionId, stderrBuffer);
-        stderrBuffer = "";
-      }
-    };
+		const flushStderr = () => {
+			if (stderrBuffer.trim().length > 0) {
+				this.debugGateway.sendLog(sessionId, stderrBuffer);
+				stderrBuffer = "";
+			}
+		};
 
-    proc.stdout.on("data", (data) => {
-      stdoutBuffer += data.toString();
+		proc.stdout.on("data", (data) => {
+			stdoutBuffer += data.toString();
 
-      const lines = stdoutBuffer.split(/\r?\n|\r/);
-      stdoutBuffer = lines.pop() ?? "";
+			const lines = stdoutBuffer.split(/\r?\n|\r/);
+			stdoutBuffer = lines.pop() ?? "";
 
-      for (const line of lines) {
-        if (line.length > 0) {
-          this.debugGateway.sendLog(sessionId, line);
-        }
-      }
-    });
+			for (const line of lines) {
+				if (line.length > 0) {
+					this.debugGateway.sendLog(sessionId, line);
+				}
+			}
+		});
 
-    proc.stderr.on("data", (data) => {
-      stderrBuffer += data.toString();
+		proc.stderr.on("data", (data) => {
+			stderrBuffer += data.toString();
 
-      const lines = stderrBuffer.split(/\r?\n|\r/);
-      stderrBuffer = lines.pop() ?? "";
+			const lines = stderrBuffer.split(/\r?\n|\r/);
+			stderrBuffer = lines.pop() ?? "";
 
-      for (const line of lines) {
-        if (line.length > 0) {
-          this.debugGateway.sendLog(sessionId, `${line}\n`);
-        }
-      }
-    });
+			for (const line of lines) {
+				if (line.length > 0) {
+					this.debugGateway.sendLog(sessionId, `${line}\n`);
+				}
+			}
+		});
 
-    proc.on("close", () => {
-      flushStdout();
-      flushStderr();
-    });
-  }
+		proc.on("close", () => {
+			flushStdout();
+			flushStderr();
+		});
+	}
 
 	private registerProcess(sessionId: string, proc: ChildProcessWithoutNullStreams): void {
 		if (!this.runningProcesses.has(sessionId)) {
@@ -175,51 +175,48 @@ export class DebugService {
 	}
 
 	private killAllRunningProcesses(): void {
-    for (const [sessionId, processes] of this.runningProcesses.entries()) {
-      for (const proc of processes) {
-        if (!proc.pid) continue;
+		for (const [sessionId, processes] of this.runningProcesses.entries()) {
+			for (const proc of processes) {
+				if (!proc.pid) continue;
 
-        this.debugGateway.sendLog(sessionId, "[info] Terminating active debug process.");
+				this.debugGateway.sendLog(sessionId, "[info] Terminating active debug process.");
 
-        try {
-          process.kill(-proc.pid, "SIGKILL");
-        } catch (error) {
-          if (error.code !== "ESRCH") {
-            this.debugGateway.sendLog(
-              sessionId,
-              `[error] Failed to kill process: ${error.message}`
-            );
-          }
-        }
-      }
-    }
+				try {
+					process.kill(-proc.pid, "SIGKILL");
+				} catch (error) {
+					if (error.code !== "ESRCH") {
+						this.debugGateway.sendLog(sessionId, `[error] Failed to kill process: ${error.message}`);
+					}
+				}
+			}
+		}
 
-    this.runningProcesses.clear();
-    this.runningSessions.clear();
-  }
+		this.runningProcesses.clear();
+		this.runningSessions.clear();
+	}
 
-  private getEnv() {
-    const env = { ...process.env };
+	private getEnv() {
+		const env = { ...process.env };
 
-    const variablesToRemove = [
-      "PORT",
-      "GLOBAL_PREFIX",
-      "CORS_ORIGIN",
-      "SOCKET_ADMIN_ENABLED",
-      "SOCKET_ADMIN_USERNAME",
-      "SOCKET_ADMIN_PASSWORD",
-    ];
+		const variablesToRemove = [
+			"PORT",
+			"GLOBAL_PREFIX",
+			"CORS_ORIGIN",
+			"SOCKET_ADMIN_ENABLED",
+			"SOCKET_ADMIN_USERNAME",
+			"SOCKET_ADMIN_PASSWORD"
+		];
 
-    for (const key of Object.keys(env)) {
-      if (variablesToRemove.includes(key)) {
-        delete env[key];
-      }
-    }
+		for (const key of Object.keys(env)) {
+			if (variablesToRemove.includes(key)) {
+				delete env[key];
+			}
+		}
 
-    return {
-      ...env,
-      FORCE_COLOR: "1",
-      CI: "1",
-    };
-  }
+		return {
+			...env,
+			FORCE_COLOR: "1",
+			CI: "1"
+		};
+	}
 }

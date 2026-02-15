@@ -22,10 +22,8 @@ export const ormConfigs: OrmConfig[] = [
 		displayName: "Prisma",
 		modules: ["prisma-standalone", "nestjs-prisma"],
 		fieldName: "prismaType",
-		databases: [
-			{ value: "postgres", label: "PostgreSQL", icon: "postgres" }
-		]
-  }
+		databases: [{ value: "postgres", label: "PostgreSQL", icon: "postgres" }]
+	}
 ];
 
 export function getOrmConfigByModule(moduleName: string): OrmConfig | undefined {

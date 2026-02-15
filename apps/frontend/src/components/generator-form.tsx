@@ -64,7 +64,7 @@ function configToFormData(data: ConfigStructure) {
 }
 
 export function GeneratorForm() {
-  const debugEnabled = process.env.NEXT_PUBLIC_DEBUG_ENABLED === "true";
+	const debugEnabled = process.env.NEXT_PUBLIC_DEBUG_ENABLED === "true";
 
 	const t = useTranslations("Generator");
 	const formSchema = generatorFormSchema(t);
@@ -97,7 +97,7 @@ export function GeneratorForm() {
 	const { packages, fetchPackages, loading: packagesLoading } = useExtraPackages();
 	const [debugId, setDebugId] = useState<string | null>(null);
 	const [debugIsOpen, setDebugIsOpen] = useState(false);
-  const [dataToDebug, setDataToDebug] = useState<z.infer<typeof generatorFormSchema>>(defaultValues);
+	const [dataToDebug, setDataToDebug] = useState<z.infer<typeof generatorFormSchema>>(defaultValues);
 	const modules = form.watch("modules");
 
 	useEffect(() => {
@@ -138,7 +138,7 @@ export function GeneratorForm() {
 	}
 
 	async function getDebugId(values: z.infer<ReturnType<typeof generatorFormSchema>>) {
-    setDataToDebug(values);
+		setDataToDebug(values);
 		const debugId = await getDebugSession();
 
 		if (!debugId) return;
@@ -424,7 +424,12 @@ export function GeneratorForm() {
 						fetchPackages={fetchPackages}
 					/>
 
-					<DebugModal debugId={debugId ?? ""} isOpen={debugIsOpen} onOpenChange={() => setDebugIsOpen((prev) => !prev)} dataToDebug={dataToDebug} />
+					<DebugModal
+						debugId={debugId ?? ""}
+						isOpen={debugIsOpen}
+						onOpenChange={() => setDebugIsOpen((prev) => !prev)}
+						dataToDebug={dataToDebug}
+					/>
 
 					<Module.DatabaseConfig isOpen={isOpenDatabaseConfigModal} onOpenChange={setIsOpenDatabaseConfigModal} />
 
@@ -454,15 +459,15 @@ export function GeneratorForm() {
 								</Button>
 							</div>
 							{debugEnabled && (
-                <Button
-								onClick={form.handleSubmit((values) => getDebugId(values))}
-								variant="outline"
-								className="cursor-pointer"
-								size="lg">
-								<Bug className="mr-2 h-5 w-5" />
-								Debug
-							</Button>
-              )}
+								<Button
+									onClick={form.handleSubmit((values) => getDebugId(values))}
+									variant="outline"
+									className="cursor-pointer"
+									size="lg">
+									<Bug className="mr-2 h-5 w-5" />
+									Debug
+								</Button>
+							)}
 						</div>
 					</div>
 				</form>

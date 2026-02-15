@@ -3,22 +3,22 @@ export function PrismaBaseTemplates(type: string) {
 		postgres: "postgresql://postgres:password@localhost:5432/mydb"
 	};
 
-  function addDatabaseEnvVars(type: string): string {
-    switch (type) {
-      case "postgres":
-        return `
+	function addDatabaseEnvVars(type: string): string {
+		switch (type) {
+			case "postgres":
+				return `
 POSTGRES_PORT=5432
 POSTGRES_USERNAME=postgres
 POSTGRES_PASSWORD=password
 POSTGRES_DATABASE=mydb
 `;
-    }
-  }
+		}
+	}
 
-  function addDockerCompose(type: string): string {
-    switch (type) {
-      case "postgres":
-        return `
+	function addDockerCompose(type: string): string {
+		switch (type) {
+			case "postgres":
+				return `
   postgresql:
     image: bitnami/postgresql:latest
     container_name: postgres
@@ -29,8 +29,8 @@ POSTGRES_DATABASE=mydb
       - POSTGRESQL_PASSWORD=\${POSTGRES_PASSWORD}
       - POSTGRESQL_DATABASE=\${POSTGRES_DATABASE}
         `;
-    }
-  }
+		}
+	}
 	return {
 		prismaConfig: {
 			name: "prisma.config.ts",
@@ -78,9 +78,9 @@ ${addDatabaseEnvVars(type)}
 				replacer: "restart: unless-stopped",
 				content: "restart: unless-stopped\n\tdepends_on:\n\t  - postgres"
 			},
-      service: {
-        content: addDockerCompose(type)
-      }
+			service: {
+				content: addDockerCompose(type)
+			}
 		}
 	};
 }

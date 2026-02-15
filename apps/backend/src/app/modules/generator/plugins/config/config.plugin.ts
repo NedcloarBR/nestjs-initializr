@@ -49,14 +49,20 @@ export class ConfigPlugin extends BasePlugin {
 		const mainTemplate = configMainTemplate(this.mainType);
 		this.createFile(mainTemplate.name, mainTemplate.path, mainTemplate.content);
 
-		this.updateFile("src", "app.module.ts", "replace", this.getAppModuleContent(), /import { Module } from "@nestjs\/common";[\s\S]*export class AppModule {}/);
+		this.updateFile(
+			"src",
+			"app.module.ts",
+			"replace",
+			this.getAppModuleContent(),
+			/import { Module } from "@nestjs\/common";[\s\S]*export class AppModule {}/
+		);
 
 		this.addPkg("@nestjs/config");
 		this.addPkg("class-validator");
 		this.addPkg("class-transformer");
 
 		this.setConstants({
-			token: 'Services.Config',
+			token: "Services.Config",
 			import: "ConfigModule",
 			export: 'export { ConfigModule } from "./config/config.module"',
 			importArray: "ConfigModule",

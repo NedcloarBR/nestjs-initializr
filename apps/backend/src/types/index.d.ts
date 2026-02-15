@@ -40,8 +40,8 @@ export type ModuleNames =
 	| "swagger"
 	| "scalar-api-reference"
 	| "toolkit"
-  | "nestjs-prisma"
-  | "prisma-standalone";
+	| "nestjs-prisma"
+	| "prisma-standalone";
 
 export type ExtraNames = "compression" | "cors" | "helmet" | "validation";
 

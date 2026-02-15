@@ -21,16 +21,16 @@ export class ConfigDTO {
 	})
 	public readonly GLOBAL_PREFIX: string;
 
-  @IsBoolean()
-  public readonly SOCKET_ADMIN_ENABLED: boolean;
+	@IsBoolean()
+	public readonly SOCKET_ADMIN_ENABLED: boolean;
 
-  @IsString()
-  @ValidateIf((data: ConfigDTO) => data.SOCKET_ADMIN_ENABLED)
-  public readonly SOCKET_ADMIN_USERNAME: string;
+	@IsString()
+	@ValidateIf((data: ConfigDTO) => data.SOCKET_ADMIN_ENABLED)
+	public readonly SOCKET_ADMIN_USERNAME: string;
 
-  @IsString()
-  @ValidateIf((data: ConfigDTO) => data.SOCKET_ADMIN_ENABLED)
-  public readonly SOCKET_ADMIN_PASSWORD: string;
+	@IsString()
+	@ValidateIf((data: ConfigDTO) => data.SOCKET_ADMIN_ENABLED)
+	public readonly SOCKET_ADMIN_PASSWORD: string;
 
 	@IsString()
 	@IsOptional()

@@ -1,4 +1,4 @@
- import { ModuleCategory, type ModuleType } from "@/types/module";
+import { ModuleCategory, type ModuleType } from "@/types/module";
 
 const rawModules = [
 	{

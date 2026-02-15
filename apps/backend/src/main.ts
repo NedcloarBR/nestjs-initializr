@@ -59,7 +59,7 @@ async function bootstrap() {
 	NodeHandler(app);
 
 	await app.listen(port, "0.0.0.0");
-  const appUrl = await app.getUrl();
+	const appUrl = await app.getUrl();
 
 	Logger.log(`Application is running on: ${appUrl}/${globalPrefix}`, "Bootstrap");
 }

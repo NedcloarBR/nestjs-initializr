@@ -8,6 +8,7 @@ import type {
 	PluginResult,
 	Script
 } from "@/app/common/interfaces";
+// biome-ignore lint/style/useImportType: Cannot use 'import type' in Dependency Injection
 import { PluginContainer } from "./plugin-container";
 
 export interface ExecutionResult {
@@ -32,6 +33,8 @@ export class PluginExecutor {
 	/**
 	 * Execute plugins for the given module names
 	 */
+
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Function is complex but well-structured for its purpose
 	public async execute(ctx: GeneratorContext, moduleNames: string[]): Promise<ExecutionResult> {
 		const errors: string[] = [];
 		const allResults: PluginResult[] = [];
@@ -171,6 +174,7 @@ export class PluginExecutor {
 		};
 	}
 
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Function is complex but necessary for validating plugin dependencies and conflicts
 	private validateActivePlugins(activePlugins: IGeneratorPlugin[], moduleNames: string[]): string[] {
 		const errors: string[] = [];
 		const activeNames = new Set(activePlugins.map((p) => this.getPluginName(p)));

@@ -67,7 +67,6 @@ export class NecordService {
 `.trim()
 };
 
-
 export const necordCommandTemplate = {
 	name: "necord.command.ts",
 	path: "src/modules/necord",
@@ -161,7 +160,8 @@ export const necordConfigIntegration = {
 	},
 	configModuleImport: {
 		replacer: 'import EnvConfig from "./dtos/env.dto"',
-		content: 'import EnvConfig from "./dtos/env.dto";\nimport DiscordEnvConfig from "@/modules/necord/dtos/discord-env.dto";'
+		content:
+			'import EnvConfig from "./dtos/env.dto";\nimport DiscordEnvConfig from "@/modules/necord/dtos/discord-env.dto";'
 	},
 	configModuleLoad: {
 		replacer: "load: [EnvConfig",
@@ -169,7 +169,8 @@ export const necordConfigIntegration = {
 	},
 	configServiceImport: {
 		replacer: 'import { EnvDTO } from "./dtos/env.dto";',
-		content: 'import { EnvDTO } from "./dtos/env.dto";\nimport { DiscordEnvDTO } from "@/modules/necord/dtos/discord-env.dto";'
+		content:
+			'import { EnvDTO } from "./dtos/env.dto";\nimport { DiscordEnvDTO } from "@/modules/necord/dtos/discord-env.dto";'
 	},
 	configServiceType: {
 		replacer: "InstanceType<typeof EnvDTO>",

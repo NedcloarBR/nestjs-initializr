@@ -99,6 +99,7 @@ export function ModuleCard({ title, name, description, dependsOn, conflicts, ico
 		field.onChange(updatedModules);
 	}
 
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <>
 	function getTooltipMessage() {
 		const missingMessages: string[] = [];
 

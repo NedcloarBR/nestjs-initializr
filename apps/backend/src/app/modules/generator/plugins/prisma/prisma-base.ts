@@ -1,5 +1,5 @@
 import { Logger } from "@nestjs/common";
-import { DEV_NPM_PACKAGE_KEYS, NPM_PACKAGE_KEYS } from "@/types";
+import type { DEV_NPM_PACKAGE_KEYS, NPM_PACKAGE_KEYS } from "@/types";
 import { BasePlugin } from "../../core/base-plugin";
 import { PrismaBaseTemplates } from "./templates";
 
@@ -18,7 +18,7 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 				pkg.dev ? this.addDevPkg(pkg.name as DEV_NPM_PACKAGE_KEYS) : this.addPkg(pkg.name as NPM_PACKAGE_KEYS);
 			}
 		}
-    this.addRootFolder("prisma");
+		this.addRootFolder("prisma");
 		this.generateBaseTemplates();
 		this.generateTemplates();
 
@@ -35,33 +35,23 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 	protected abstract generateTemplates(): void;
 
 	private generateBaseTemplates(): void {
-    const templates = PrismaBaseTemplates(this.ctx.metadata.database.find(db => db.module === "prisma")?.prismaType || "postgres");
-		this.createFile(
-			templates.prismaConfig.name,
-			templates.prismaConfig.path,
-			templates.prismaConfig.content
+		const templates = PrismaBaseTemplates(
+			this.ctx.metadata.database.find((db) => db.module === "prisma")?.prismaType || "postgres"
 		);
+		this.createFile(templates.prismaConfig.name, templates.prismaConfig.path, templates.prismaConfig.content);
 
-		this.createFile(
-			templates.prismaSchema.name,
-			templates.prismaSchema.path,
-			templates.prismaSchema.content
+		this.createFile(templates.prismaSchema.name, templates.prismaSchema.path, templates.prismaSchema.content);
+
+		this.addScript("postinstall", "prisma generate");
+
+		this.appendToFile("", ".env", `\n${templates.dotenv.content}`);
+		this.replaceInFile(
+			"",
+			"docker-compose.yml",
+			templates.dockerCompose.dependsOn.replacer,
+			templates.dockerCompose.dependsOn.content
 		);
-
-    this.addScript("postinstall", "prisma generate");
-
-    this.appendToFile("", ".env", `\n${templates.dotenv.content}`);
-    this.replaceInFile(
-      "",
-      "docker-compose.yml",
-      templates.dockerCompose.dependsOn.replacer,
-      templates.dockerCompose.dependsOn.content
-    );
-    this.appendToFile(
-      "",
-      "docker-compose.yml",
-      templates.dockerCompose.service.content
-    );
+		this.appendToFile("", "docker-compose.yml", templates.dockerCompose.service.content);
 	}
 
 	private getDatabasePackage(type: string) {

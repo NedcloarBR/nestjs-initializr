@@ -1,11 +1,7 @@
 import { Plugin } from "@/app/common";
 import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
-import {
-	necordPaginationCommandUpdates,
-	necordPaginationModuleUpdates,
-	paginationServiceTemplate
-} from "./templates";
+import { necordPaginationCommandUpdates, necordPaginationModuleUpdates, paginationServiceTemplate } from "./templates";
 
 /**
  * Necord Pagination Plugin - Paginated embeds for Discord bots
@@ -32,11 +28,7 @@ export class NecordPaginationPlugin extends BasePlugin {
 	protected onGenerate(): void {
 		const moduleUpdates = necordPaginationModuleUpdates(this.withConfig);
 
-		this.createFile(
-			paginationServiceTemplate.name,
-			paginationServiceTemplate.path,
-			paginationServiceTemplate.content
-		);
+		this.createFile(paginationServiceTemplate.name, paginationServiceTemplate.path, paginationServiceTemplate.content);
 
 		this.replaceInFile(
 			"src/modules/necord",

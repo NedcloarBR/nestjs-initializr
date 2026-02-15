@@ -10,7 +10,7 @@
 			"options": {
 				"command": "webpack-cli build",
 				"args": ["node-env=production"],
-        "output-path": "dist"
+				"output-path": "dist"
 			},
 			"configurations": {
 				"development": {

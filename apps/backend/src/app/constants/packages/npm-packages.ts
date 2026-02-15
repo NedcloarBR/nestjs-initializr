@@ -131,26 +131,26 @@ export const NPM_DEPENDENCIES = {
 		name: "@nedcloarbr/nestjs-toolkit",
 		version: "^1.1.0"
 	},
-  dotenv: {
-    name: "dotenv",
-    version: "^17.2.3"
-  },
-  "nestjs-prisma": {
-    name: "nestjs-prisma",
-    version: "^0.27.0-dev.0"
-  },
-  "@prisma/client": {
-    name: "@prisma/client",
-    version: "^7.2.0"
-  },
-  "@prisma/adapter-pg": {
-    name: "@prisma/adapter-pg",
-    version: "^7.2.0"
-  },
-  pg: {
-    name: "pg",
-    version: "^8.16.3"
-  },
+	dotenv: {
+		name: "dotenv",
+		version: "^17.2.3"
+	},
+	"nestjs-prisma": {
+		name: "nestjs-prisma",
+		version: "^0.27.0-dev.0"
+	},
+	"@prisma/client": {
+		name: "@prisma/client",
+		version: "^7.2.0"
+	},
+	"@prisma/adapter-pg": {
+		name: "@prisma/adapter-pg",
+		version: "^7.2.0"
+	},
+	pg: {
+		name: "pg",
+		version: "^8.16.3"
+	}
 };
 
 export const DEV_NPM_DEPENDENCIES = {
@@ -294,12 +294,12 @@ export const DEV_NPM_DEPENDENCIES = {
 		name: "lint-staged",
 		version: "^15.5.1"
 	},
-  prisma: {
-    name: "prisma",
-    version: "^7.2.0"
-  },
-  "@types/pg": {
-    name: "@types/pg",
-    version: "^8.16.0"
-  }
+	prisma: {
+		name: "prisma",
+		version: "^7.2.0"
+	},
+	"@types/pg": {
+		name: "@types/pg",
+		version: "^8.16.0"
+	}
 };

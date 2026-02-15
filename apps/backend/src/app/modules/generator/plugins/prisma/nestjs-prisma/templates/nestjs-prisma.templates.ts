@@ -1,13 +1,13 @@
 export function NestJSPrismaTemplates(withConfigModule: boolean, type: string) {
-  const adapters: Record<string, { name: string; adapter: string }> = {
-    postgres: { name: "pg", adapter: "PrismaPg" },
-  };
+	const adapters: Record<string, { name: string; adapter: string }> = {
+		postgres: { name: "pg", adapter: "PrismaPg" }
+	};
 
-  return {
-    module: {
-      name: "prisma.module.ts",
-      path: "src/modules/database/prisma",
-      content: `
+	return {
+		module: {
+			name: "prisma.module.ts",
+			path: "src/modules/database/prisma",
+			content: `
 import { Module } from '@nestjs/common';
 import { CustomPrismaModule } from 'nestjs-prisma/dist/custom';
 import { prisma } from './prisma.extension';
@@ -24,11 +24,11 @@ import { prisma } from './prisma.extension';
 })
 export class PrismaModule {}
 `.trim()
-    },
-    extension: {
-      name: "prisma.extension.ts",
-      path: "src/modules/database/prisma",
-      content: `
+		},
+		extension: {
+			name: "prisma.extension.ts",
+			path: "src/modules/database/prisma",
+			content: `
 import { ${adapters[type]} } from '@prisma/adapter-better-sqlite3';
 import { PrismaClient } from './generated/prisma/client';
 
@@ -37,6 +37,6 @@ export const prisma = new PrismaClient({ adapter });
 
 export type PrismaClientType = typeof prisma;
 `.trim()
-  }
-}
+		}
+	};
 }

@@ -1,13 +1,13 @@
 export function PrismaStandaloneTemplates(withConfigModule: boolean, type: string) {
-  const adapters: Record<string, { name: string; adapter: string }> = {
-    postgres: { name: "pg", adapter: "PrismaPg" },
-  };
+	const adapters: Record<string, { name: string; adapter: string }> = {
+		postgres: { name: "pg", adapter: "PrismaPg" }
+	};
 
-  return {
-    module: {
-      name: "prisma.module.ts",
-      path: "src/modules/database/prisma",
-      content: `
+	return {
+		module: {
+			name: "prisma.module.ts",
+			path: "src/modules/database/prisma",
+			content: `
 import { Module } from "@nestjs/common";
 import { PrismaService } from "./prisma.service";
 ${withConfigModule ? 'import { ConfigModule } from "@/modules/config/config.module";' : ""}
@@ -19,11 +19,11 @@ ${withConfigModule ? 'import { ConfigModule } from "@/modules/config/config.modu
 })
 export class PrismaModule {}
 `.trim()
-    },
-    service: {
-      name: "prisma.service.ts",
-      path: "src/modules/database/prisma",
-      content: `
+		},
+		service: {
+			name: "prisma.service.ts",
+			path: "src/modules/database/prisma",
+			content: `
 import { Injectable } from "@nestjs/common";
 import { PrismaClient } from "./generated/prisma/client";
 import { ${adapters[type].adapter} } from "@prisma/adapter-${adapters[type].name}";
@@ -37,6 +37,6 @@ export class PrismaService extends PrismaClient {
   }
 }
 `.trim()
-  }
-}
+		}
+	};
 }

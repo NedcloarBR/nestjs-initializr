@@ -9,25 +9,18 @@ import { DebugService } from "./debug.service";
 export class DebugController {
 	constructor(private readonly debugService: DebugService) {}
 
-  @Post("session")
-  public createSession() {
-    const sessionId = Math.random().toString(36).slice(2)
-    return { sessionId }
-  }
+	@Post("session")
+	public createSession() {
+		const sessionId = Math.random().toString(36).slice(2);
+		return { sessionId };
+	}
 
 	@Post("start")
-  public startDebug(
-    @Req() req: FastifyRequest,
-    @Body() metadata: MetadataDTO
-  ) {
-    const sessionId = req.headers["x-debug-session-id"] as string
+	public startDebug(@Req() req: FastifyRequest, @Body() metadata: MetadataDTO) {
+		const sessionId = req.headers["x-debug-session-id"] as string;
 
-    this.debugService.debugAndStreamProject(
-      metadata,
-      req.requestId,
-      sessionId
-    )
+		this.debugService.debugAndStreamProject(metadata, req.requestId, sessionId);
 
-    return { started: true }
-  }
+		return { started: true };
+	}
 }

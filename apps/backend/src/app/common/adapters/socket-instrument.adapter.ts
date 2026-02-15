@@ -17,13 +17,13 @@ export class SocketInstrumentAdapter extends IoAdapter {
 
 	public createIOServer(port: number, options?: GatewayMetadata): Server {
 		const server = super.createIOServer(port, {
-      ...options,
-      cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
-        credentials: false,
-      }
-    } as GatewayMetadata);
+			...options,
+			cors: {
+				origin: "*",
+				methods: ["GET", "POST"],
+				credentials: false
+			}
+		} as GatewayMetadata);
 
 		const enabled = this.configService.get("SOCKET_ADMIN_ENABLED");
 		if (!enabled) {

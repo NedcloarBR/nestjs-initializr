@@ -39,17 +39,21 @@ export class NecordLavalinkPlugin extends BasePlugin {
 	protected onGenerate(): void {
 		const moduleUpdates = lavalinkModuleUpdates(this.withConfig);
 
-		this.createFile(
-			lavalinkListenersTemplate.name,
-			lavalinkListenersTemplate.path,
-			lavalinkListenersTemplate.content
-		);
+		this.createFile(lavalinkListenersTemplate.name, lavalinkListenersTemplate.path, lavalinkListenersTemplate.content);
 
 		this.createFile(playCommandTemplate.name, playCommandTemplate.path, playCommandTemplate.content);
 		this.createFile(queryDtoTemplate.name, queryDtoTemplate.path, queryDtoTemplate.content);
-		this.createFile(sourceAutocompleteTemplate.name, sourceAutocompleteTemplate.path, sourceAutocompleteTemplate.content);
+		this.createFile(
+			sourceAutocompleteTemplate.name,
+			sourceAutocompleteTemplate.path,
+			sourceAutocompleteTemplate.content
+		);
 
-		this.createFile(lavalinkDockerfileTemplate.name, lavalinkDockerfileTemplate.path, lavalinkDockerfileTemplate.content);
+		this.createFile(
+			lavalinkDockerfileTemplate.name,
+			lavalinkDockerfileTemplate.path,
+			lavalinkDockerfileTemplate.content
+		);
 		this.createFile(
 			lavalinkDockerComposeTemplate.name,
 			lavalinkDockerComposeTemplate.path,

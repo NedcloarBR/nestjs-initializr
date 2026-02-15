@@ -5,6 +5,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import archiver from "archiver";
 import { createContext, type GeneratedFile, type PackageDependency, type Script } from "@/app/common";
 import { commonPackages, expressPackages, fastifyPackages } from "@/app/constants/packages";
+// biome-ignore lint/style/useImportType: Cannot use 'import type' in Dependency Injection
 import { PluginExecutor } from "./core";
 import type { MetadataDTO } from "./dtos/metadata.dto";
 
@@ -44,11 +45,11 @@ export class PluginGeneratorService {
 
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
 
-    if (!debugCleanup) await this.lintAndFormat(id);
+		if (!debugCleanup) await this.lintAndFormat(id);
 
 		this.scheduleCleanup(id, debugCleanup);
 
-    if (debugCleanup) return basePath;
+		if (debugCleanup) return basePath;
 
 		const zipStream = await this.createZipFile(basePath, result.files, result.rootFolders, metadata.packageManager);
 
@@ -67,19 +68,20 @@ export class PluginGeneratorService {
 		}
 	}
 
-  private getLockfileName(packageManager: string): string | null {
-    switch (packageManager) {
-      case "npm":
-        return "package-lock.json";
-      case "yarn":
-        return "yarn.lock";
-      case "pnpm":
-        return "pnpm-lock.yaml";
-      default:
-        return null;
-    }
-  }
+	private getLockfileName(packageManager: string): string | null {
+		switch (packageManager) {
+			case "npm":
+				return "package-lock.json";
+			case "yarn":
+				return "yarn.lock";
+			case "pnpm":
+				return "pnpm-lock.yaml";
+			default:
+				return null;
+		}
+	}
 
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: This method is responsible for generating the package.json file based on the metadata and selected packages. It needs to handle multiple sources of dependencies (common, platform-specific, and extra) and scripts, which adds to its complexity.
 	private async generatePackageJson(
 		basePath: string,
 		metadata: MetadataDTO,
@@ -90,8 +92,8 @@ export class PluginGeneratorService {
 			name: metadata.packageJson.name,
 			version: "1.0.0",
 			description: metadata.packageJson.description ?? "",
-      private: true,
-      packageManager: this.resolvePackageManager(metadata.packageManager),
+			private: true,
+			packageManager: this.resolvePackageManager(metadata.packageManager),
 			scripts: {} as Record<string, string>,
 			dependencies: {} as Record<string, string>,
 			devDependencies: {} as Record<string, string>,
@@ -129,14 +131,19 @@ export class PluginGeneratorService {
 		packageJson.dependencies = this.sortObject(packageJson.dependencies as Record<string, string>);
 		packageJson.devDependencies = this.sortObject(packageJson.devDependencies as Record<string, string>);
 
-    const lockfileName = this.getLockfileName(metadata.packageManager);
-    fs.writeFileSync(path.join(basePath, lockfileName), "", "utf-8");
+		const lockfileName = this.getLockfileName(metadata.packageManager);
+		fs.writeFileSync(path.join(basePath, lockfileName), "", "utf-8");
 
 		const filePath = path.join(basePath, "package.json");
 		fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 2), "utf-8");
 	}
 
-	private async createZipFile(basePath: string, files: GeneratedFile[], rootFolders: string[], packageManager: string): Promise<fs.ReadStream> {
+	private async createZipFile(
+		basePath: string,
+		files: GeneratedFile[],
+		rootFolders: string[],
+		packageManager: string
+	): Promise<fs.ReadStream> {
 		const zipPath = path.join(basePath, "project.zip");
 		const output = fs.createWriteStream(zipPath);
 		const archive = archiver("zip", { zlib: { level: 9 } });
@@ -166,13 +173,13 @@ export class PluginGeneratorService {
 
 		const lockfileName = this.getLockfileName(packageManager);
 
-    if (lockfileName) {
-      const lockfilePath = path.join(basePath, lockfileName);
+		if (lockfileName) {
+			const lockfilePath = path.join(basePath, lockfileName);
 
-      if (fs.existsSync(lockfilePath)) {
-        archive.file(lockfilePath, { name: lockfileName });
-      }
-    }
+			if (fs.existsSync(lockfilePath)) {
+				archive.file(lockfilePath, { name: lockfileName });
+			}
+		}
 
 		await new Promise<void>((resolve, reject) => {
 			output.on("close", resolve);
@@ -236,7 +243,7 @@ export class PluginGeneratorService {
 
 	private async lintAndFormat(id: string): Promise<void> {
 		const dirPath = this.getPath(id);
-		const configPath = path.join(__dirname, "assets");
+		const configPath = path.join(__dirname, "assets", "biome.config.json");
 
 		const runBiomeCommand = (args: string[]): Promise<void> => {
 			return new Promise((resolve, reject) => {
@@ -269,13 +276,13 @@ export class PluginGeneratorService {
 		await runBiomeCommand(["format", "--write"]);
 	}
 
-  private resolvePackageManager(packageManager: string): string | undefined {
-    const versions: Record<string, string> = {
-      pnpm: "pnpm@10.29.1",
-      yarn: "yarn@4.9.2",
-      npm: "npm@10.9.2"
-    };
+	private resolvePackageManager(packageManager: string): string | undefined {
+		const versions: Record<string, string> = {
+			pnpm: "pnpm@10.29.1",
+			yarn: "yarn@4.9.2",
+			npm: "npm@10.9.2"
+		};
 
-    return versions[packageManager];
-  }
+		return versions[packageManager];
+	}
 }

@@ -58,9 +58,7 @@ export function loadPluginsSync(): void {
 			return;
 		}
 
-		logger.warn(
-			`⚠️  Loaded ${newPlugins.length} plugin(s), ${failedPlugins.length} failed in ${duration}ms`
-		);
+		logger.warn(`⚠️  Loaded ${newPlugins.length} plugin(s), ${failedPlugins.length} failed in ${duration}ms`);
 	} catch (error) {
 		logger.error("❌ Failed to discover plugins:", error);
 	}
@@ -72,4 +70,3 @@ export function loadPluginsSync(): void {
 export async function loadPlugins(): Promise<void> {
 	loadPluginsSync();
 }
-

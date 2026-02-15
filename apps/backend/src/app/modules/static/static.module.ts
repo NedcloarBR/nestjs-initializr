@@ -8,15 +8,15 @@ import { SocketAdminUIController } from "./socket-admin-ui.controller";
 	imports: [
 		ServeStaticModule.forRoot({
 			serveRoot: "/socket-admin-ui",
-      renderPath: "/socket-admin-ui",
-      useGlobalPrefix: true,
+			renderPath: "/socket-admin-ui",
+			useGlobalPrefix: true,
 			rootPath: join(process.cwd(), "node_modules/@socket.io/admin-ui/ui/dist")
 		})
 	],
-  controllers: [SocketAdminUIController]
+	controllers: [SocketAdminUIController]
 })
 export class StaticModule implements NestModule {
-  public configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AdminUiEnabledMiddleware).forRoutes("/socket-admin-ui")
-  }
+	public configure(consumer: MiddlewareConsumer) {
+		consumer.apply(AdminUiEnabledMiddleware).forRoutes("/socket-admin-ui");
+	}
 }

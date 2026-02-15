@@ -30,7 +30,7 @@ interface Props {
 interface OrmSectionProps {
 	config: OrmConfig;
 	// biome-ignore lint/suspicious/noExplicitAny: <>
-	control: any
+	control: any;
 	t: ReturnType<typeof useTranslations>;
 }
 
@@ -41,28 +41,20 @@ function OrmDatabaseSection({ config, control, t }: OrmSectionProps) {
 			name={`database.${config.fieldName}`}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel className="font-medium text-sm">
-						{t("selectDatabase", { orm: config.displayName })}
-					</FormLabel>
+					<FormLabel className="font-medium text-sm">{t("selectDatabase", { orm: config.displayName })}</FormLabel>
 					<FormControl>
 						<RadioGroup
 							value={field.value || config.databases[0]?.value}
 							onValueChange={field.onChange}
-							className="grid grid-cols-1 gap-2"
-						>
+							className="grid grid-cols-1 gap-2">
 							{config.databases.map((option) => (
 								<Label
 									key={option.value}
 									htmlFor={`${config.name}-db-${option.value}`}
 									className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-all hover:bg-accent ${
 										field.value === option.value ? "border-primary bg-primary/5 text-primary" : "border-border"
-									}`}
-								>
-									<RadioGroupItem
-										className="sr-only"
-										value={option.value}
-										id={`${config.name}-db-${option.value}`}
-									/>
+									}`}>
+									<RadioGroupItem className="sr-only" value={option.value} id={`${config.name}-db-${option.value}`} />
 									<Icon name={option.icon} iconType="svg" subfolder="database" className="size-5" />
 									<span className="font-medium text-sm">{option.label}</span>
 								</Label>
@@ -109,4 +101,3 @@ export function DatabaseConfigModal({ isOpen, onOpenChange }: Props) {
 		</Dialog>
 	);
 }
-

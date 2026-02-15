@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { io, type Socket } from "socket.io-client";
-import type {z} from "zod";
+import type { z } from "zod";
 import { startDebug } from "@/actions/debug";
 import type { generatorFormSchema } from "@/forms/generator-form-schema";
 

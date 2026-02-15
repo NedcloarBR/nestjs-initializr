@@ -6,8 +6,8 @@ export function useExtraPackages() {
 	const [loading, setLoading] = useState(false);
 
 	const fetchPackages = useCallback(async (packageName?: string) => {
-		const query = packageName ? "?name=" + encodeURIComponent(packageName) : "";
-		const url = "/api/npm" + query;
+		const query = packageName ? `?name=${encodeURIComponent(packageName)}` : "";
+		const url = `/api/npm${query}`;
 
 		try {
 			setLoading(true);

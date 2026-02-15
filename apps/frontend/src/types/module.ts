@@ -17,5 +17,5 @@ export enum ModuleCategory {
 	DOCUMENTATION = "documentation",
 	UTILITY = "utility",
 	INFRA = "infra",
-  DATABASE = "database"
+	DATABASE = "database"
 }

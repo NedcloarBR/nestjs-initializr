@@ -16,53 +16,48 @@ type Props = {
 };
 
 export function DebugTerminalClient({ sessionId, dataToDebug }: Props) {
-  const terminalRef = useRef<HTMLDivElement>(null)
-  const xtermRef = useRef<Terminal | null>(null)
-  const fitRef = useRef<FitAddon | null>(null)
+	const terminalRef = useRef<HTMLDivElement>(null);
+	const xtermRef = useRef<Terminal | null>(null);
+	const fitRef = useRef<FitAddon | null>(null);
 
-  useEffect(() => {
-    if (!terminalRef.current) return
-    if (xtermRef.current) return
+	useEffect(() => {
+		if (!terminalRef.current) return;
+		if (xtermRef.current) return;
 
-    const terminal = new Terminal({
-      theme: draculaTheme,
-      fontFamily: "monospace",
-      fontSize: 12,
-      disableStdin: true,
-      cursorBlink: false,
-      scrollback: 10000,
-      convertEol: true
-    })
+		const terminal = new Terminal({
+			theme: draculaTheme,
+			fontFamily: "monospace",
+			fontSize: 12,
+			disableStdin: true,
+			cursorBlink: false,
+			scrollback: 10000,
+			convertEol: true
+		});
 
-    const fitAddon = new FitAddon()
-    terminal.loadAddon(fitAddon)
-    terminal.loadAddon(new WebLinksAddon())
+		const fitAddon = new FitAddon();
+		terminal.loadAddon(fitAddon);
+		terminal.loadAddon(new WebLinksAddon());
 
-    terminal.open(terminalRef.current)
-    fitAddon.fit()
+		terminal.open(terminalRef.current);
+		fitAddon.fit();
 
-    xtermRef.current = terminal
-    fitRef.current = fitAddon
+		xtermRef.current = terminal;
+		fitRef.current = fitAddon;
 
-    const handleResize = () => fitAddon.fit()
-    window.addEventListener("resize", handleResize)
+		const handleResize = () => fitAddon.fit();
+		window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize)
-      terminal.dispose()
-      xtermRef.current = null
-      fitRef.current = null
-    }
-  }, [])
+		return () => {
+			window.removeEventListener("resize", handleResize);
+			terminal.dispose();
+			xtermRef.current = null;
+			fitRef.current = null;
+		};
+	}, []);
 
-  useDebugSocket(sessionId, dataToDebug, (chunk) => {
-    xtermRef.current?.writeln(chunk.message)
-  })
+	useDebugSocket(sessionId, dataToDebug, (chunk) => {
+		xtermRef.current?.writeln(chunk.message);
+	});
 
-  return (
-    <div
-      ref={terminalRef}
-      className="h-full w-full bg-black p-3"
-    />
-  )
+	return <div ref={terminalRef} className="h-full w-full bg-black p-3" />;
 }
