@@ -10,10 +10,9 @@ export function PrismaStandaloneTemplates(withConfigModule: boolean, type: strin
 			content: `
 import { Module } from "@nestjs/common";
 import { PrismaService } from "./prisma.service";
-${withConfigModule ? 'import { ConfigModule } from "@/modules/config/config.module";' : ""}
 
 @Module({
-  imports: [${withConfigModule ? "ConfigModule" : ""}],
+  imports: [],
   providers: [PrismaService],
   exports: [PrismaService],
 })
@@ -24,14 +23,15 @@ export class PrismaModule {}
 			name: "prisma.service.ts",
 			path: "src/modules/database/prisma",
 			content: `
-import { Injectable } from "@nestjs/common";
+import { Injectable ${withConfigModule ? ", Inject" : ""} } from "@nestjs/common";
 import { PrismaClient } from "@/generated/prisma/client";
 import { ${adapters[type].adapter} } from "@prisma/adapter-${adapters[type].name}";
 ${withConfigModule ? 'import { ConfigService } from "@/modules/config/config.service";' : ""}
+${withConfigModule ? 'import { Services } from "@/constants/services";' : ""}
 
 @Injectable()
 export class PrismaService extends PrismaClient {
-  public constructor(${withConfigModule ? "configService: ConfigService" : ""}) {
+  public constructor(${withConfigModule ? "@Inject(Services.Config) configService: ConfigService" : ""}) {
     const adapter = new ${adapters[type].adapter}({ connectionString: ${withConfigModule ? "configService.get('DATABASE_URL')" : "process.env.DATABASE_URL"} });
     super({ adapter });
   }

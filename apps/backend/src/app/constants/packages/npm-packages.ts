@@ -137,7 +137,7 @@ export const NPM_DEPENDENCIES = {
 	},
 	"nestjs-prisma": {
 		name: "nestjs-prisma",
-		version: "^0.27.0-dev.0"
+		version: "^0.27.0"
 	},
 	"@prisma/client": {
 		name: "@prisma/client",

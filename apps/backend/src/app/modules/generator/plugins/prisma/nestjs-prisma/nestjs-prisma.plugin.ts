@@ -16,6 +16,8 @@ export class NestJSPrismaPlugin extends PrismaBasePlugin {
 	}
 
 	protected generateTemplates(): void {
+		this.addPkg("nestjs-prisma");
+
 		const templates = NestJSPrismaTemplates(
 			this.withConfig,
 			this.ctx.metadata.database.find((db) => db.module === "prisma")?.prismaType || "postgres"
@@ -23,5 +25,9 @@ export class NestJSPrismaPlugin extends PrismaBasePlugin {
 		this.createFile(templates.module.name, templates.module.path, templates.module.content);
 
 		this.createFile(templates.extension.name, templates.extension.path, templates.extension.content);
+
+		// this.replaceInFile("src/constants", "services.ts", "});", `  Prisma: Symbol("PRISMA_SERVICE"),\n});`); //! Waiting this https://github.com/notiz-dev/nestjs-prisma/pull/118 PR be merged to use Symbols in `nestjs-prisma`
+
+		this.replaceInFile("src/constants", "services.ts", "});", `  Prisma: "PRISMA_SERVICE",\n});`);
 	}
 }

@@ -2,6 +2,7 @@ import { Logger } from "@nestjs/common";
 import type { DEV_NPM_PACKAGE_KEYS, NPM_PACKAGE_KEYS } from "@/types";
 import { BasePlugin } from "../../core/base-plugin";
 import { PrismaBaseTemplates } from "./templates";
+import { prismaConfigIntegrationTemplates } from "./templates/config-integration.templates";
 
 export abstract class PrismaBasePlugin extends BasePlugin {
 	public logger = new Logger(PrismaBasePlugin.name);
@@ -54,7 +55,45 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 			templates.dockerCompose.dependsOn.replacer,
 			templates.dockerCompose.dependsOn.content
 		);
+
 		this.appendToFile("", "docker-compose.yml", templates.dockerCompose.service.content);
+
+		if (this.withConfig) {
+			this.setupConfigIntegration();
+		}
+	}
+
+	private setupConfigIntegration(): void {
+		const templates = prismaConfigIntegrationTemplates;
+		this.createFile(templates.prismaEnvConfig.name, templates.prismaEnvConfig.path, templates.prismaEnvConfig.content);
+
+		this.replaceInFile("src/types", "index.d.ts", templates.indexDTs.replacer, templates.indexDTs.content);
+
+		this.replaceInFile(
+			"src/modules/config",
+			"config.module.ts",
+			templates.configModuleImport.replacer,
+			templates.configModuleImport.content
+		);
+		this.replaceInFile(
+			"src/modules/config",
+			"config.module.ts",
+			templates.configModuleLoad.replacer,
+			templates.configModuleLoad.content
+		);
+
+		this.replaceInFile(
+			"src/modules/config",
+			"config.service.ts",
+			templates.configServiceImport.replacer,
+			templates.configServiceImport.content
+		);
+		this.replaceInFile(
+			"src/modules/config",
+			"config.service.ts",
+			templates.configServiceType.replacer,
+			templates.configServiceType.content
+		);
 	}
 
 	private getDatabasePackage(type: string) {

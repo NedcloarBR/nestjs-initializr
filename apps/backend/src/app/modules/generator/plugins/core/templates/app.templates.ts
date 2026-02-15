@@ -51,4 +51,19 @@ export class AppService {
 `.trim()
 };
 
-export const appTemplates: StaticTemplate[] = [appModuleTemplate, appControllerTemplate, appServiceTemplate];
+export const serviceConstants: StaticTemplate = {
+	name: "services.ts",
+	path: "src/constants",
+	content: `
+export const Services = Object.freeze({
+  //? Add service tokens here
+});
+`.trim()
+};
+
+export const appTemplates: StaticTemplate[] = [
+	appModuleTemplate,
+	appControllerTemplate,
+	appServiceTemplate,
+	serviceConstants
+];

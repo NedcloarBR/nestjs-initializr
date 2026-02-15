@@ -7,7 +7,7 @@ import { addRecentHistory } from "@/utils/history";
 
 export async function generate(values: z.infer<ReturnType<typeof generatorFormSchema>>, mode: "config" | "project") {
 	try {
-		const hasPrisma = values.modules?.includes("prisma-standalone");
+		const hasPrisma = values.modules.some((module) => ["prisma-standalone", "nestjs-prisma"].includes(module));
 
 		const rawBody = {
 			mainType: values.mainType,

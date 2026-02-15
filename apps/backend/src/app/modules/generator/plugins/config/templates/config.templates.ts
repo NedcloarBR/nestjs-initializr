@@ -25,7 +25,7 @@ import { Services } from "../../constants/services";
   ],
   exports: [Services.Config],
 })
-export class ConfigModule {}
+export class ConfigModuleWrapper {}
 `.trim()
 };
 

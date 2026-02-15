@@ -1,15 +1,7 @@
 import { Plugin } from "@/app/common";
 import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
-import {
-	configIndexTemplate,
-	configMainTemplate,
-	configTemplates,
-	dotenvExampleTemplate,
-	dotenvTemplate,
-	modulesIndexTemplate,
-	servicesConstantTemplate
-} from "./templates";
+import { configMainTemplate, configTemplates, dotenvExampleTemplate, dotenvTemplate } from "./templates";
 
 /**
  * Config Plugin - Generates the NestJS configuration module
@@ -37,11 +29,7 @@ export class ConfigPlugin extends BasePlugin {
 			this.createFile(template.name, template.path, template.content);
 		}
 
-		this.createFile(configIndexTemplate.name, configIndexTemplate.path, configIndexTemplate.content);
-
-		this.createFile(modulesIndexTemplate.name, modulesIndexTemplate.path, modulesIndexTemplate.content);
-
-		this.createFile(servicesConstantTemplate.name, servicesConstantTemplate.path, servicesConstantTemplate.content);
+		this.replaceInFile("src/constants", "services.ts", "});", `  Config: Symbol("CONFIG_SERVICE"),\n});`);
 
 		this.createFile(dotenvTemplate.name, dotenvTemplate.path, dotenvTemplate.content);
 		this.createFile(dotenvExampleTemplate.name, dotenvExampleTemplate.path, dotenvExampleTemplate.content);
@@ -55,9 +43,9 @@ export class ConfigPlugin extends BasePlugin {
 
 		this.setConstants({
 			token: "Services.Config",
-			import: "ConfigModule",
-			export: 'export { ConfigModule } from "./config/config.module"',
-			importArray: "ConfigModule",
+			import: "ConfigModuleWrapper",
+			export: 'export { ConfigModuleWrapper } from "./config/config.module";',
+			importArray: "ConfigModuleWrapper",
 			inject: "@Inject(Services.Config) private readonly configService: ConfigService,",
 			importIn: "src/app.module.ts"
 		});
