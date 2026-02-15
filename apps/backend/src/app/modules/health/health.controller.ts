@@ -28,7 +28,7 @@ export class HealthController {
 			() => this.http.pingCheck("nestjs-docs", "https://docs.nestjs.com"),
 			() => this.http.pingCheck("npm-registry", "https://registry.npmjs.org"),
 			() => this.memory.checkHeap("memory_heap", 150 * 1024 * 1024),
-			() => this.memory.checkRSS("memory_rss", 150 * 1024 * 1024),
+			() => this.memory.checkRSS("memory_rss", 500 * 1024 * 1024),
 			() => this.disk.checkStorage("storage", { path: "/", thresholdPercent: 0.9 })
 		]);
 
