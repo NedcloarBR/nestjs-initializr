@@ -18,7 +18,7 @@ import { biomeTemplate, eslintPrettierTemplate } from "./templates";
 })
 export class LinterFormatterPlugin extends BasePlugin {
 	shouldActivate(ctx: GeneratorContext): boolean {
-		return ctx.metadata.linterFormatter !== undefined;
+		return ["biome", "eslint-prettier"].includes(ctx.metadata.linterFormatter);
 	}
 
 	protected onGenerate(): void {

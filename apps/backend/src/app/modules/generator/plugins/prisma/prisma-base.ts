@@ -25,7 +25,7 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 		this.setConstants({
 			token: null,
 			import: "PrismaModule",
-			export: 'export { PrismaModule } from "./prisma/prisma.module";',
+			export: 'export { PrismaModule } from "./database/prisma/prisma.module";',
 			importArray: "PrismaModule",
 			inject: null,
 			importIn: "src/app.module.ts"

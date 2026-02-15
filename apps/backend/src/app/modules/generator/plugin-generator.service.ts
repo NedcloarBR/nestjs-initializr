@@ -33,6 +33,12 @@ export class PluginGeneratorService {
 		const selectedModules = metadata.modules ?? [];
 		this.logger.log(`Generating project with modules: ${selectedModules.join(", ") || "none"}`);
 
+		if (selectedModules.length > 0) {
+			fs.mkdirSync("src/modules", { recursive: true });
+			fs.writeFileSync("src/modules/index.ts", "");
+			ctx.files.set("src/modules/index.ts", { path: "src/modules", name: "index.ts", content: "" });
+		}
+
 		const result = await this.executor.execute(ctx, selectedModules);
 
 		if (!result.success) {

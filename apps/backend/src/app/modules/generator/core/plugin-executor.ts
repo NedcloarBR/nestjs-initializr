@@ -56,7 +56,7 @@ export class PluginExecutor {
 			const isSelected = moduleNames.includes(meta.name);
 			if (!isSelected) return false;
 
-			return !plugin.shouldActivate || plugin.shouldActivate(ctx) !== false;
+			return !plugin.shouldActivate || plugin.shouldActivate?.(ctx) !== false;
 		});
 
 		const depErrors = this.validateActivePlugins(activePlugins, moduleNames);
@@ -115,6 +115,24 @@ export class PluginExecutor {
 				for (const folder of result.rootFolders ?? []) {
 					if (!ctx.rootFolders.includes(folder)) {
 						ctx.rootFolders.push(folder);
+					}
+				}
+
+				const constants = result.constants;
+				if (constants) {
+					if (constants.export) {
+						const barrelFile = ctx.files.get("src/modules/index.ts");
+						if (barrelFile && !barrelFile.content.includes(constants.export)) {
+							barrelFile.content += constants.export;
+						}
+					}
+
+					if (constants.importIn && constants.import) {
+						const importFile = ctx.files.get(constants.importIn);
+						const moduleToInject = constants.importArray || constants.import;
+						if (importFile && moduleToInject) {
+							importFile.content = this.injectModuleIntoDecorator(importFile.content, moduleToInject);
+						}
 					}
 				}
 			} catch (error) {
@@ -263,5 +281,72 @@ export class PluginExecutor {
 			success: false,
 			errors
 		};
+	}
+
+	private injectModuleIntoDecorator(fileContent: string, moduleName: string): string {
+		const importRegex = new RegExp(`import\\s*\\{([^}]*)\\}\\s*from\\s*["']${"@/modules"}["']`);
+
+		const importMatch = importRegex.exec(fileContent);
+
+		if (importMatch) {
+			const existingImports = importMatch[1]
+				.split(",")
+				.map((s) => s.trim())
+				.filter(Boolean);
+
+			if (!existingImports.includes(moduleName)) {
+				const newImportList = [...existingImports, moduleName].join(", ");
+				const newImportStatement = `import { ${newImportList} } from "@/modules";\n`;
+				// biome-ignore lint/style/noParameterAssign: ???
+				fileContent = fileContent.replace(importMatch[0], newImportStatement);
+			}
+		} else {
+			const newImport = `import { ${moduleName} } from "@/modules";\n`;
+			// biome-ignore lint/style/noParameterAssign: ???
+			fileContent = newImport + fileContent;
+		}
+
+		const moduleRegex = /@Module\s*\(\s*\{([\s\S]*?)\}\s*\)/;
+		const moduleMatch = moduleRegex.exec(fileContent);
+
+		if (!moduleMatch) return fileContent;
+
+		const fullModuleMatch = moduleMatch[0];
+		const moduleBody = moduleMatch[1];
+
+		const importsRegex = /imports\s*:\s*\[([\s\S]*?)\]/;
+		const importsMatch = importsRegex.exec(moduleBody);
+
+		if (importsMatch) {
+			const fullImportsMatch = importsMatch[0];
+			const importsContent = importsMatch[1];
+
+			const existsRegex = new RegExp(`\\b${moduleName}\\b`);
+			if (existsRegex.test(importsContent)) {
+				return fileContent;
+			}
+
+			const trimmed = importsContent.trim();
+
+			let newImportsBlock: string;
+
+			if (trimmed.length === 0) {
+				newImportsBlock = `imports: [${moduleName}]`;
+			} else {
+				const formatted = trimmed.endsWith(",")
+					? `${importsContent}${moduleName},`
+					: `${importsContent.trim()}, ${moduleName}`;
+
+				newImportsBlock = `imports: [${formatted}]`;
+			}
+
+			const newModuleBody = moduleBody.replace(fullImportsMatch, newImportsBlock);
+
+			return fileContent.replace(fullModuleMatch, `@Module({${newModuleBody}})`);
+		}
+
+		const newModuleBody = `imports: [${moduleName}],\n${moduleBody}`;
+
+		return fileContent.replace(fullModuleMatch, `@Module({${newModuleBody}})`);
 	}
 }
