@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { io, type Socket } from "socket.io-client";
-import type { z } from "zod";
 import { startDebug } from "@/actions/debug";
-import type { generatorFormSchema } from "@/forms/generator-form-schema";
+import type { GeneratorFormDataType } from "@/types/form";
 
 type DebugLogPayload = {
 	sessionId: string;
@@ -12,7 +11,7 @@ type DebugLogPayload = {
 
 export function useDebugSocket(
 	sessionId: string,
-	dataToDebug: z.infer<ReturnType<typeof generatorFormSchema>>,
+	dataToDebug: GeneratorFormDataType,
 	onChunk: (data: DebugLogPayload) => void
 ) {
 	useEffect(() => {

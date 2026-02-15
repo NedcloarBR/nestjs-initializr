@@ -5,14 +5,13 @@ import { WebLinksAddon } from "@xterm/addon-web-links";
 import { Terminal } from "@xterm/xterm";
 import { useEffect, useRef } from "react";
 import "@xterm/xterm/css/xterm.css";
-import type { z } from "zod";
 import { draculaTheme } from "@/constants/terminal-theme";
-import type { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useDebugSocket } from "@/hooks/use-debug-logs";
+import type { GeneratorFormDataType } from "@/types/form";
 
 type Props = {
 	sessionId: string;
-	dataToDebug: z.infer<ReturnType<typeof generatorFormSchema>>;
+	dataToDebug: GeneratorFormDataType;
 };
 
 export function DebugTerminalClient({ sessionId, dataToDebug }: Props) {

@@ -1,13 +1,12 @@
-import type { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui";
-import type { generatorFormSchema } from "@/forms/generator-form-schema";
+import type { GeneratorFormDataType } from "@/types/form";
 import { DebugTerminalClient } from "./debug-terminal.client";
 
 interface Props {
 	debugId: string;
 	isOpen: boolean;
 	onOpenChange: (isOpen: boolean) => void;
-	dataToDebug: z.infer<ReturnType<typeof generatorFormSchema>>;
+	dataToDebug: GeneratorFormDataType;
 }
 
 export function DebugModal({ debugId, isOpen, onOpenChange, dataToDebug }: Props) {

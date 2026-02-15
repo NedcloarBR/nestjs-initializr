@@ -13,6 +13,7 @@ import { databaseModules } from "@/constants/modules";
 import { generatorFormSchema } from "@/forms/generator-form-schema";
 import { useExtraPackages } from "@/hooks/use-extra-packages";
 import type { ConfigStructure } from "@/types/config";
+import type { GeneratorFormDataType } from "@/types/form";
 import type { ModuleCategory } from "@/types/module";
 import { DebugModal } from "./debug/debug-modal";
 import { ExtraField } from "./extra-field";
@@ -68,7 +69,7 @@ export function GeneratorForm() {
 
 	const t = useTranslations("Generator");
 	const formSchema = generatorFormSchema(t);
-	const defaultValues: z.infer<typeof formSchema> = {
+	const defaultValues: GeneratorFormDataType = {
 		projectName: t("FormSchema.projectName.default"),
 		projectDescription: t("FormSchema.projectDescription.default"),
 		nodeVersion: "20",
@@ -97,7 +98,7 @@ export function GeneratorForm() {
 	const { packages, fetchPackages, loading: packagesLoading } = useExtraPackages();
 	const [debugId, setDebugId] = useState<string | null>(null);
 	const [debugIsOpen, setDebugIsOpen] = useState(false);
-	const [dataToDebug, setDataToDebug] = useState<z.infer<typeof generatorFormSchema>>(defaultValues);
+	const [dataToDebug, setDataToDebug] = useState<GeneratorFormDataType>(defaultValues);
 	const modules = form.watch("modules");
 
 	useEffect(() => {
