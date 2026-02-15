@@ -171,6 +171,8 @@ export class PluginGeneratorService {
 			}
 		}
 
+		archive.file(path.join(basePath, "package.json"), { name: "package.json" });
+
 		const lockfileName = this.getLockfileName(packageManager);
 
 		if (lockfileName) {

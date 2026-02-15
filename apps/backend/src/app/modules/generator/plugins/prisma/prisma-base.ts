@@ -44,7 +44,10 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 
 		this.addScript("postinstall", "prisma generate");
 
-		this.appendToFile("", ".env", `\n${templates.dotenv.content}`);
+		this.ctx.metadata.modules.includes("config")
+			? this.appendToFile("", ".env", `\n${templates.dotenv.content}`)
+			: this.createFile(".env", "", templates.dotenv.content);
+
 		this.replaceInFile(
 			"",
 			"docker-compose.yml",
