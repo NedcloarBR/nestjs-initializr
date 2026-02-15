@@ -46,6 +46,11 @@ export class PluginGeneratorService {
 			throw new Error(`Generation failed: ${result.errors.join(", ")}`);
 		}
 
+		const envFile = result.files.find((file) => file.name === ".env");
+		if (envFile) {
+			result.files.push({ name: ".envexample", path: "", content: envFile.content });
+		}
+
 		const basePath = this.getPath(id);
 		await this.writeFilesToDisk(basePath, result.files);
 
@@ -144,6 +149,7 @@ export class PluginGeneratorService {
 		fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 2), "utf-8");
 	}
 
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <>
 	private async createZipFile(
 		basePath: string,
 		files: GeneratedFile[],
@@ -171,6 +177,10 @@ export class PluginGeneratorService {
 		for (const file of files) {
 			if (file.path === "") {
 				const filePath = path.join(basePath, file.name);
+				if (file.name === ".envexample") {
+					archive.file(filePath, { name: ".env.example" });
+					continue;
+				}
 				if (fs.existsSync(filePath)) {
 					archive.file(filePath, { name: file.name });
 				}

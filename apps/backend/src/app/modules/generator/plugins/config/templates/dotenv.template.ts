@@ -9,13 +9,3 @@ PORT=4404
 GLOBAL_PREFIX=api
 `.trim()
 };
-
-export const dotenvExampleTemplate: StaticTemplate = {
-	name: ".env.example",
-	path: "",
-	content: `
-NODE_ENV=development
-PORT=4404
-GLOBAL_PREFIX=api
-`.trim()
-};

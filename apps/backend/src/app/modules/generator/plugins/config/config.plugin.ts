@@ -1,7 +1,7 @@
 import { Plugin } from "@/app/common";
 import type { GeneratorContext } from "@/app/common/interfaces";
 import { BasePlugin } from "../../core/base-plugin";
-import { configMainTemplate, configTemplates, dotenvExampleTemplate, dotenvTemplate } from "./templates";
+import { configMainTemplate, configTemplates, dotenvTemplate } from "./templates";
 
 /**
  * Config Plugin - Generates the NestJS configuration module
@@ -10,7 +10,7 @@ import { configMainTemplate, configTemplates, dotenvExampleTemplate, dotenvTempl
  * - src/modules/config/ (module, service, validator, dtos)
  * - src/constants/services.ts
  * - src/types/index.d.ts (ProcessEnv types)
- * - .env and .env.example
+ * - .env file
  * - Updates main.ts to use ConfigService
  */
 @Plugin({
@@ -21,7 +21,7 @@ import { configMainTemplate, configTemplates, dotenvExampleTemplate, dotenvTempl
 })
 export class ConfigPlugin extends BasePlugin {
 	shouldActivate(ctx: GeneratorContext): boolean {
-		return ctx.metadata.modules?.includes("config") ?? false;
+		return ctx.metadata.modules?.includes("config");
 	}
 
 	protected onGenerate(): void {
@@ -32,7 +32,6 @@ export class ConfigPlugin extends BasePlugin {
 		this.replaceInFile("src/constants", "services.ts", "});", `  Config: Symbol("CONFIG_SERVICE"),\n});`);
 
 		this.createFile(dotenvTemplate.name, dotenvTemplate.path, dotenvTemplate.content);
-		this.createFile(dotenvExampleTemplate.name, dotenvExampleTemplate.path, dotenvExampleTemplate.content);
 
 		const mainTemplate = configMainTemplate(this.mainType);
 		this.createFile(mainTemplate.name, mainTemplate.path, mainTemplate.content);
