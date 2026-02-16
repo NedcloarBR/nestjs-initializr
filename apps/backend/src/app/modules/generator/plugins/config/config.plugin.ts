@@ -31,7 +31,7 @@ export class ConfigPlugin extends BasePlugin {
 
 		this.replaceInFile("src/constants", "services.ts", "});", `  Config: Symbol("CONFIG_SERVICE"),\n});`);
 
-		this.createFile(dotenvTemplate.name, dotenvTemplate.path, dotenvTemplate.content);
+		this.appendToFile(dotenvTemplate.name, dotenvTemplate.path, dotenvTemplate.content);
 
 		const mainTemplate = configMainTemplate(this.mainType);
 		this.createFile(mainTemplate.name, mainTemplate.path, mainTemplate.content);

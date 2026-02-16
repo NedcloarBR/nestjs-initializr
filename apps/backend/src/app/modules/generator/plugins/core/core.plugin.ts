@@ -35,6 +35,8 @@ export class CorePlugin extends BasePlugin {
 			this.createFile(template.name, template.path, template.content);
 		}
 
+		this.createFile(".env", "", "");
+
 		this.createFile(readmeTemplate.name, readmeTemplate.path, readmeTemplate.content);
 
 		this.addScript("build", "nest build");
