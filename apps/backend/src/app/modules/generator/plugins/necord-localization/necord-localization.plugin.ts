@@ -4,6 +4,7 @@ import { BasePlugin } from "../../core/base-plugin";
 import {
 	jsonLocaleLoaderTemplate,
 	necordLocalizationCommandUpdates,
+	necordLocalizationConfigIntegration,
 	necordLocalizationModuleUpdates,
 	pingTranslationTemplate
 } from "./templates";
@@ -35,7 +36,7 @@ export class NecordLocalizationPlugin extends BasePlugin {
 		const moduleUpdates = necordLocalizationModuleUpdates(this.withConfig);
 
 		if (this.withConfig) {
-			this.createFile(jsonLocaleLoaderTemplate.name, jsonLocaleLoaderTemplate.path, jsonLocaleLoaderTemplate.content);
+			this.setupConfigIntegration();
 		}
 
 		this.createFile(pingTranslationTemplate.name, pingTranslationTemplate.path, pingTranslationTemplate.content);
@@ -73,5 +74,23 @@ export class NecordLocalizationPlugin extends BasePlugin {
 		);
 
 		this.addPkg("@necord/localization");
+
+		this.setConstants({
+			importIn: "src/modules/necord/necord.module.ts",
+			importArray: moduleUpdates.moduleConfig.content
+		});
+	}
+
+	private setupConfigIntegration(): void {
+		this.createFile(jsonLocaleLoaderTemplate.name, jsonLocaleLoaderTemplate.path, jsonLocaleLoaderTemplate.content);
+
+		const { importString, configFunction, envOptions, envValidator } = necordLocalizationConfigIntegration;
+
+		this.replaceInFile(importString.path, importString.name, importString.replacer, importString.content);
+		this.replaceInFile(configFunction.path, configFunction.name, configFunction.replacer, configFunction.content);
+		this.replaceInFile(envOptions.path, envOptions.name, envOptions.replacer, envOptions.content);
+		this.replaceInFile(envValidator.path, envValidator.name, envValidator.replacer, envValidator.content);
+
+		this.appendToFile("", ".env", 'DISCORD_FALLBACK_LOCALE="en_US"');
 	}
 }

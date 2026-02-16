@@ -7,6 +7,7 @@ import {
 	lavalinkDockerfileTemplate,
 	lavalinkListenersTemplate,
 	lavalinkModuleUpdates,
+	necordLavalinkConfigIntegration,
 	playCommandTemplate,
 	pluginsGitkeepTemplate,
 	queryDtoTemplate,
@@ -38,6 +39,10 @@ export class NecordLavalinkPlugin extends BasePlugin {
 
 	protected onGenerate(): void {
 		const moduleUpdates = lavalinkModuleUpdates(this.withConfig);
+
+		if (this.withConfig) {
+			this.setupConfigIntegration();
+		}
 
 		this.createFile(lavalinkListenersTemplate.name, lavalinkListenersTemplate.path, lavalinkListenersTemplate.content);
 
@@ -87,5 +92,21 @@ export class NecordLavalinkPlugin extends BasePlugin {
 
 		this.addPkg("@necord/lavalink");
 		this.addPkg("lavalink-client");
+
+		this.setConstants({
+			importIn: "src/modules/necord/necord.module.ts",
+			importArray: moduleUpdates.moduleConfig.content
+		});
+	}
+
+	private setupConfigIntegration(): void {
+		const { importString, configFunction } = necordLavalinkConfigIntegration;
+
+		this.replaceInFile(importString.path, importString.name, importString.replacer, importString.content);
+		this.replaceInFile(configFunction.path, configFunction.name, configFunction.replacer, configFunction.content);
+
+		this.appendToFile("", ".env", 'DISCORD_LAVALINK_PASSWORD="youshallnotpass"');
+		this.appendToFile("", ".env", 'DISCORD_LAVALINK_HOST="localhost"');
+		this.appendToFile("", ".env", "DISCORD_LAVALINK_PORT=2333");
 	}
 }

@@ -28,8 +28,7 @@ import {
 	name: "necord",
 	displayName: "Necord",
 	description: "Discord bot framework with slash commands and event handling",
-	priority: 400,
-	dependencies: ["config"] // Optional dependency
+	priority: 400
 })
 export class NecordPlugin extends BasePlugin {
 	shouldActivate(ctx: GeneratorContext): boolean {

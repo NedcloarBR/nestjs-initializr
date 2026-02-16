@@ -32,7 +32,7 @@ ${withConfigModule ? "" : "import { IntentsBitField } from 'discord.js';"}
         IntentsBitField.Flags.GuildMessages,
         IntentsBitField.Flags.MessageContent
       ],
-      development: process.env.DISCORD_DEVELOPMENT_GUILD_ID
+      development: [process.env.DISCORD_DEVELOPMENT_GUILD_ID]
     })`
 		}
   ],
@@ -83,6 +83,8 @@ export class NecordCommand {
   public async onPing(@Context() [interaction]: SlashCommandContext) {
     return interaction.reply({ content: "Pong!" });
   }
+
+  //MoreOptions?
 }
 `.trim()
 };
@@ -114,6 +116,8 @@ export class NecordConfig {
       development: this.config.get("DISCORD_DEVELOPMENT_GUILD_ID")
     };
   }
+
+  // MoreOptions?
 }
 `.trim()
 };
@@ -134,6 +138,8 @@ export class DiscordEnvDTO {
   @IsString()
   @IsNotEmpty()
   public readonly DISCORD_DEVELOPMENT_GUILD_ID!: string[];
+
+  //MoreOptions?
 }
 
 export default registerAs("discord_env", () => {
@@ -142,6 +148,7 @@ export default registerAs("discord_env", () => {
   return {
     DISCORD_TOKEN: process.env.DISCORD_TOKEN || "",
     DISCORD_DEVELOPMENT_GUILD_ID: [process.env.DISCORD_DEVELOPMENT_GUILD_ID]
+    //MoreOptions_
   };
 });
 `.trim()

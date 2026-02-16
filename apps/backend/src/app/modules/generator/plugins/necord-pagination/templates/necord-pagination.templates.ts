@@ -32,7 +32,7 @@ export class NecordPagination implements OnModuleInit {
 `.trim()
 };
 
-export function necordPaginationModuleUpdates(_withConfigModule: boolean) {
+export function necordPaginationModuleUpdates(withConfigModule: boolean) {
 	return {
 		importNecordPagination: {
 			replacer: 'import { NecordModule } from "necord";',
@@ -45,24 +45,38 @@ import { NecordPaginationModule } from "@necord/pagination";`
 import { NecordPagination } from "./necord.pagination";`
 		},
 		providers: {
-			replacer: "providers: [NecordService, NecordCommand]",
-			content: "providers: [NecordService, NecordCommand, NecordPagination]"
+			replacer: "providers: [NecordService, NecordCommand",
+			content: "providers: [NecordService, NecordCommand, NecordPagination"
+		},
+		moduleConfig: {
+			content: withConfigModule
+				? `
+    NecordPaginationModule.forRootAsync({
+      inject: [Services.Config],
+      useClass: NecordConfig
+    })`
+				: `
+    NecordPaginationModule.forRoot({
+      allowSkip: false,
+			allowTraversal: false,
+			buttonsPosition: "end",
+    })`
 		}
 	};
 }
 
 export const necordPaginationCommandUpdates = {
 	addCommand: {
-		replacer: 'return interaction.reply({ content: "Pong!" });',
-		content: `return interaction.reply({ content: "Pong!" });
-  }
-
+		replacer: "//MoreOptions?",
+		content: `
   @SlashCommand({ name: "pagination", description: "Test pagination" })
   public async onPagination(@Context() [interaction]: SlashCommandContext) {
     const pagination = this.paginationService.get("test");
     const page = await pagination.build();
 
-    return interaction.reply(page);`
+    return interaction.reply(page);
+  }
+    //MoreOptions?`
 	},
 	addImport: {
 		replacer: 'import { Context, SlashCommand, SlashCommandContext } from "necord";',
@@ -73,5 +87,31 @@ import { NecordPaginationService } from "@necord/pagination";`
 		replacer: "export class NecordCommand {",
 		content: `export class NecordCommand {
   public constructor(private readonly paginationService: NecordPaginationService) {}`
+	}
+};
+
+export const necordPaginationConfigIntegration = {
+	importString: {
+		path: "src/modules/necord",
+		name: "necord.config.ts",
+		replacer: 'import { NecordModule } from "necord";',
+		content:
+			'import { NecordModule } from "necord";\nimport type { NecordPaginationOptions } from "@necord/pagination";'
+	},
+	configFunction: {
+		path: "src/modules/necord",
+		name: "necord.config.ts",
+		replacer: "// MoreOptions?",
+		content: `
+    public createNecordPaginationOptions(): NecordPaginationOptions {
+		return {
+			allowSkip: false,
+			allowTraversal: false,
+			buttonsPosition: "end",
+		};
+	}
+
+  // MoreOptions?
+    `
 	}
 };

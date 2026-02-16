@@ -248,12 +248,11 @@ export const pluginsGitkeepTemplate = {
 	content: ""
 };
 
-export function lavalinkModuleUpdates(_withConfigModule: boolean) {
+export function lavalinkModuleUpdates(withConfigModule: boolean) {
 	return {
 		importLavalink: {
 			replacer: 'import { NecordModule } from "necord";',
-			content: `import { NecordModule } from "necord";
-import { NecordLavalinkModule } from "@necord/lavalink";`
+			content: 'import { NecordModule } from "necord";import { NecordLavalinkModule } from "@necord/lavalink";'
 		},
 		importCommands: {
 			replacer: 'import { NecordCommand } from "./necord.command";',
@@ -262,8 +261,57 @@ import { PlayCommand } from "./commands/play/play.command";
 import { LavalinkListenersService } from "./lavalink-listeners.service";`
 		},
 		providers: {
-			replacer: "providers: [NecordService, NecordCommand]",
-			content: "providers: [NecordService, NecordCommand, PlayCommand, LavalinkListenersService]"
+			replacer: "providers: [NecordService, NecordCommand",
+			content: "providers: [NecordService, NecordCommand, PlayCommand, LavalinkListenersService"
+		},
+		moduleConfig: {
+			content: withConfigModule
+				? `
+    NecordLavalinkModule.forRootAsync({
+      inject: [Services.Config],
+      useClass: NecordConfig
+    })`
+				: `
+    NecordLavalinkModule.forRoot({
+      nodes: [
+				{
+					authorization: process.env.LAVALINK_PASSWORD,
+					host: process.env.LAVALINK_HOST as string,
+					port: Number(process.env.LAVALINK_PORT),
+				},
+			],
+    })
+`
 		}
 	};
 }
+
+export const necordLavalinkConfigIntegration = {
+	importString: {
+		path: "src/modules/necord",
+		name: "necord.config.ts",
+		replacer: 'import { NecordModule } from "necord";',
+		content:
+			'import { NecordModule } from "necord";\nimport { JSONLocaleLoader } from "./JSONLocale.loader";\nimport type { NecordLavalinkModuleOptions } from "@necord/lavalink";'
+	},
+	configFunction: {
+		path: "src/modules/necord",
+		name: "necord.config.ts",
+		replacer: "// MoreOptions?",
+		content: `
+    public createNecordLavalinkOptions(): NecordLavalinkModuleOptions {
+		return {
+			nodes: [
+				{
+					authorization: process.env.DISCORD_LAVALINK_PASSWORD,
+					host: process.env.DISCORD_LAVALINK_HOST as string,
+					port: Number(process.env.DISCORD_LAVALINK_PORT),
+				},
+			],
+		};
+	}
+
+  // MoreOptions?
+    `
+	}
+};

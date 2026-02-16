@@ -73,22 +73,17 @@ export function necordLocalizationModuleUpdates(withConfigModule: boolean) {
 import { ${withConfigModule ? "" : "GuildResolver, "}NecordLocalizationModule${withConfigModule ? "" : ", NestedLocalizationAdapter"} } from "@necord/localization";`
 		},
 		moduleConfig: {
-			replacer: "providers: [NecordService, NecordCommand]",
 			content: withConfigModule
-				? `imports: [
-    // ... existing imports
+				? `
     NecordLocalizationModule.forRootAsync({
       inject: [Services.Config],
       useClass: NecordConfig
-    })
-  ],
-  providers: [NecordService, NecordCommand]`
-				: `imports: [
-    // ... existing imports
+    })`
+				: `
     NecordLocalizationModule.forRoot({
       resolvers: GuildResolver,
       adapter: new NestedLocalizationAdapter({
-        fallbackLanguage: "en-US",
+        fallbackLocale: "en-US",
         locales: {
           "en-US": {
             "commands": {
@@ -101,8 +96,7 @@ import { ${withConfigModule ? "" : "GuildResolver, "}NecordLocalizationModule${w
         }
       })
     })
-  ],
-  providers: [NecordService, NecordCommand]`
+`
 		}
 	};
 }
@@ -127,5 +121,48 @@ import { CurrentTranslate, localizationMapByKey, TranslationFn } from "@necord/l
 		replacer: 'return interaction.reply({ content: "Pong!" });',
 		content: `const message = t("commands.ping.description");
     return interaction.reply(message);`
+	}
+};
+
+export const necordLocalizationConfigIntegration = {
+	importString: {
+		path: "src/modules/necord",
+		name: "necord.config.ts",
+		replacer: 'import { NecordModule } from "necord";',
+		content:
+			'import { NecordModule } from "necord";\nimport { JSONLocaleLoader } from "./JSONLocale.loader";\nimport { GuildResolver, type NecordLocalizationOptions, NestedLocalizationAdapter } from "@necord/localization";'
+	},
+	configFunction: {
+		path: "src/modules/necord",
+		name: "necord.config.ts",
+		replacer: "// MoreOptions?",
+		content: `
+    public async createNecordLocalizationOptions(): Promise<NecordLocalizationOptions> {
+		return {
+			adapter: new NestedLocalizationAdapter({
+				fallbackLocale:
+					this.config.get("DISCORD_FALLBACK_LOCALE"),
+				locales: await new JSONLocaleLoader(
+					path.resolve(__dirname, "../../common/localization/necord"),
+				).loadTranslations(),
+			}),
+			resolvers: GuildResolver,
+		};
+	}
+
+  // MoreOptions?
+    `
+	},
+	envOptions: {
+		name: "discord-env.dto.ts",
+		path: "src/modules/necord/dtos",
+		replacer: "//MoreOptions?",
+		content: "@IsString()\n@IsNotEmpty()\npublic readonly DISCORD_FALLBACK_LOCALE!: string;\n\n//MoreOptions?"
+	},
+	envValidator: {
+		name: "discord-env.dto.ts",
+		path: "src/modules/necord/dtos",
+		replacer: "//MoreOptions_",
+		content: "DISCORD_FALLBACK_LOCALE: process.env.DISCORD_FALLBACK_LOCALE\n//MoreOptions_"
 	}
 };
