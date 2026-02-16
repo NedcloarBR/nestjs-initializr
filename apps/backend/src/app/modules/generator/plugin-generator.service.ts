@@ -46,6 +46,10 @@ export class PluginGeneratorService {
 			throw new Error(`Generation failed: ${result.errors.join(", ")}`);
 		}
 
+		for (const file of result.files) {
+			file.content = file.content.replace("//MoreOptions?", "").replace("//MoreOptions_", "");
+		}
+
 		const envFile = result.files.find((file) => file.name === ".env");
 		if (envFile) {
 			result.files.push({ name: ".envexample", path: "", content: envFile.content });
