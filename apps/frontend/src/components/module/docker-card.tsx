@@ -19,12 +19,17 @@ export function DockerCard() {
 	const isSelected = field.value;
 
 	function toggleDocker() {
-		if (!isSelected) {
-			const updatedModules = modulesField.value.filter((mod: ModuleName) => !dockerRequiredModules.includes(mod));
+		const nextValue = !isSelected;
+
+		if (!nextValue) {
+			const updatedModules = (modulesField.value ?? []).filter(
+				(mod: ModuleName) => !dockerRequiredModules.includes(mod)
+			);
 
 			modulesField.onChange(updatedModules);
 		}
-		field.onChange(!isSelected);
+
+		field.onChange(nextValue);
 	}
 
 	return (
