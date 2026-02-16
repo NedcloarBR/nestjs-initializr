@@ -1,4 +1,5 @@
 import { useController, useFormContext } from "react-hook-form";
+import { linterFormatterRequiredModules, type ModuleName } from "@/constants/modules";
 import {
 	Card,
 	CardDescription,
@@ -28,12 +29,24 @@ export function LinterFormatterCard({ title, name, description, disableText, ico
 		control
 	});
 
+	const { field: modulesField } = useController({
+		name: "modules",
+		control
+	});
+
 	const isSelected = field.value === name;
 
 	const disabled = field.value && field.value !== name;
 
 	function toggleLinterFormatter() {
 		const updatedLinterFormatter = isSelected ? "" : name;
+		if (!updatedLinterFormatter) {
+			const updatedModules = modulesField.value.filter(
+				(mod: ModuleName) => !linterFormatterRequiredModules.includes(mod)
+			);
+
+			modulesField.onChange(updatedModules);
+		}
 		field.onChange(updatedLinterFormatter);
 	}
 

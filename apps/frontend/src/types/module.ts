@@ -19,3 +19,5 @@ export enum ModuleCategory {
 	INFRA = "infra",
 	DATABASE = "database"
 }
+
+export type Dependency = { type: "AND"; modules: ModuleName[] } | { type: "OR"; modules: ModuleName[] };

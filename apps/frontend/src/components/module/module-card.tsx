@@ -7,6 +7,7 @@ import {
 	moduleConflicts,
 	moduleDependencies
 } from "@/constants/modules";
+import type { Dependency } from "@/types/module";
 import {
 	Card,
 	CardDescription,
@@ -66,14 +67,30 @@ export function ModuleCard({ title, name, description, dependsOn, conflicts, ico
 	const isDisabled =
 		isDisabledModules || dockerIsMissing || anotherLinterFormatterEnabled || (hasActiveConflict && !isSelected);
 
-	function findDependents(moduleName: ModuleName, currentModules: string[]): string[] {
-		const dependents: Set<string> = new Set();
+	function findDependents(moduleName: ModuleName, currentModules: ModuleName[]): ModuleName[] {
+		const dependents: Set<ModuleName> = new Set();
+
+		function dependencyBroken(dependency: Dependency, activeModules: ModuleName[]): boolean {
+			if (dependency.type === "AND") {
+				return !dependency.modules.every((m) => activeModules.includes(m));
+			}
+
+			if (dependency.type === "OR") {
+				return !dependency.modules.some((m) => activeModules.includes(m));
+			}
+
+			return false;
+		}
 
 		function find(module: ModuleName) {
-			for (const [mod, dependencies] of Object.entries(moduleDependencies)) {
-				if (dependencies.includes(module) && currentModules.includes(mod)) {
+			for (const [mod, dependency] of Object.entries(moduleDependencies) as [ModuleName, Dependency][]) {
+				if (!currentModules.includes(mod)) continue;
+
+				if (!dependency.modules.includes(module)) continue;
+
+				if (dependencyBroken(dependency, currentModules)) {
 					dependents.add(mod);
-					find(mod as ModuleName);
+					find(mod);
 				}
 			}
 		}
@@ -84,10 +101,10 @@ export function ModuleCard({ title, name, description, dependsOn, conflicts, ico
 	}
 
 	function toggleModule() {
-		let updatedModules: string[] = [];
+		let updatedModules: ModuleName[] = [];
 
 		if (isSelected) {
-			updatedModules = field.value.filter((mod: string) => mod !== name);
+			updatedModules = field.value.filter((mod: ModuleName) => mod !== name);
 
 			const toRemove = findDependents(name, updatedModules);
 

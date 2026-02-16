@@ -1,4 +1,4 @@
-import { ModuleCategory, type ModuleType } from "@/types/module";
+import { type Dependency, ModuleCategory, type ModuleType } from "@/types/module";
 
 const rawModules = [
 	{
@@ -117,11 +117,11 @@ export const modules = (t: (key: string) => string) => {
 	return newModules;
 };
 
-export const moduleDependencies: Record<string, ModuleName[]> = {
-	"necord-localization": ["necord"],
-	"necord-pagination": ["necord"],
-	"necord-lavalink": ["necord"],
-	"scalar-api-reference": ["swagger"]
+export const moduleDependencies: Partial<Record<ModuleName, Dependency>> = {
+	"necord-localization": { type: "AND", modules: ["necord"] },
+	"necord-pagination": { type: "AND", modules: ["necord"] },
+	"necord-lavalink": { type: "AND", modules: ["necord"] },
+	"scalar-api-reference": { type: "AND", modules: ["swagger"] }
 };
 
 export const dockerRequiredModules: ModuleName[] = ["necord-lavalink", "prisma-standalone", "nestjs-prisma"];
