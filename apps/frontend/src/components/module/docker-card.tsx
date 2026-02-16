@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
+import { dockerRequiredModules, type ModuleName } from "@/constants/modules";
 import { Card, CardDescription, CardFooter, CardTitle, FormControl, Icon, Separator, Switch } from "../ui";
 
 export function DockerCard() {
@@ -10,9 +11,19 @@ export function DockerCard() {
 		control
 	});
 
+	const { field: modulesField } = useController({
+		name: "modules",
+		control
+	});
+
 	const isSelected = field.value;
 
 	function toggleDocker() {
+		if (!isSelected) {
+			const updatedModules = modulesField.value.filter((mod: ModuleName) => !dockerRequiredModules.includes(mod));
+
+			modulesField.onChange(updatedModules);
+		}
 		field.onChange(!isSelected);
 	}
 
