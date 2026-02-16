@@ -147,7 +147,7 @@ export default registerAs("discord_env", () => {
 
   return {
     DISCORD_TOKEN: process.env.DISCORD_TOKEN || "",
-    DISCORD_DEVELOPMENT_GUILD_ID: [process.env.DISCORD_DEVELOPMENT_GUILD_ID]
+    DISCORD_DEVELOPMENT_GUILD_ID: [process.env.DISCORD_DEVELOPMENT_GUILD_ID],
     //MoreOptions_
   };
 });

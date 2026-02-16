@@ -163,6 +163,6 @@ export const necordLocalizationConfigIntegration = {
 		name: "discord-env.dto.ts",
 		path: "src/modules/necord/dtos",
 		replacer: "//MoreOptions_",
-		content: "DISCORD_FALLBACK_LOCALE: process.env.DISCORD_FALLBACK_LOCALE\n//MoreOptions_"
+		content: "DISCORD_FALLBACK_LOCALE: process.env.DISCORD_FALLBACK_LOCALE,\n//MoreOptions_"
 	}
 };
