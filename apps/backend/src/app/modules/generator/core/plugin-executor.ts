@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { Node, Project, SyntaxKind } from "ts-morph";
 import type {
 	FileUpdate,
 	GeneratedFile,
@@ -127,11 +128,11 @@ export class PluginExecutor {
 						}
 					}
 
-					if (constants.importIn && constants.import) {
+					if ((constants.importIn && constants.importArray) || (constants.importIn && constants.import)) {
 						const importFile = ctx.files.get(constants.importIn);
 						const moduleToInject = constants.importArray || constants.import;
 						if (importFile && moduleToInject) {
-							importFile.content = this.injectModuleIntoDecorator(importFile.content, moduleToInject);
+							importFile.content = this.injectModuleIntoDecorator(importFile.content, moduleToInject, constants.import);
 						}
 					}
 				}
@@ -283,70 +284,86 @@ export class PluginExecutor {
 		};
 	}
 
-	private injectModuleIntoDecorator(fileContent: string, moduleName: string): string {
-		const importRegex = new RegExp(`import\\s*\\{([^}]*)\\}\\s*from\\s*["']${"@/modules"}["']`);
+	// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <>
+	private injectModuleIntoDecorator(fileContent: string, moduleName: string, importString?: string): string {
+		const project = new Project({
+			useInMemoryFileSystem: true
+		});
 
-		const importMatch = importRegex.exec(fileContent);
+		const sourceFile = project.createSourceFile("temp.module.ts", fileContent, { overwrite: true });
 
-		if (importMatch) {
-			const existingImports = importMatch[1]
-				.split(",")
-				.map((s) => s.trim())
-				.filter(Boolean);
+		if (importString !== undefined) {
+			const existingImport = sourceFile
+				.getImportDeclarations()
+				.find((d) => d.getModuleSpecifierValue() === "@/modules");
 
-			if (!existingImports.includes(moduleName)) {
-				const newImportList = [...existingImports, moduleName].join(", ");
-				const newImportStatement = `import { ${newImportList} } from "@/modules";\n`;
-				// biome-ignore lint/style/noParameterAssign: ???
-				fileContent = fileContent.replace(importMatch[0], newImportStatement);
-			}
-		} else {
-			const newImport = `import { ${moduleName} } from "@/modules";\n`;
-			// biome-ignore lint/style/noParameterAssign: ???
-			fileContent = newImport + fileContent;
-		}
+			if (existingImport) {
+				const alreadyImported = existingImport.getNamedImports().some((n) => n.getName() === importString);
 
-		const moduleRegex = /@Module\s*\(\s*\{([\s\S]*?)\}\s*\)/;
-		const moduleMatch = moduleRegex.exec(fileContent);
-
-		if (!moduleMatch) return fileContent;
-
-		const fullModuleMatch = moduleMatch[0];
-		const moduleBody = moduleMatch[1];
-
-		const importsRegex = /imports\s*:\s*\[([\s\S]*?)\]/;
-		const importsMatch = importsRegex.exec(moduleBody);
-
-		if (importsMatch) {
-			const fullImportsMatch = importsMatch[0];
-			const importsContent = importsMatch[1];
-
-			const existsRegex = new RegExp(`\\b${moduleName}\\b`);
-			if (existsRegex.test(importsContent)) {
-				return fileContent;
-			}
-
-			const trimmed = importsContent.trim();
-
-			let newImportsBlock: string;
-
-			if (trimmed.length === 0) {
-				newImportsBlock = `imports: [${moduleName}]`;
+				if (!alreadyImported) {
+					existingImport.addNamedImport(importString);
+				}
 			} else {
-				const formatted = trimmed.endsWith(",")
-					? `${importsContent}${moduleName},`
-					: `${importsContent.trim()}, ${moduleName}`;
-
-				newImportsBlock = `imports: [${formatted}]`;
+				sourceFile.addImportDeclaration({
+					moduleSpecifier: "@/modules",
+					namedImports: [importString]
+				});
 			}
-
-			const newModuleBody = moduleBody.replace(fullImportsMatch, newImportsBlock);
-
-			return fileContent.replace(fullModuleMatch, `@Module({${newModuleBody}})`);
 		}
 
-		const newModuleBody = `imports: [${moduleName}],\n${moduleBody}`;
+		const moduleDecorator = sourceFile.getDescendantsOfKind(SyntaxKind.Decorator).find((d) => {
+			const expression = d.getExpression();
 
-		return fileContent.replace(fullModuleMatch, `@Module({${newModuleBody}})`);
+			if (!Node.isCallExpression(expression)) {
+				return false;
+			}
+
+			const identifier = expression.getExpression();
+
+			return identifier.getText() === "Module";
+		});
+
+		if (!moduleDecorator) {
+			return sourceFile.getFullText();
+		}
+
+		const callExpression = moduleDecorator.getExpression();
+
+		if (!Node.isCallExpression(callExpression)) {
+			return sourceFile.getFullText();
+		}
+
+		const arg = callExpression.getArguments()[0];
+
+		if (!Node.isObjectLiteralExpression(arg)) {
+			return sourceFile.getFullText();
+		}
+
+		const objectLiteral = arg;
+
+		const importsProp = objectLiteral
+			.getProperties()
+			.find((p) => Node.isPropertyAssignment(p) && p.getName() === "imports");
+
+		if (!importsProp) {
+			objectLiteral.addPropertyAssignment({
+				name: "imports",
+				initializer: `[${moduleName}]`
+			});
+		} else {
+			const arrayLiteral = importsProp.getFirstDescendantByKind(SyntaxKind.ArrayLiteralExpression);
+
+			if (!arrayLiteral) {
+				return sourceFile.getFullText();
+			}
+
+			const alreadyExists = arrayLiteral.getElements().some((el) => el.getText() === moduleName);
+
+			if (!alreadyExists) {
+				arrayLiteral.addElement(moduleName);
+			}
+		}
+
+		return sourceFile.getFullText();
 	}
 }
