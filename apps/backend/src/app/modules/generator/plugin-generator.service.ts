@@ -263,9 +263,14 @@ export class PluginGeneratorService {
 		const dirPath = this.getPath(id);
 		const configPath = path.join(__dirname, "assets", "biome.config.json");
 
+		const biomeModuleFile = this.getPath(id, "biome.json");
+		const biomeTempModuleFile = this.getPath(id, "biome.json.disabled");
+
+		if (fs.existsSync(biomeModuleFile)) fs.renameSync(biomeModuleFile, biomeTempModuleFile);
+
 		const runBiomeCommand = (args: string[]): Promise<void> => {
 			return new Promise((resolve, reject) => {
-				const process = spawn("biome", [...args, "--config-path", configPath, dirPath]);
+				const process = spawn("biome", [...args, "--config-path", configPath], { cwd: dirPath });
 
 				process.stdout?.on("data", (data) => {
 					this.logger.log(`[biome ${args[0]} stdout]: ${data.toString().trim()}`);
@@ -292,6 +297,10 @@ export class PluginGeneratorService {
 
 		await runBiomeCommand(["lint", "--write"]);
 		await runBiomeCommand(["format", "--write"]);
+
+		if (fs.existsSync(biomeTempModuleFile)) {
+			fs.renameSync(biomeTempModuleFile, biomeModuleFile);
+		}
 	}
 
 	private resolvePackageManager(packageManager: string): string | undefined {

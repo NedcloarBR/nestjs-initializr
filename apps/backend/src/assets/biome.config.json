@@ -1,5 +1,4 @@
 {
-	"root": true,
 	"$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
 	"extends": ["@nedcloarbr/biome-config/nestjs"],
 	"formatter": {
@@ -11,5 +10,8 @@
 				"useImportType": "off"
 			}
 		}
+	},
+	"files": {
+		"includes": ["**", "!**/__generated__/**/biome.json"]
 	}
 }

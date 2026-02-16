@@ -9,7 +9,8 @@ export const biomeTemplate = {
 		content: `
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "extends": ["@nedcloarbr/biome-config/nestjs"]
+  "root": true,
+  "extends": ["@nedcloarbr/biome-config/nestjs", "@nedcloarbr/biome-config/ignore"]
 }
 `.trim()
 	},
