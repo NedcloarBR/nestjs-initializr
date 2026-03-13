@@ -29,13 +29,14 @@ export class PluginGeneratorService {
 	 */
 	public async generate(metadata: MetadataDTO, id: string, debugCleanup = false): Promise<fs.ReadStream | string> {
 		const ctx = createContext(id, metadata);
+		const basePath = this.getPath(id);
 
 		const selectedModules = metadata.modules ?? [];
 		this.logger.log(`Generating project with modules: ${selectedModules.join(", ") || "none"}`);
 
 		if (selectedModules.length > 0) {
-			fs.mkdirSync("src/modules", { recursive: true });
-			fs.writeFileSync("src/modules/index.ts", "");
+			fs.mkdirSync(path.join(basePath, "src/modules"), { recursive: true });
+			fs.writeFileSync(path.join(basePath, "index.ts"), "");
 			ctx.files.set("src/modules/index.ts", { path: "src/modules", name: "index.ts", content: "" });
 		}
 
@@ -55,7 +56,6 @@ export class PluginGeneratorService {
 			result.files.push({ name: ".envexample", path: "", content: envFile.content });
 		}
 
-		const basePath = this.getPath(id);
 		await this.writeFilesToDisk(basePath, result.files);
 
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
