@@ -56,7 +56,6 @@ export class PluginGeneratorService {
 			result.files.push({ name: ".envexample", path: "", content: envFile.content });
 		}
 
-		const basePath = this.getPath(id);
 		this.writeFilesToDisk(basePath, result.files);
 
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);

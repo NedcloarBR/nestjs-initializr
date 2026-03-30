@@ -19,7 +19,7 @@ POSTGRES_DATABASE=mydb
 		switch (type) {
 			case "postgres":
 				return `
-  postgresql:
+  postgres:
     image: bitnami/postgresql:latest
     container_name: postgres
     ports:

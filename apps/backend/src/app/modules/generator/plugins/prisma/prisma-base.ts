@@ -24,11 +24,9 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 		this.generateTemplates();
 
 		this.setConstants({
-			token: null,
 			import: "PrismaModule",
 			export: 'export { PrismaModule } from "./database/prisma/prisma.module";',
 			importArray: "PrismaModule",
-			inject: null,
 			importIn: "src/app.module.ts"
 		});
 	}
@@ -45,7 +43,7 @@ export abstract class PrismaBasePlugin extends BasePlugin {
 
 		this.addScript("postinstall", "prisma generate");
 
-		this.ctx.metadata.modules.includes("config")
+		this.ctx.metadata.modules?.includes("config")
 			? this.appendToFile("", ".env", `\n${templates.dotenv.content}`)
 			: this.createFile(".env", "", templates.dotenv.content);
 
