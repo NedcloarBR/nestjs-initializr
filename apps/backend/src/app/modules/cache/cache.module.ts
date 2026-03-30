@@ -7,7 +7,6 @@ import { Module } from "@nestjs/common";
 			ttl: 300000,
 			max: 100
 		})
-	],
-	exports: [NestCacheModule]
+	]
 })
 export class CacheModule {}

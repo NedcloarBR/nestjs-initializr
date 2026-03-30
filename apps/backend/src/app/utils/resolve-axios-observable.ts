@@ -1,7 +1,7 @@
-import { AxiosResolveError } from "@/app/common/errors/axios.error";
 import { Logger } from "@nestjs/common";
 import { AxiosError, type AxiosResponse } from "axios";
-import { type Observable, catchError, firstValueFrom, throwError } from "rxjs";
+import { catchError, firstValueFrom, type Observable, throwError } from "rxjs";
+import { AxiosResolveError } from "@/app/common/errors/axios.error";
 
 export async function resolveAxiosObservable<T>(source: Observable<AxiosResponse<T>>): Promise<AxiosResponse<T>> {
 	const logger = new Logger("ResolveAxiosObservable");

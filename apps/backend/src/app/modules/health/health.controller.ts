@@ -14,10 +14,10 @@ import { ApiHealthCheck, ApiLivenessCheck } from "./health.swagger";
 @Controller("health")
 export class HealthController {
 	public constructor(
-		private health: HealthCheckService,
-		private http: HttpHealthIndicator,
-		private memory: MemoryHealthIndicator,
-		private disk: DiskHealthIndicator
+		private readonly health: HealthCheckService,
+		private readonly http: HttpHealthIndicator,
+		private readonly memory: MemoryHealthIndicator,
+		private readonly disk: DiskHealthIndicator
 	) {}
 
 	@Get()

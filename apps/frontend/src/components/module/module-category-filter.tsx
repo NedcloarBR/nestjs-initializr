@@ -1,5 +1,5 @@
-import { ModuleCategory } from "@/types/module";
 import { useTranslations } from "next-intl";
+import { ModuleCategory } from "@/types/module";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui";
 
 interface Props {

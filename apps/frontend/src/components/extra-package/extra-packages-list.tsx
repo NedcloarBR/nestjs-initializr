@@ -1,7 +1,7 @@
-import type { SimpleNPMPackage } from "@/types/npm";
 import { Package } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useController, useFormContext } from "react-hook-form";
+import type { SimpleNPMPackage } from "@/types/npm";
 import { ExtraPackage } from ".";
 
 export function ExtraPackagesList() {

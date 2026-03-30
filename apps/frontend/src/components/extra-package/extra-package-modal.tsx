@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import {
 	Dialog,
 	DialogContent,
@@ -9,8 +11,6 @@ import {
 	Spinner
 } from "@/components/ui";
 import type { NPMPackage } from "@/types/npm";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 import { ExtraPackage } from ".";
 
 interface Props {

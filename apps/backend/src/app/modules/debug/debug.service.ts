@@ -1,6 +1,4 @@
 import { type ChildProcessWithoutNullStreams, spawn } from "node:child_process";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import { Injectable } from "@nestjs/common";
 import { PACKAGE_MANAGER_COMMANDS, type PackageManager } from "@/app/constants/package-manager.commands";
 import type { MetadataDTO } from "../generator/dtos/metadata.dto";
@@ -37,14 +35,9 @@ export class DebugService {
 			const pm = metadata.packageManager as PackageManager;
 			const commands = PACKAGE_MANAGER_COMMANDS[pm];
 
-			const nodeModulesPath = join(generatedPath, "node_modules");
+			this.debugGateway.sendLog(sessionId, "[info] Installing dependencies...");
+			await this.runAndStream(commands.install, generatedPath, sessionId);
 
-			if (!existsSync(nodeModulesPath)) {
-				this.debugGateway.sendLog(sessionId, "[info] Installing dependencies...");
-				await this.runAndStream(commands.install, generatedPath, sessionId);
-			} else {
-				this.debugGateway.sendLog(sessionId, "[info] Dependencies already installed.");
-			}
 			this.debugGateway.sendLog(sessionId, `[debug] Total setup time: ${Date.now() - startedAt}ms`);
 			this.startProject(commands.start, generatedPath, sessionId);
 		} catch (error) {

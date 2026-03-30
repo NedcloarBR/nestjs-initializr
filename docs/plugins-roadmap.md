@@ -19,6 +19,7 @@ This document outlines planned plugins for the NestJS Initializr project.
 - `test-runner` - Jest or Vitest configuration
 - `toolkit` - @nedcloarbr/nestjs-toolkit integration
 - `extra` - CORS, Helmet, Compression, Validation
+- `prisma` - PrismaORM using Standalone or nestjs-prisma package
 
 ---
 
@@ -28,7 +29,6 @@ Essential plugins that most projects need.
 
 | Plugin | Description | Dependencies |
 |--------|-------------|--------------|
-| `prisma` | Prisma ORM with schema, migrations, and Prisma Client | config (optional) |
 | `typeorm` | TypeORM setup with entities, migrations, and data source | config (optional) |
 | `mongoose` | MongoDB with Mongoose schemas and connection | config (optional) |
 | `swagger` | OpenAPI/Swagger UI with auto-generated documentation | config (optional) |

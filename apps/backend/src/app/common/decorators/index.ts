@@ -1,2 +1,2 @@
-export { Plugin, getPluginMetadata, PLUGIN_METADATA, pluginRegistry, type PluginOptions } from "./plugin.decorator";
-export { InjectPlugin, getInjectMetadata, INJECT_METADATA } from "./inject.decorator";
+export { getInjectMetadata, INJECT_METADATA, InjectPlugin } from "./inject.decorator";
+export { getPluginMetadata, PLUGIN_METADATA, Plugin, type PluginOptions, pluginRegistry } from "./plugin.decorator";

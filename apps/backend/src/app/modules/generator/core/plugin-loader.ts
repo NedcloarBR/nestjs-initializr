@@ -63,10 +63,3 @@ export function loadPluginsSync(): void {
 		logger.error("❌ Failed to discover plugins:", error);
 	}
 }
-
-/**
- * Async version for use in dynamic imports
- */
-export async function loadPlugins(): Promise<void> {
-	loadPluginsSync();
-}

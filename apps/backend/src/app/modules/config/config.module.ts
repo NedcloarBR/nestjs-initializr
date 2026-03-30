@@ -16,7 +16,6 @@ const providers: Provider[] = [{ provide: Services.Config, useClass: ConfigServi
 			validate: configValidator
 		})
 	],
-	providers: [...providers],
-	exports: [...providers]
+	providers: [...providers]
 })
 export class ConfigModule {}

@@ -56,7 +56,8 @@ export class PluginGeneratorService {
 			result.files.push({ name: ".envexample", path: "", content: envFile.content });
 		}
 
-		await this.writeFilesToDisk(basePath, result.files);
+		const basePath = this.getPath(id);
+		this.writeFilesToDisk(basePath, result.files);
 
 		await this.generatePackageJson(basePath, metadata, result.packages, result.scripts);
 
@@ -71,7 +72,7 @@ export class PluginGeneratorService {
 		return zipStream;
 	}
 
-	private async writeFilesToDisk(basePath: string, files: GeneratedFile[]): Promise<void> {
+	private writeFilesToDisk(basePath: string, files: GeneratedFile[]): void {
 		fs.mkdirSync(basePath, { recursive: true });
 
 		for (const file of files) {
