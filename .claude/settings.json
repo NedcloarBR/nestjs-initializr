@@ -1,0 +1,17 @@
+{
+	"hooks": {
+		"PostToolUse": [
+			{
+				"matcher": "Write|Edit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=JSON.parse(d).tool_input.file_path;if(p){const {execSync}=require('child_process');execSync('npx biome check --write \\\"'+p+'\\\"',{stdio:'inherit'});}})\" 2>/dev/null || true",
+						"timeout": 30,
+						"statusMessage": "Formatting with Biome..."
+					}
+				]
+			}
+		]
+	}
+}
