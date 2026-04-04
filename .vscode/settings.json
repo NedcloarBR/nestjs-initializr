@@ -1,5 +1,10 @@
 {
   "search.exclude": {
     "**/.yarn": true,
-  }
+  },
+  "i18n-ally.localesPaths": [
+    "apps/frontend/public/locales",
+    "apps/frontend/src/lib/i18n",
+    "apps/backend/src/app/modules/generator/plugins/i18n"
+  ]
 }
