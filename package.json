@@ -95,7 +95,7 @@
 		"@nx/web": "22.3.3",
 		"@nx/webpack": "22.3.3",
 		"@nx/workspace": "22.3.3",
-		"@playwright/test": "^1.56.0",
+		"@playwright/test": "^1.57.0",
 		"@swc-node/register": "~1.11.1",
 		"@swc/core": "1.13.5",
 		"@swc/helpers": "~0.5.17",
